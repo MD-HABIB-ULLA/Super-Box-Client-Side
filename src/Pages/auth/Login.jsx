@@ -2,9 +2,19 @@ import { Link } from "react-router-dom";
 import facebookIcon from "/facebook.png";
 import instagramIcon from "/instagram.png";
 import linkedinIcon from "/linkedin.png";
+import { useForm } from "react-hook-form";
 
 
 const Login = () => {
+  const { register, handleSubmit } = useForm();
+  const handleGoogleLogin = () => {
+    console.log("hello");
+  };
+
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+
   return (
     <div className="min-h-screen  w-full flex flex-row">
       <div className="flex-auto w-1/2 p-5 bg-gray-200">
@@ -24,7 +34,10 @@ const Login = () => {
           account
         </p>
 
-        <form className="flex flex-col gap-5 py-8">
+        <form
+          className="flex flex-col gap-5 py-8"
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <label className="input input-bordered flex items-center gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -36,9 +49,8 @@ const Login = () => {
               <path d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z" />
             </svg>
             <input
-              type="text"
-              name="email"
-              className="grow"
+              type="email"
+              {...register("email", { required: true })}
               placeholder="Email"
               required
             />
@@ -59,7 +71,7 @@ const Login = () => {
             </svg>
             <input
               type="password"
-              name="password"
+              {...register("password", { required: true })}
               required
               className="grow"
               placeholder="password"
@@ -89,13 +101,12 @@ const Login = () => {
         <div>
           <p className=" text-sm font-semibold">Or login with</p>
           <div className="flex flex-row gap-2 py-2 ">
-            <Link>
-              <img
-                className=" w-8"
-                src="https://i.ibb.co/74JTkrp/google-13170545.png"
-                alt=""
-              />
-            </Link>
+            <img
+              onClick={handleGoogleLogin}
+              className=" w-8 cursor-pointer"
+              src="https://i.ibb.co/74JTkrp/google-13170545.png"
+              alt=""
+            />
 
             <img className=" w-8" src={facebookIcon} alt="" />
             <img className=" w-8" src={instagramIcon} alt="" />

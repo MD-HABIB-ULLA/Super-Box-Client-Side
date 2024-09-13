@@ -2,8 +2,17 @@ import { Link } from "react-router-dom";
 import facebookIcon from "/facebook.png";
 import instagramIcon from "/instagram.png";
 import linkedinIcon from "/linkedin.png";
+import { useForm } from "react-hook-form";
 
 const SignUp = () => {
+  const { register, handleSubmit } = useForm();
+  const handleGoogleLogin = () => {
+    console.log("hello");
+  };
+
+  const onSubmit = (data) => {
+    console.log(data);
+  };
   return (
     <div>
       <div className="min-h-screen  w-full flex flex-row">
@@ -24,7 +33,10 @@ const SignUp = () => {
             account
           </p>
 
-          <form className="flex flex-col gap-5 py-8">
+          <form
+            className="flex flex-col gap-5 py-8"
+            onSubmit={handleSubmit(onSubmit)}
+          >
             <div className="flex flex-row gap-4">
               {/* Name */}
               <div className="form-control flex-1 ">
@@ -34,7 +46,7 @@ const SignUp = () => {
                 <input
                   type="text"
                   placeholder="enter your name"
-                //   {...register("name", { required: true })}
+                    {...register("name", { required: true })}
                   className="input input-bordered "
                 />
               </div>
@@ -46,7 +58,7 @@ const SignUp = () => {
                 <input
                   type="text"
                   placeholder="enter your email"
-                //   {...register("email", { required: true })}
+                    {...register("email", { required: true })}
                   className="input input-bordered "
                 />
               </div>
@@ -55,13 +67,13 @@ const SignUp = () => {
               {/* your image */}
               <div className="form-control flex-1 ">
                 <label className="label">
-                  <span className="label-text text-lg">
-                    Choose a passport size picture
+                  <span className="label-text text-lg ">
+                    Choose a passport size  picture
                   </span>
                 </label>
 
                 <input
-                //   {...register("image", { required: true })}
+                    {...register("image", { required: true })}
                   type="file"
                   className="file-input  input-bordered file-input-info"
                 />
@@ -73,8 +85,9 @@ const SignUp = () => {
                 </label>
                 <input
                   type="tel"
+
                   placeholder="Enter a whatsapp number"
-                //   {...register("whatsappNumber", { required: true })}
+                    {...register("whatsappNumber", { required: true })}
                   className="input input-bordered  "
                 />
               </div>
@@ -89,7 +102,7 @@ const SignUp = () => {
                 <input
                   type="text"
                   placeholder="Type your country name"
-                //   {...register("sellerCountry", { required: true })}
+                    {...register("sellerCountry", { required: true })}
                   className="input input-bordered "
                 />
               </div>
@@ -101,7 +114,7 @@ const SignUp = () => {
                 <input
                   type="text"
                   placeholder="please enter your full address"
-                //   {...register("sellerAddress", { required: true })}
+                    {...register("sellerAddress", { required: true })}
                   className="input input-bordered "
                 />
               </div>
@@ -115,7 +128,7 @@ const SignUp = () => {
               <input
                 type="text"
                 placeholder="Enter your NID number"
-                // {...register("nidNumber", { required: true })}
+                {...register("nidNumber", { required: true })}
                 className="input input-bordered  "
               />
             </div>
@@ -128,7 +141,7 @@ const SignUp = () => {
                 </label>
 
                 <input
-                //   {...register("tradeLicense")}
+                    {...register("tradeLicense")}
                   type="file"
                   className="file-input  input-bordered file-input-info"
                 />
@@ -140,7 +153,7 @@ const SignUp = () => {
                 </label>
 
                 <input
-                //   {...register("introVdo")}
+                    {...register("introVdo")}
                   type="file"
                   className="file-input  input-bordered file-input-info"
                 />
@@ -149,7 +162,7 @@ const SignUp = () => {
 
             <label className="input input-bordered flex items-center gap-2">
               <input
-                // {...register("password", { required: true })}
+                {...register("password", { required: true })}
                 type="password"
                 placeholder="Enter your password"
                 className="grow"
