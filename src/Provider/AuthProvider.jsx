@@ -43,10 +43,29 @@ const AuthProvider = ({ children }) => {
 
   // Log out
   const logOut = () => {
+    console.log("hello")
     setLoading(true);
     return signOut(auth);
   };
 
+
+  const updateUserProfile = async (displayName, photoURL) => {
+    try {
+      setLoading(true); 
+      const profileData = {};
+      if (displayName) {
+        profileData.displayName = displayName;
+      }
+      if (photoURL) {
+        profileData.photoURL = photoURL;
+      }
+      await updateProfile(auth.currentUser, profileData);
+      console.log("User profile updated successfully");
+    } catch (error) {
+      console.error("Error updating user profile:", error);
+    }
+  };
+  
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -58,12 +77,7 @@ const AuthProvider = ({ children }) => {
   });
 
   // User updating
-  const userUpdate = (name, image) => {
-    return updateProfile(auth.currentUser, {
-      displayName: name,
-      photoURL: image,
-    });
-  };
+
 
   const authInfo = {
     googleLogin,
@@ -71,7 +85,7 @@ const AuthProvider = ({ children }) => {
     loginWithEmailAndPassword,
     user,
     logOut,
-    userUpdate,
+    updateUserProfile,
     loading,
   };
 

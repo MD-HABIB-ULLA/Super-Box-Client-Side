@@ -7,9 +7,7 @@ import GoogleLoginBtn from "../../Components/Common/GoogleLoginBtn";
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
-  const handleGoogleLogin = () => {
-    console.log("hello");
-  };
+ 
 
   const onSubmit = (data) => {
     console.log(data);
