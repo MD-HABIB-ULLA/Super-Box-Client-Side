@@ -24,7 +24,7 @@ const GoogleLoginBtn = () => {
               toast.success("Signin successful ");
               navigate(location?.state ? location.state : "/");
             })
-            .catch((err) => console.log(err));
+            .catch((err) => console.log(err)) ;
         }
       })
       .catch((err) => {
