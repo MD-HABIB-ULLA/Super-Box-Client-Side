@@ -1,36 +1,78 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import facebookIcon from "/facebook.png";
 import instagramIcon from "/instagram.png";
 import linkedinIcon from "/linkedin.png";
 import { useForm } from "react-hook-form";
+import GoogleLoginBtn from "../../Components/Common/GoogleLoginBtn";
+import axios from "axios";
+import { useContext } from "react";
+import { AuthContext } from "../../Provider/AuthProvider";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const SignUp = () => {
+  const { updateUserProfile, signUpWithEmailAndPassword } = useContext(AuthContext);
   const { register, handleSubmit } = useForm();
-  const handleGoogleLogin = () => {
-    console.log("hello");
-  };
-
-
-//   email
-// : 
-// "habibulla1278@gmail.com"
-// image
-// : 
-// FileList {0: File, length: 1}
-// name
-// : 
-// "Habib ulla"
-// password
-// : 
-// "ASDFASDF"
+  const location = useLocation();
+  const navigate = useNavigate();
+  const axiosPublic = useAxiosPublic();
   const onSubmit = (data) => {
+    const password = data.password;
+    const email = data.email;
+    const imageFile = { image: data.image[0] };
 
-    const userInfo = {
-       email : data.email,
-       role : "customer"
-    }
+    axios
+      .post(
+        `https://api.imgbb.com/1/upload?key=e9b3cb55e11b48d4142caf366d77cea6`,
+        imageFile,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
+      .then((res) => {
+        const image = res.data.data.display_url;
+        console.log(res.data.success)
+        if (res.data.success) {
+          signUpWithEmailAndPassword(email, password)
+            .then((res) => {
+              if (res.user) {
+                updateUserProfile(data.name, image).then(() => {
+                  const userInfo = {
+                    name: data.name,
+                    email: data.email,
+                  };
+                  axiosPublic
+                    .post("/users", userInfo)
+                    .then((res) => {
+                      if (res.data.insertedId) {
+                        navigate("/");
+                      } else {
+                        navigate("/");
+                      }
+                    })
+                    .catch((err) => console.log(err));
+                });
+                toast.success("Successfully sign in ");
+                navigate(location?.state ? location.state : "/");
+              }
+            })
+            .catch((error) => {
+              if (
+                error.code ===
+                  "auth/account-exists-with-different-credential" ||
+                error.code === "auth/email-already-in-use"
+              ) {
+                toast.error("This email alreay exist");
+                setLoading(false);
+              }
+            });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
-    
     console.log(data);
   };
   return (
@@ -140,11 +182,7 @@ const SignUp = () => {
           <div>
             <p className=" text-sm font-semibold">Or login with</p>
             <div className="flex flex-row gap-2 py-2 ">
-              <img
-                className=" w-8"
-                src="https://i.ibb.co/74JTkrp/google-13170545.png"
-                alt=""
-              />
+              <GoogleLoginBtn />
               <img className=" w-8" src={facebookIcon} alt="" />
               <img className=" w-8" src={instagramIcon} alt="" />
               <img className=" w-8" src={linkedinIcon} alt="" />
