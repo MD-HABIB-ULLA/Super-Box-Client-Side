@@ -10,7 +10,27 @@ const SignUp = () => {
     console.log("hello");
   };
 
+
+//   email
+// : 
+// "habibulla1278@gmail.com"
+// image
+// : 
+// FileList {0: File, length: 1}
+// name
+// : 
+// "Habib ulla"
+// password
+// : 
+// "ASDFASDF"
   const onSubmit = (data) => {
+
+    const userInfo = {
+       email : data.email,
+       role : "customer"
+    }
+
+    
     console.log(data);
   };
   return (
@@ -46,7 +66,7 @@ const SignUp = () => {
                 <input
                   type="text"
                   placeholder="enter your name"
-                    {...register("name", { required: true })}
+                  {...register("name", { required: true })}
                   className="input input-bordered "
                 />
               </div>
@@ -58,7 +78,7 @@ const SignUp = () => {
                 <input
                   type="text"
                   placeholder="enter your email"
-                    {...register("email", { required: true })}
+                  {...register("email", { required: true })}
                   className="input input-bordered "
                 />
               </div>
@@ -68,96 +88,17 @@ const SignUp = () => {
               <div className="form-control flex-1 ">
                 <label className="label">
                   <span className="label-text text-lg ">
-                    Choose a passport size  picture
+                    Choose a passport size picture
                   </span>
                 </label>
 
                 <input
-                    {...register("image", { required: true })}
+                  {...register("image", { required: true })}
                   type="file"
                   className="file-input  input-bordered file-input-info"
                 />
               </div>
               {/*Whatsapp number */}
-              <div className="form-control flex-1 ">
-                <label className="label">
-                  <span className="label-text text-lg">Whatsapp Number</span>
-                </label>
-                <input
-                  type="tel"
-
-                  placeholder="Enter a whatsapp number"
-                    {...register("whatsappNumber", { required: true })}
-                  className="input input-bordered  "
-                />
-              </div>
-            </div>
-
-            <div className="flex flex-row gap-4">
-              {/* Country */}
-              <div className="form-control flex-1 ">
-                <label className="label">
-                  <span className="label-text text-lg">Country</span>
-                </label>
-                <input
-                  type="text"
-                  placeholder="Type your country name"
-                    {...register("sellerCountry", { required: true })}
-                  className="input input-bordered "
-                />
-              </div>
-              {/* Address */}
-              <div className="form-control flex-1 ">
-                <label className="label">
-                  <span className="label-text text-lg">Address</span>
-                </label>
-                <input
-                  type="text"
-                  placeholder="please enter your full address"
-                    {...register("sellerAddress", { required: true })}
-                  className="input input-bordered "
-                />
-              </div>
-            </div>
-
-            {/*NID Number */}
-            <div className="form-control w-full ">
-              <label className="label">
-                <span className="label-text text-lg">NID Number</span>
-              </label>
-              <input
-                type="text"
-                placeholder="Enter your NID number"
-                {...register("nidNumber", { required: true })}
-                className="input input-bordered  "
-              />
-            </div>
-
-            <div className="flex flex-row gap-4">
-              {/*trade license*/}
-              <div className="form-control flex-1 ">
-                <label className="label">
-                  <span className="label-text text-lg">Trade License</span>
-                </label>
-
-                <input
-                    {...register("tradeLicense")}
-                  type="file"
-                  className="file-input  input-bordered file-input-info"
-                />
-              </div>
-              {/*introduction video*/}
-              <div className="form-control flex-1 ">
-                <label className="label">
-                  <span className="label-text text-lg">Introduction video</span>
-                </label>
-
-                <input
-                    {...register("introVdo")}
-                  type="file"
-                  className="file-input  input-bordered file-input-info"
-                />
-              </div>
             </div>
 
             <label className="input input-bordered flex items-center gap-2">
@@ -223,3 +164,83 @@ const SignUp = () => {
 };
 
 export default SignUp;
+
+// <div className="flex flex-row gap-4">
+// {/* Country */}
+// <div className="form-control flex-1 ">
+//   <label className="label">
+//     <span className="label-text text-lg">Country</span>
+//   </label>
+//   <input
+//     type="text"
+//     placeholder="Type your country name"
+//       {...register("sellerCountry", { required: true })}
+//     className="input input-bordered "
+//   />
+// </div>
+// {/* Address */}
+// <div className="form-control flex-1 ">
+//   <label className="label">
+//     <span className="label-text text-lg">Address</span>
+//   </label>
+//   <input
+//     type="text"
+//     placeholder="please enter your full address"
+//       {...register("sellerAddress", { required: true })}
+//     className="input input-bordered "
+//   />
+// </div>
+// </div>
+
+// {/*NID Number */}
+// <div className="form-control w-full ">
+// <label className="label">
+//   <span className="label-text text-lg">NID Number</span>
+// </label>
+// <input
+//   type="text"
+//   placeholder="Enter your NID number"
+//   {...register("nidNumber", { required: true })}
+//   className="input input-bordered  "
+// />
+// </div>
+
+// <div className="flex flex-row gap-4">
+// {/*trade license*/}
+// <div className="form-control flex-1 ">
+//   <label className="label">
+//     <span className="label-text text-lg">Trade License</span>
+//   </label>
+
+//   <input
+//       {...register("tradeLicense")}
+//     type="file"
+//     className="file-input  input-bordered file-input-info"
+//   />
+// </div>
+// {/*introduction video*/}
+// <div className="form-control flex-1 ">
+//   <label className="label">
+//     <span className="label-text text-lg">Introduction video</span>
+//   </label>
+
+//   <input
+//       {...register("introVdo")}
+//     type="file"
+//     className="file-input  input-bordered file-input-info"
+//   />
+// </div>
+// </div>
+
+// <div className="form-control flex-1 ">
+// <label className="label">
+//   <span className="label-text text-lg">Whatsapp Number</span>
+// </label>
+// <input
+//   type="tel"
+
+//   placeholder="Enter a whatsapp number"
+//     {...register("whatsappNumber", { required: true })}
+//   className="input input-bordered  "
+// />
+// </div>

@@ -3,7 +3,7 @@ import facebookIcon from "/facebook.png";
 import instagramIcon from "/instagram.png";
 import linkedinIcon from "/linkedin.png";
 import { useForm } from "react-hook-form";
-
+import GoogleLoginBtn from "../../Components/Common/GoogleLoginBtn";
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
@@ -101,12 +101,7 @@ const Login = () => {
         <div>
           <p className=" text-sm font-semibold">Or login with</p>
           <div className="flex flex-row gap-2 py-2 ">
-            <img
-              onClick={handleGoogleLogin}
-              className=" w-8 cursor-pointer"
-              src="https://i.ibb.co/74JTkrp/google-13170545.png"
-              alt=""
-            />
+            <GoogleLoginBtn />
 
             <img className=" w-8" src={facebookIcon} alt="" />
             <img className=" w-8" src={instagramIcon} alt="" />
