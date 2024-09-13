@@ -2,12 +2,13 @@ import { useContext } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const GoogleLoginBtn = () => {
   const { googleLogin, logOut } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
-
+  const axiosPublic = useAxiosPublic();
   const handleGoogleLogin = () => {
     logOut();
     googleLogin()
@@ -17,6 +18,7 @@ const GoogleLoginBtn = () => {
           const userInfo = {
             name: res.user.displayName,
             email: res.user.email,
+            role: "user",
           };
           axiosPublic
             .post("/users", userInfo)
@@ -24,7 +26,7 @@ const GoogleLoginBtn = () => {
               toast.success("Signin successful ");
               navigate(location?.state ? location.state : "/");
             })
-            .catch((err) => console.log(err)) ;
+            .catch((err) => console.log(err));
         }
       })
       .catch((err) => {
