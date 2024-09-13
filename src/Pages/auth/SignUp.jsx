@@ -67,7 +67,7 @@ const SignUp = () => {
               {/* your image */}
               <div className="form-control flex-1 ">
                 <label className="label">
-                  <span className="label-text text-lg">
+                  <span className="label-text text-lg ">
                     Choose a passport size  picture
                   </span>
                 </label>
