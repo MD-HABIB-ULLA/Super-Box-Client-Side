@@ -24,7 +24,7 @@ const GoogleLoginBtn = () => {
             .post("/users", userInfo)
             .then(() => {
               toast.success("Signin successful ");
-              navigate(location?.state ? location.state : "/");
+              navigate("/dashboard");
             })
             .catch((err) => console.log(err));
         }
