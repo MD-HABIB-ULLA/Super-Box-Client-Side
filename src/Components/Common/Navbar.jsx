@@ -1,8 +1,11 @@
 import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
+import useRole from "../../hooks/useRole";
 
 const Navbar = () => {
+  const [isSeller, role] = useRole();
+  console.log(isSeller);
   const { user, logOut } = useContext(AuthContext);
   return (
     <div>
@@ -17,7 +20,7 @@ const Navbar = () => {
             {user?.email ? (
               <div className=" flex flex-row justify-center items-center gap-5">
                 <Link
-                  to={"/my-website"}
+                  to={"/dashboard"}
                   className="text-xl font-serif text-blue-600 font-semibold hover:underline"
                 >
                   DashBoard

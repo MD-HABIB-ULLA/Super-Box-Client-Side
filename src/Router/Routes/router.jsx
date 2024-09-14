@@ -5,6 +5,10 @@ import Home from "../../Pages/Home/Home";
 import Login from "../../Pages/auth/Login";
 import SignUp from "../../Pages/auth/SignUp";
 import DHome from "../../Pages/Dashboard/DHome";
+import CreateWebsite from "../../Pages/Dashboard/Seller/CreateWebsite";
+import PrivateRoute from "../Private/PrivateRoute";
+import Layout from "../../Pages/SellerWebsite/Layout/Layout";
+import SellerWebsite from "../../Pages/SellerWebsite/Home/SellerWebsite";
 
 const router = createBrowserRouter([
   {
@@ -17,7 +21,17 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard",
-        element: <DHome />,
+        element: (
+          <PrivateRoute>
+            <DHome />
+          </PrivateRoute>
+        ),
+        children: [
+          {
+            path: "/dashboard",
+            element: <CreateWebsite />,
+          },
+        ],
       },
     ],
   },
@@ -28,6 +42,20 @@ const router = createBrowserRouter([
   {
     path: "/sign-up",
     element: <SignUp />,
+  },
+  {
+    path: "/w/:name",
+    element: <Layout />,
+    children: [
+      {
+        path: "",  // No need to repeat "/w/" here
+        element: <SellerWebsite />,
+      },
+      {
+        path: "login",  // No need to repeat "/w/" here
+        element: <Login />,
+      },
+    ],
   },
 ]);
 export default router;

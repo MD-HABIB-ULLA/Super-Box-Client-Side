@@ -5,19 +5,12 @@ import { HiChatBubbleLeftRight, HiUserGroup } from "react-icons/hi2";
 import { MdAddBusiness } from "react-icons/md";
 import { TbLogs } from "react-icons/tb";
 import { NavLink, Outlet } from "react-router-dom";
+import useRole from "../../hooks/useRole";
 
 const DHome = () => {
+  const [isAdmin, isSeller] = useRole();
   const sellerNavLinks = (
     <>
-      <li>
-        <NavLink
-          to="/dashboard/create-shop"
-          className={`p-2 text-lg rounded-sm`}
-        >
-          <MdAddBusiness className="text-3xl" />
-          Create a website
-        </NavLink>
-      </li>
       <li>
         <NavLink
           to="/dashboard/product-management"
@@ -65,6 +58,14 @@ const DHome = () => {
         </NavLink>
       </li>
     </>
+  );
+  const userNavLinks = (
+    <li>
+      <NavLink to="/" className={`p-2 text-lg rounded-sm`}>
+        <MdAddBusiness className="text-3xl" />
+        Create a website
+      </NavLink>
+    </li>
   );
   const adminNavLinks = (
     <>
@@ -135,7 +136,7 @@ const DHome = () => {
     <div>
       <div className="drawer lg:drawer-open">
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-content flex flex-col items-center justify-center">
+        <div className="drawer-content ">
           <div>
             <Outlet />
           </div>
@@ -153,7 +154,7 @@ const DHome = () => {
             className="drawer-overlay"
           ></label>
           <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
-           {adminNavLinks}
+            {isAdmin ? adminNavLinks : isSeller ? sellerNavLinks : userNavLinks}
           </ul>
         </div>
       </div>

@@ -1,16 +1,31 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import facebookIcon from "/facebook.png";
 import instagramIcon from "/instagram.png";
 import linkedinIcon from "/linkedin.png";
 import { useForm } from "react-hook-form";
 import GoogleLoginBtn from "../../Components/Common/GoogleLoginBtn";
+import toast from "react-hot-toast";
+import { useContext } from "react";
+import { AuthContext } from "../../Provider/AuthProvider";
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
- 
-
-  const onSubmit = (data) => {
-    console.log(data);
+  const { logOut, loginWithEmailAndPassword } = useContext(AuthContext);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const onSubmit = (data, e) => {
+    logOut();
+    loginWithEmailAndPassword(data.email, data.password)
+      .then((result) => {
+        toast.success("Login sucsessful");
+        e.target.reset();
+        navigate( "/dashboard");
+      })
+      .catch((error) => {
+        if (error.code === "auth/invalid-credential") {
+          toast.error("Invalid email or password. Please try again.");
+        }
+      });
   };
 
   return (
