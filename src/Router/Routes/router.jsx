@@ -9,7 +9,21 @@ import CreateWebsite from "../../Pages/Dashboard/Seller/CreateWebsite";
 import PrivateRoute from "../Private/PrivateRoute";
 import Layout from "../../Pages/SellerWebsite/Layout/Layout";
 import SellerWebsite from "../../Pages/SellerWebsite/Home/SellerWebsite";
+import CreateWebFormContext from "../../Context/CreateWebFormContext";
+import useRole from "../../hooks/useRole";
+const RoleBasedComponent = () => {
+  const { isAdmin, isSeller } = useRole();
 
+  if (isAdmin) {
+    return <div>Hello, Admin</div>;
+  }
+
+  if (isSeller) {
+    return <div>Hi, Seller</div>;
+  }
+
+  return <CreateWebsite />;
+};
 const router = createBrowserRouter([
   {
     path: "/",
@@ -29,7 +43,7 @@ const router = createBrowserRouter([
         children: [
           {
             path: "/dashboard",
-            element: <CreateWebsite />,
+            element: <RoleBasedComponent />,
           },
         ],
       },
@@ -48,11 +62,11 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       {
-        path: "",  // No need to repeat "/w/" here
+        path: "",
         element: <SellerWebsite />,
       },
       {
-        path: "login",  // No need to repeat "/w/" here
+        path: "login",
         element: <Login />,
       },
     ],

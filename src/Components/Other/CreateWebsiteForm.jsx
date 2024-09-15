@@ -5,17 +5,21 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import Title from "../Common/Title";
+import  { FormContext } from "../../Context/CreateWebFormContext";
 
 const CreateWebsiteForm = () => {
+  const {setWebInfo} = useContext(FormContext)
+
   const { register, handleSubmit, reset } = useForm();
   const { user } = useContext(AuthContext);
   const axiosPublic = useAxiosPublic();
   const location = useLocation();
   const navigate = useNavigate();
+
   const onSubmit = async (data) => {
     if (user) {
       console.log(data);
-      const imageFiles = { image: data.brandLogo[0] };
+      const imageFiles = { image: data.logo[0] };
       //img upload to imgbb and get an url
       const res = await axiosPublic.post(
         "https://api.imgbb.com/1/upload?key=e9b3cb55e11b48d4142caf366d77cea6",
@@ -44,30 +48,44 @@ const CreateWebsiteForm = () => {
       console.log(res.data);
       if (res.data?.success && res2.data?.success) {
         const newWebsite = {
-          brand_name: data.brandName,
-          brand_logo: [res.data.data.display_url],
-          brand_banner: [res2.data.data.display_url],
-          nav_color: data.navColor,
-          nav_layout: data.navLayout,
-          nav_font_color: data.navFontColor,
-          nav_font_size: data.navFontSize,
-          bg_color: data.bgColor,
-          sec_title_color: data.secTitleColor,
-          sec_title_font_size: data.secTitleFontSize,
-          location: data.location,
-          mobile: data.mobile,
-          hotline: data.hotline,
-          infoEmail: data.infoEmail,
-          supportEmail: data.supportEmail,
-          facebookUrl: data.facebookUrl,
-          instagramUrl: data.instagramUrl,
-          linkedinUrl: data.linkedinUrl,
-          twitterUrl: data.twitterUrl,
-          youtubeUrl: data.youtubeUrl,
+          shopName: data.shopName,
+          logo: res.data.data.display_url,
+          title: {
+            color: data.color,
+            textSize: data.textSize,
+          },
+          body: {
+            backgroundColor: data.backgroundColor,
+          },
+          navbar: {
+            linksPosition: data.linksPosition,
+            backgroundColor: data.navBackground,
+            color: data.navTextColor,
+          },
+          banner: {
+            image: res2.data.data.display_url,
+            title: data.bannerTitle,
+            description: data.description,
+            textPosition: data.textPosition,
+          },
+          contactInfo: {
+            location: data.location,
+            mobile: data.mobile,
+            hotline: data.hotline,
+            emailInfo: data.infoEmail,
+            emailSupport: data.supportEmail,
+          },
+          socialLinks: {
+            instagram: data.instagram,
+            facebook: data.facebook,
+            linkedin: data.linkedin,
+            twitter: data.twitter,
+            youtube: data.youtube,
+          },
         };
 
-        console.log(newWebsite);
-        reset();
+        setWebInfo(newWebsite);
+      
       }
     } else {
       navigate("/login", { state: location.pathname });
@@ -79,33 +97,126 @@ const CreateWebsiteForm = () => {
       <form onSubmit={handleSubmit(onSubmit)} className=" p-5 rounded-lg ">
         {/* Shops Information */}
         <h1 className="text-3xl mt-10">Shops Information:</h1>
-
-        <div className="grid grid-cols-3 gap-4 border-b-2 border-dashed pb-10 mb-10">
-          {/*Brand Name */}
+        <div className="grid grid-cols-2 gap-4 border-b-2 border-dashed pb-10 mb-10">
+          {/*shop Name */}
           <div className="form-control w-full my-6">
             <label className="label">
-              <span className="label-text text-lg">Brand Name</span>
+              <span className="label-text text-lg">Shop Name</span>
             </label>
             <input
               type="text"
               placeholder="Enter a Brand Name"
-              {...register("brandName", { required: true })}
+              {...register("shopName", { required: true })}
               className="input input-bordered "
             />
           </div>
-          {/* Brand Logo */}
+          {/* shop Logo */}
           <div className="form-control w-full my-6">
             <label className="label">
-              <span className="label-text text-lg">Brand Logo</span>
+              <span className="label-text text-lg">Shop Logo</span>
             </label>
 
             <input
-              {...register("brandLogo", { required: true })}
+              {...register("logo", { required: true })}
               type="file"
               className="file-input  input-bordered"
             />
           </div>
-          {/* Banner picture */}
+        </div>
+
+        {/* Page Body */}
+        <h1 className="text-3xl">Page Body:</h1>
+        <div className=" border-b-2 grid grid-cols-3 gap-4 border-dashed pb-10 mb-10">
+          {/* Background Color */}
+          <div className="form-control w-full my-6">
+            <label className="label">
+              <span className="label-text text-xl">Background Color</span>
+            </label>
+            <input
+              {...register("backgroundColor", { required: true })}
+              type="color"
+              className="file-input  input-bordered w-full"
+            />
+          </div>
+          <div className="form-control w-full my-6">
+            <label className="label">
+              <span className="label-text text-lg">
+                Section title size (px)
+              </span>
+            </label>
+            <input
+              {...register("textSize", { required: true })} // Capture the text size
+              type="number" // Numeric input for text size
+              placeholder="Enter text size in pixels"
+              className="input input-bordered w-full"
+              min="8" // Minimum text size (optional)
+              max="72" // Maximum text size (optional)
+            />
+          </div>
+          {/* title color */}
+          <div className="form-control w-full my-6">
+            <label className="label">
+              <span className="label-text text-lg">Section title color</span>
+            </label>
+            <input
+              {...register("color", { required: true })}
+              type="color"
+              className="file-input  input-bordered w-full"
+            />
+          </div>
+        </div>
+
+        {/* navbar section */}
+        <h1 className="text-3xl">Navbar Setup:</h1>
+        <div className="grid grid-cols-3 gap-4 border-b-2 border-dashed pb-10 mb-10">
+          {/* Navbar Color */}
+          <div className="form-control w-full my-6">
+            <label className="label">
+              <span className="label-text text-xl">Navbar Color</span>
+            </label>
+            <input
+              {...register("navBackground", { required: true })}
+              type="color"
+              className="file-input  input-bordered w-full"
+            />
+          </div>
+          {/* Navbar Layout */}
+          <div className="form-control w-full my-6">
+            <label className="label">
+              <span className="label-text text-xl">Navbar link position</span>
+            </label>
+            <select
+              defaultValue="default"
+              {...register("linksPosition", { required: true })}
+              className="select select-bordered  "
+            >
+              <option disabled value="default">
+                Select a Layout
+              </option>
+              <option value="default">center</option>
+              <option value="default">end</option>
+              {/* {
+                  guideList?.map((item, index) => <option key={index} value={item.name}>{item.name}</option>)
+              } */}
+            </select>
+          </div>
+          {/* Navbar font Color */}
+          <div className="form-control w-full my-6">
+            <label className="label">
+              <span className="label-text text-xl">Navbar Font Color</span>
+            </label>
+            <input
+              {...register("navTextColor", { required: true })}
+              type="color"
+              className="file-input  input-bordered w-full"
+            />
+          </div>
+        </div>
+
+        {/* banner section */}
+        <h1 className="text-3xl">Banner Setup:</h1>
+        {/* Banner picture */}
+        <div className="grid grid-cols-3 gap-4 border-b-2 border-dashed pb-10 mb-10">
           <div className="form-control w-full my-6">
             <label className="label">
               <span className="label-text text-lg">Banner picture</span>
@@ -117,156 +228,46 @@ const CreateWebsiteForm = () => {
               className="file-input  input-bordered"
             />
           </div>
-        </div>
-
-        {/* Navbar Setup: */}
-        <h1 className="text-3xl">Navbar Setup:</h1>
-        <div className="grid grid-cols-3 gap-4 border-b-2 border-dashed pb-10 mb-10">
-          {/* Navbar Color */}
+          {/* banner title */}
           <div className="form-control w-full my-6">
             <label className="label">
-              <span className="label-text text-xl">Navbar Color</span>
+              <span className="label-text text-lg">Banner title</span>
             </label>
-            <select
-              defaultValue="default"
-              {...register("navColor", { required: true })}
-              className="select select-bordered  "
-            >
-              <option disabled value="default">
-                Select a guide
-              </option>
-              <option value="default">Select a guide</option>
-              <option value="default">Select a guide</option>
-              {/* {
-                  guideList?.map((item, index) => <option key={index} value={item.name}>{item.name}</option>)
-              } */}
-            </select>
+            <input
+              type="text"
+              placeholder="Enter your banner title"
+              {...register("bannerTitle", { required: true })}
+              className="input input-bordered w-full "
+            />
           </div>
-          {/* Navbar Layout */}
+          {/* banner title position  */}
           <div className="form-control w-full my-6">
             <label className="label">
-              <span className="label-text text-xl">Navbar Layout</span>
+              <span className="label-text text-xl">Navbar link position</span>
             </label>
             <select
               defaultValue="default"
-              {...register("navLayout", { required: true })}
+              {...register("textPosition", { required: true })}
               className="select select-bordered  "
             >
               <option disabled value="default">
                 Select a Layout
               </option>
-              <option value="default">Select a guide</option>
-              <option value="default">Select a guide</option>
-              {/* {
-                  guideList?.map((item, index) => <option key={index} value={item.name}>{item.name}</option>)
-              } */}
+              <option value="default">center</option>
+              <option value="default">left</option>
             </select>
           </div>
-          {/* Navbar font Color */}
-          <div className="form-control w-full my-6">
+          {/* banner description  */}
+          <div className="form-control w-full  col-span-3">
             <label className="label">
-              <span className="label-text text-xl">Navbar Font Color</span>
+              <span className="label-text text-lg">Title </span>
             </label>
-            <select
-              defaultValue="default"
-              {...register("navFontColor", { required: true })}
-              className="select select-bordered "
-            >
-              <option disabled value="default">
-                Select Font Color
-              </option>
-              <option value="default">Select a guide</option>
-              <option value="default">Select a guide</option>
-              {/* {
-                  guideList?.map((item, index) => <option key={index} value={item.name}>{item.name}</option>)
-              } */}
-            </select>
-          </div>
-          {/* Navbar Font Size */}
-          <div className="form-control w-full my-6">
-            <label className="label">
-              <span className="label-text text-xl">Navbar Font Size</span>
-            </label>
-            <select
-              defaultValue="default"
-              {...register("navFontSize", { required: true })}
-              className="select select-bordered "
-            >
-              <option disabled value="default">
-                Select Font Size
-              </option>
-              <option value="default">Select a guide</option>
-              <option value="default">Select a guide</option>
-              {/* {
-                  guideList?.map((item, index) => <option key={index} value={item.name}>{item.name}</option>)
-              } */}
-            </select>
-          </div>
-        </div>
-        {/* Page Body */}
-        <h1 className="text-3xl">Page Body:</h1>
-        <div className="grid grid-cols-3 gap-4 border-b-2 border-dashed pb-10 mb-10">
-          {/* Background Color */}
-          <div className="form-control w-full my-6">
-            <label className="label">
-              <span className="label-text text-xl">Background Color</span>
-            </label>
-            <select
-              defaultValue="default"
-              {...register("bgColor", { required: true })}
-              className="select select-bordered  "
-            >
-              <option disabled value="default">
-                Select a color
-              </option>
-              <option value="default">Select a guide</option>
-              <option value="default">Select a guide</option>
-              {/* {
-                  guideList?.map((item, index) => <option key={index} value={item.name}>{item.name}</option>)
-              } */}
-            </select>
-          </div>
-          {/* Sections Title Color */}
-          <div className="form-control w-full my-6">
-            <label className="label">
-              <span className="label-text text-xl">Sections Title Color</span>
-            </label>
-            <select
-              defaultValue="default"
-              {...register("secTitleColor", { required: true })}
-              className="select select-bordered  "
-            >
-              <option disabled value="default">
-                Select a color
-              </option>
-              <option value="default">Select a guide</option>
-              <option value="default">Select a guide</option>
-              {/* {
-                  guideList?.map((item, index) => <option key={index} value={item.name}>{item.name}</option>)
-              } */}
-            </select>
-          </div>
-          {/* Sections Title Font Size*/}
-          <div className="form-control w-full my-6">
-            <label className="label">
-              <span className="label-text text-xl">
-                Sections Title Font Size
-              </span>
-            </label>
-            <select
-              defaultValue="default"
-              {...register("secTitleFontSize", { required: true })}
-              className="select select-bordered  "
-            >
-              <option disabled value="default">
-                Select a Font Size
-              </option>
-              <option value="default">Select a guide</option>
-              <option value="default">Select a guide</option>
-              {/* {
-                  guideList?.map((item, index) => <option key={index} value={item.name}>{item.name}</option>)
-              } */}
-            </select>
+            <textarea
+              {...register("description", { required: true })} // Keeping the same React Hook Form setup
+              placeholder="Enter a Brand Name"
+              className="textarea textarea-bordered" // Tailwind class for textarea styling
+              rows="4" // Optional: specify rows for height
+            ></textarea>
           </div>
         </div>
 
@@ -345,7 +346,7 @@ const CreateWebsiteForm = () => {
             <input
               type="url"
               placeholder="Enter Tripe Tile"
-              {...register("facebookUrl", { required: true })}
+              {...register("facebook", { required: true })}
               className="input input-bordered  "
             />
           </div>
@@ -357,7 +358,7 @@ const CreateWebsiteForm = () => {
             <input
               type="url"
               placeholder="Enter Tripe Tile"
-              {...register("instagramUrl", { required: true })}
+              {...register("instagram", { required: true })}
               className="input input-bordered  "
             />
           </div>
@@ -369,7 +370,7 @@ const CreateWebsiteForm = () => {
             <input
               type="url"
               placeholder="Enter Tripe Tile"
-              {...register("linkedinUrl", { required: true })}
+              {...register("linkedin", { required: true })}
               className="input input-bordered "
             />
           </div>
@@ -381,7 +382,7 @@ const CreateWebsiteForm = () => {
             <input
               type="url"
               placeholder="Enter Tripe Tile"
-              {...register("twitterUrl", { required: true })}
+              {...register("twitter", { required: true })}
               className="input input-bordered  "
             />
           </div>
@@ -393,7 +394,7 @@ const CreateWebsiteForm = () => {
             <input
               type="url"
               placeholder="Enter Tripe Tile"
-              {...register("youtubeUrl", { required: true })}
+              {...register("youtube", { required: true })}
               className="input input-bordered   "
             />
           </div>

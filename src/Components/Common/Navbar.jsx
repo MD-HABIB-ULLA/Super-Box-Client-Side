@@ -4,7 +4,7 @@ import { AuthContext } from "../../Provider/AuthProvider";
 import useRole from "../../hooks/useRole";
 
 const Navbar = () => {
-  const [isSeller, role] = useRole();
+  const {isSeller, role} = useRole();
   console.log(isSeller);
   const { user, logOut } = useContext(AuthContext);
   return (
