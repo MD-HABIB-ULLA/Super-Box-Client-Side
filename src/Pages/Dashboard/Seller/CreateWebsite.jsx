@@ -1,17 +1,42 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import CreateWebsiteForm from "../../../Components/Other/CreateWebsiteForm";
+import { FormContext } from "../../../Context/CreateWebFormContext";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
 
 const CreateWebsite = () => {
-  const [sellerData, setSellerData] = useState(null);
+  const { setSellerInfo, sellerInfo } = useContext(FormContext);
+  const axiosPublic = useAxiosPublic();
 
   const { register, handleSubmit } = useForm();
-  const onSubmit = (data) => {
-    setSellerData(data);
+  const onSubmit = async (data) => {
+    const image = { image: data.tradeLicense[0] };
+    //img upload to imgbb and get an url
+    console.log(image);
+    const tradeLicenseImage = await axiosPublic.post(
+      "https://api.imgbb.com/1/upload?key=e9b3cb55e11b48d4142caf366d77cea6",
+      image,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    const tradeLicense = tradeLicenseImage.data.data.display_url;
+    const sellerData = {
+      sellerCountry: data.sellerCountry,
+      nidNumber: data.nidNumber,
+      sellerAddress: data.sellerAddress,
+      whatsappNumber: data.whatsappNumber,
+      tradeLicense,
+    };
+    if (tradeLicenseImage.data?.success) {
+      setSellerInfo(sellerData);
+    }
   };
   return (
     <div>
-      {!sellerData ? (
+      {!sellerInfo ? (
         <div>
           <div className=" py-10">
             <h1 className="text-4xl text-center font-bold">
@@ -110,7 +135,7 @@ const CreateWebsite = () => {
           </form>
         </div>
       ) : (
-        <CreateWebsiteForm/>
+        <CreateWebsiteForm />
       )}
     </div>
   );

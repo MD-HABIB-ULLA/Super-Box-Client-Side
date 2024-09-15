@@ -7,7 +7,7 @@ const useRole = () => {
   const { user, loading } = useContext(AuthContext);
  
   const axiosPublic = useAxiosPublic();
-  const { data: role, isPending: isRoleLoading } = useQuery({
+  const { data: role, isPending: isRoleLoading, refetch } = useQuery({
     queryKey: [user?.email, "userRole"],
     enabled: !!user?.email,
     queryFn: async () => {
@@ -17,11 +17,11 @@ const useRole = () => {
       }
     },
   });
-  console.log(role);
+
   const isAdmin = role === "admin";
   const isSeller = role === "seller";
 
-  return [isAdmin, isSeller, isRoleLoading, role];
+  return {isAdmin, isSeller, isRoleLoading, role, refetch};
 };
 
 export default useRole;

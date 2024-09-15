@@ -8,7 +8,7 @@ import { NavLink, Outlet } from "react-router-dom";
 import useRole from "../../hooks/useRole";
 
 const DHome = () => {
-  const [isAdmin, isSeller] = useRole();
+  const {isAdmin, isSeller} = useRole();
   const sellerNavLinks = (
     <>
       <li>
