@@ -1,13 +1,12 @@
 import { Link, NavLink, useParams } from "react-router-dom";
 
 const Navbar = ({ linksPosition, backgroundColor, logo, shopName }) => {
-  console.log(backgroundColor);
   const { name } = useParams();
-  console.log(name);
   const list = (
     <>
       <NavLink
         to={`/w/${name}`}
+        end
         className={({ isActive }) =>
           `text-base font-bold px-6 py-2 w-full flex items-center hover:bg-gray-200 dark:hover:bg-gray-700 duration-500 hover:text-gray-700 dark:hover:text-gray-200 uppercase ${
             isActive
@@ -19,7 +18,6 @@ const Navbar = ({ linksPosition, backgroundColor, logo, shopName }) => {
         Home
       </NavLink>
 
-      {/* Dynamic NavLink for SellerWebsite route */}
       <NavLink
         to={`/w/${name}/products`}
         className={({ isActive }) =>
@@ -50,14 +48,13 @@ const Navbar = ({ linksPosition, backgroundColor, logo, shopName }) => {
   );
 
   return (
-    <nav
-      style={{ backgroundColor: `${backgroundColor}` }}
-      className={`h-16 `}
-    >
+    <nav style={{ backgroundColor: `${backgroundColor}` }} className={`h-16 `}>
       <div className="flex py-2 px-5 h-full">
         <div className=" h-full flex gap-2 items-center">
           <img src={logo} className="h-full" alt="" />
-          <h1 className="text-2xl text-white font-bold  capitalize">{shopName}</h1>
+          <h1 className="text-2xl text-white font-bold  capitalize">
+            {shopName}
+          </h1>
         </div>
         <div className={`flex-1 flex  justify-${linksPosition}`}>
           <ul className="flex gap-2 h-full items-center "> {list}</ul>
