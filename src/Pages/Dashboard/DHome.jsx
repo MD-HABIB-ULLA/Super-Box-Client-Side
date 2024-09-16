@@ -8,42 +8,62 @@ import { NavLink, Outlet } from "react-router-dom";
 import useRole from "../../hooks/useRole";
 
 const DHome = () => {
-  const {isAdmin, isSeller} = useRole();
+  const { isAdmin, isSeller } = useRole();
   const sellerNavLinks = (
     <>
       <li>
         <NavLink
           to="/dashboard"
-          className={`p-2 text-lg rounded-sm`}
+          className={({ isActive }) =>
+            `p-2 text-lg rounded-sm ${isActive ? " bg-gray-600/30" : ""}`
+          }
+          end // Makes sure this matches exactly for /dashboard
         >
           <AiOutlineProduct className="text-3xl" />
-          Edit your site 
+          Edit your site
         </NavLink>
       </li>
       <li>
         <NavLink
-          to="/dashboard/product-management"
-          className={`p-2 text-lg rounded-sm`}
+          to="/dashboard/productManagement"
+          className={({ isActive }) =>
+            `p-2 text-lg rounded-sm ${isActive ? " bg-gray-600/30" : ""}`
+          }
         >
           <AiOutlineProduct className="text-3xl" />
           Product Management
         </NavLink>
       </li>
       <li>
-        <NavLink to="/dashboard/blogs" className={`p-2 text-lg rounded-sm`}>
+        <NavLink
+          to="/dashboard/blogs"
+          className={({ isActive }) =>
+            `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
+          }
+        >
           <TbLogs className="text-3xl" />
           Blogs
         </NavLink>
       </li>
       <li>
-        <NavLink to="/dashboard/pos" className={`p-2 text-lg rounded-sm`}>
+        <NavLink
+          to="/dashboard/pos"
+          className={({ isActive }) =>
+            `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
+          }
+        >
           <GrAtm className="text-3xl" />
           POS
         </NavLink>
       </li>
 
       <li>
-        <NavLink to="/dashboard/chat-us" className={`p-2 text-lg rounded-sm`}>
+        <NavLink
+          to="/dashboard/chat-us"
+          className={({ isActive }) =>
+            `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
+          }
+        >
           <HiChatBubbleLeftRight className="text-3xl" />
           Chat with us
         </NavLink>
@@ -51,7 +71,9 @@ const DHome = () => {
       <li>
         <NavLink
           to="/dashboard/business-revenue"
-          className={`p-2 text-lg rounded-sm`}
+          className={({ isActive }) =>
+            `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
+          }
         >
           <GrResources className="text-3xl" />
           Business Revenue
@@ -60,7 +82,9 @@ const DHome = () => {
       <li>
         <NavLink
           to="/dashboard/bm-resources"
-          className={`p-2 text-lg rounded-sm`}
+          className={({ isActive }) =>
+            `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
+          }
         >
           <GrResources className="text-3xl" />
           Business and Marketing Resources
@@ -68,6 +92,7 @@ const DHome = () => {
       </li>
     </>
   );
+
   const userNavLinks = (
     <li>
       <NavLink to="/" className={`p-2 text-lg rounded-sm`}>

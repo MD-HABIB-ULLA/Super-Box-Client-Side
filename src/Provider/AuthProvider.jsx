@@ -17,8 +17,8 @@ export const AuthContext = createContext(null);
 
 // eslint-disable-next-line react/prop-types
 const AuthProvider = ({ children }) => {
-  const [customerInfo, setCustomerInfo] = useState(null)
-  const [isCustomer , setIsCustomer] = useState(false)
+  const [customerInfo, setCustomerInfo] = useState(null);
+
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(true);
   const googleProvider = new GoogleAuthProvider();
@@ -45,15 +45,13 @@ const AuthProvider = ({ children }) => {
 
   // Log out
   const logOut = () => {
-   
     setLoading(true);
     return signOut(auth);
   };
 
-
   const updateUserProfile = async (displayName, photoURL) => {
     try {
-      setLoading(true); 
+      setLoading(true);
       const profileData = {};
       if (displayName) {
         profileData.displayName = displayName;
@@ -67,11 +65,16 @@ const AuthProvider = ({ children }) => {
       console.error("Error updating user profile:", error);
     }
   };
-  
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       console.log(currentUser);
+      const storedIsCustomer = localStorage.getItem("isCustomer");
+      const isCustomer = JSON.parse(storedIsCustomer);
+      if (isCustomer) {
+        setCustomerInfo(currentUser);
+      }
     });
     return () => {
       unsubscribe();
@@ -79,7 +82,6 @@ const AuthProvider = ({ children }) => {
   });
 
   // User updating
-
 
   const authInfo = {
     googleLogin,
@@ -89,6 +91,8 @@ const AuthProvider = ({ children }) => {
     logOut,
     updateUserProfile,
     loading,
+
+    customerInfo,
   };
 
   return (

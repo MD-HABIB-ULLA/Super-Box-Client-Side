@@ -1,6 +1,10 @@
+import { useContext } from "react";
 import { Link, NavLink, useParams } from "react-router-dom";
+import { AuthContext } from "../../Provider/AuthProvider";
 
 const Navbar = ({ linksPosition, backgroundColor, logo, shopName }) => {
+  const { customerInfo, logOut } = useContext(AuthContext);
+  console.log(customerInfo?.photoURL);
   const { name } = useParams();
   const list = (
     <>
@@ -63,12 +67,41 @@ const Navbar = ({ linksPosition, backgroundColor, logo, shopName }) => {
           className=" h-full flex items-center
          "
         >
-          <Link className="h-full" to={`/w/${name}/login`}>
-            {" "}
-            <button className=" px-3 py-2 bg-black text-sm font-bold text-white rounded-full">
-              Login
-            </button>
-          </Link>
+          {customerInfo?.email ? (
+            <div className=" flex flex-row justify-center items-center gap-5">
+              <div className="dropdown dropdown-bottom dropdown-end">
+                <label tabIndex={0} className="avatar w-16">
+                  <div className="hover:cursor-pointer w-16  p-2">
+                    <img className="h-full rounded-full bg-gray-700 ring-black ring-1" src={customerInfo?.photoURL} alt="User Avatar" />
+                  </div>
+                </label>
+                <ul
+                  tabIndex={0}
+                  className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-fit"
+                >
+                  <li>
+                    <p className="text-center">{customerInfo?.displayName}</p>
+                  </li>
+                  <li>
+                    <p>{customerInfo?.email}</p>
+                  </li>
+                  <li>
+                    <Link to={"/dashboard/welcome-page"}>Dashboard</Link>
+                  </li>
+                  <li>
+                    <button onClick={logOut}>logOut</button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          ) : (
+            <Link
+              to={`/w/${name}/login`}
+              className=" text-white text-sm bg-black rounded-full px-3 py-2  font-semibold"
+            >
+              Log in
+            </Link>
+          )}
         </div>
       </div>
     </nav>

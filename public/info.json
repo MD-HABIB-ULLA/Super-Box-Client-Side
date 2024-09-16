@@ -1,0 +1,129 @@
+[
+    {
+      "name": "Mobility Training",
+      "title": "Dynamic Mobility Training",
+      "description": "A class aimed at improving joint mobility, flexibility, and range of motion.",
+      "image": "https://i.pinimg.com/564x/00/b2/eb/00b2eb573846f5cd533bd5589cfc09e4.jpg",
+      "bookings": 57
+    },
+    {
+      "name": "Yoga",
+      "title": "Relaxing Yoga Class",
+      "description": "A class focusing on flexibility and mindfulness through various yoga poses.",
+      "image": "https://i.pinimg.com/564x/f6/18/57/f61857e0095e44cd1fd8f079717d3c28.jpg",
+      "bookings": 57
+    },
+    {
+      "name": "Balance & Stability Training",
+      "title": "Comprehensive Balance and Stability Training",
+      "description": "A class focused on improving balance and stability through targeted exercises.",
+      "image": "https://i.pinimg.com/564x/0c/a1/35/0ca1350a973d473e8d3cf04b14834aa8.jpg",
+      "bookings": 50
+    },
+    {
+      "name": "TRX",
+      "title": "Suspension Training with TRX",
+      "description": "A class utilizing TRX suspension trainers to perform a variety of exercises.",
+      "image": "https://i.pinimg.com/564x/df/8b/ca/df8bcadb7e5483109a5e9256489d6fb3.jpg",
+      "bookings": 65
+    },
+    {
+      "name": "Meditation",
+      "title": "Guided Meditation Session",
+      "description": "A class focused on relaxation and mindfulness through guided meditation.",
+      "image": "https://i.pinimg.com/564x/0f/91/32/0f913255ee76520feb8d939eeb814278.jpg",
+      "bookings": 41
+    },
+    {
+      "name": "Surgery Recovery",
+      "title": "Post-Surgery Recovery",
+      "description": "A class designed to aid recovery after surgery through gentle exercises.",
+      "image": "https://i.pinimg.com/564x/a1/eb/fd/a1ebfdd41bd4a14f3357bdea53a8c3d7.jpg",
+      "bookings": 35
+    },
+    {
+      "name": "Postural Correction",
+      "title": "Effective Postural Correction",
+      "description": "A class aimed at improving posture through exercises and techniques.",
+      "image": "https://i.pinimg.com/564x/fb/a2/6c/fba26c9020d49c4659292d8f76621aaa.jpg",
+      "bookings": 52
+    },
+    {
+      "name": "Rehabilitation",
+      "title": "Comprehensive Rehabilitation",
+      "description": "A class designed to aid in the recovery and rehabilitation process through targeted exercises.",
+      "image": "https://i.pinimg.com/736x/ab/ea/64/abea6441c6ec77907c9514508a9cda86.jpg",
+      "bookings": 40
+    },
+    {
+      "name": "Weight Loss",
+      "title": "Effective Weight Loss Training",
+      "description": "A class designed to help participants lose weight through a combination of exercises and dietary tips.",
+      "image": "https://i.pinimg.com/736x/38/d6/a4/38d6a452288122974f3b2b910e6101b9.jpg",
+      "bookings": 75
+    },
+    {
+      "name": "Cardio",
+      "title": "High-Energy Cardio Workout",
+      "description": "A class designed to increase heart rate and improve cardiovascular endurance.",
+      "image": "https://i.pinimg.com/564x/79/23/a0/7923a02a292883a741bfa115374bacff.jpg",
+      "bookings": 91
+    },
+    {
+      "name": "Barre",
+      "title": "Energizing Barre Workout",
+      "description": "A class that combines ballet-inspired movements with elements of Pilates and strength training.",
+      "image": "https://i.pinimg.com/564x/85/fa/9d/85fa9d01451c90fb7565bb0fc547b3f7.jpg",
+      "bookings": 65
+    },
+    {
+      "name": "Myofascial Release",
+      "title": "Myofascial Release Therapy",
+      "description": "A class focusing on self-myofascial release techniques to alleviate muscle tension and improve recovery.",
+      "image": "https://i.pinimg.com/564x/47/63/3c/47633c619b57b1526ecf12f73a9af324.jpg",
+      "bookings": 45
+    },
+    {
+      "name": "Pilates",
+      "title": "Core-Strengthening Pilates",
+      "description": "A class that focuses on strengthening the core muscles, improving flexibility, and enhancing overall body balance.",
+      "image": "https://i.pinimg.com/564x/ca/3c/51/ca3c519f83fa12d53e458122b0d14fca.jpg",
+      "bookings": 74
+    },
+    {
+      "name": "Plyometrics",
+      "title": "Explosive Plyometric Training",
+      "description": "A class that incorporates explosive, high-impact exercises to improve strength and agility.",
+      "image": "https://i.pinimg.com/736x/93/3b/99/933b99e7e7c519f5674cff305ec5681b.jpg",
+      "bookings": 55
+    },
+    {
+      "name": "Sports Specific Training",
+      "title": "Tailored Sports Specific Training",
+      "description": "A class designed to enhance performance in specific sports through targeted exercises and techniques.",
+      "image": "https://i.pinimg.com/736x/11/26/80/112680a8be68d08b47e4c11ea5da346a.jpg",
+      "bookings": 75
+    },
+    {
+      "name": "CrossFit",
+      "title": "Intense CrossFit Training",
+      "description": "A high-intensity workout class that combines elements of various sports disciplines to improve strength, endurance, and overall fitness.",
+      "image": "https://i.pinimg.com/564x/d2/88/6c/d2886cb2866af5f21c3e692e1d7ad279.jpg",
+      "bookings": 121
+    },
+    {
+      "name": "Nutrition",
+      "title": "Nutrition Essentials",
+      "description": "A class covering essential principles of nutrition, including meal planning, macronutrient distribution, and healthy eating habits.",
+      "image": "https://i.pinimg.com/564x/8e/b7/dc/8eb7dcc62d43dc897822b1fab6be83cf.jpg",
+      "bookings": 61
+    },
+    {
+      "name": "Stretching",
+      "title": "Comprehensive Stretching Class",
+      "description": "A class focused on improving flexibility and range of motion through a variety of stretching techniques.",
+      "image": "https://i.pinimg.com/564x/ff/28/61/ff286170a3e883518e4e763d36e78ae1.jpg",
+      "bookings": 60
+    }
+  ]
+  

@@ -14,6 +14,8 @@ import useRole from "../../hooks/useRole";
 import EditWebsite from "../../Pages/Dashboard/Seller/EditWebsite";
 import Products from "../../Pages/SellerWebsite/Products/Products";
 import WebDataDisProvider from "../../Context/WebDataDisContext";
+import LoginCus from "../../Pages/SellerWebsite/Auth/Login";
+import ProductManagement from "../../Pages/Dashboard/Seller/ProductManagement";
 const RoleBasedComponent = () => {
   const { isAdmin, isSeller } = useRole();
 
@@ -48,6 +50,10 @@ const router = createBrowserRouter([
             path: "/dashboard",
             element: <RoleBasedComponent />,
           },
+          {
+            path: "/dashboard/productManagement",
+            element: <ProductManagement />,
+          },
         ],
       },
     ],
@@ -78,8 +84,8 @@ const router = createBrowserRouter([
       },
       {
         path: "login",
-        element: <Login />,
-      },
+        element: <LoginCus />,
+      },  
     ],
   },
 ]);
