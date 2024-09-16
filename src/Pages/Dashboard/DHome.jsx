@@ -13,6 +13,15 @@ const DHome = () => {
     <>
       <li>
         <NavLink
+          to="/dashboard"
+          className={`p-2 text-lg rounded-sm`}
+        >
+          <AiOutlineProduct className="text-3xl" />
+          Edit your site 
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
           to="/dashboard/product-management"
           className={`p-2 text-lg rounded-sm`}
         >

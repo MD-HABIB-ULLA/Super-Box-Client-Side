@@ -14,8 +14,8 @@ const CreateWebFormContext = ({ children }) => {
   const { user } = useContext(AuthContext);
 
   const webDataAndSellerData = {
-    email: user.email,
-    name: user.displayName,
+    email: user?.email,
+    name: user?.displayName,
     sellerInfo,
     webInfo,
   };
