@@ -1,15 +1,20 @@
 import { useContext } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const GoogleLoginBtn = () => {
+  const { name } = useParams();
+
   const { googleLogin, logOut } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
   const axiosPublic = useAxiosPublic();
   const handleGoogleLogin = () => {
+    localStorage.setItem("isCustomer", JSON.stringify(true));
+    const storedIsCustomer = localStorage.getItem("isCustomer");
+    const isCustomer = JSON.parse(storedIsCustomer);
     logOut();
     googleLogin()
       .then((res) => {
@@ -24,7 +29,7 @@ const GoogleLoginBtn = () => {
             .post("/users", userInfo)
             .then(() => {
               toast.success("Signin successful ");
-              navigate("/dashboard");
+              isCustomer ? navigate(`/w/${name}`) : navigate(`/dashboard`);
             })
             .catch((err) => console.log(err));
         }

@@ -50,7 +50,7 @@ const EditWebsite = () => {
   console.log(data);
   return (
     <div className="my-10">
-      <Title title1={"BY YOUR PREFERENCE"} title2={"CREATE SHOP"}></Title>
+      <Title title1={"BY YOUR PREFERENCE"} title2={"Edit your website "}></Title>
       <form onSubmit={handleSubmit(onSubmit)} className=" p-5 rounded-lg ">
         {/* Shops Information */}
         <h1 className="text-3xl mt-10">Shops Information:</h1>
