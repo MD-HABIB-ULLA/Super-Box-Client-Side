@@ -17,6 +17,9 @@ import WebDataDisProvider from "../../Context/WebDataDisContext";
 import LoginCus from "../../Pages/SellerWebsite/Auth/Login";
 import ProductManagement from "../../Pages/Dashboard/Seller/ProductManagement";
 import ProductDetails from "../../Pages/SellerWebsite/ProductDetails/ProductDetails";
+import SellerPanel from "../../Pages/Dashboard/Admin/SellerPanel/SellerPanel";
+import CustomerPanel from "../../Pages/Dashboard/Admin/CustomerPanel/CustomerPanel";
+import AllProducts from "../../Pages/Dashboard/Admin/AllProducts/AllProducts";
 const RoleBasedComponent = () => {
   const { isAdmin, isSeller } = useRole();
 
@@ -54,6 +57,18 @@ const router = createBrowserRouter([
           {
             path: "/dashboard/productManagement",
             element: <ProductManagement />,
+          },
+          {
+            path: "/dashboard/seller-panel",
+            element: <SellerPanel />,
+          },
+          {
+            path: "/dashboard/customer-panel",
+            element: <CustomerPanel />,
+          },
+          {
+            path: "/dashboard/all-products",
+            element: <AllProducts />,
           },
         ],
       },
