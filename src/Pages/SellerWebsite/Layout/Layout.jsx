@@ -6,8 +6,7 @@ import { WebDataDisContext } from "../../../Context/WebDataDisContext";
 const Layout = () => {
   const { webInfo } = useContext(WebDataDisContext);
   const { name } = useParams();
-  console.log(name);
-  console.log(webInfo);
+
 
   return (
     <>

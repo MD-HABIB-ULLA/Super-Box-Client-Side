@@ -16,6 +16,7 @@ import Products from "../../Pages/SellerWebsite/Products/Products";
 import WebDataDisProvider from "../../Context/WebDataDisContext";
 import LoginCus from "../../Pages/SellerWebsite/Auth/Login";
 import ProductManagement from "../../Pages/Dashboard/Seller/ProductManagement";
+import ProductDetails from "../../Pages/SellerWebsite/ProductDetails/ProductDetails";
 const RoleBasedComponent = () => {
   const { isAdmin, isSeller } = useRole();
 
@@ -79,13 +80,17 @@ const router = createBrowserRouter([
         element: <SellerWebsite />,
       },
       {
-        path: "products",
+        path: "products", // List of products
         element: <Products />,
+      },
+      {
+        path: "products/:id", // Single product details page
+        element: <ProductDetails />, // Your ProductDetails component here
       },
       {
         path: "login",
         element: <LoginCus />,
-      },  
+      },
     ],
   },
 ]);

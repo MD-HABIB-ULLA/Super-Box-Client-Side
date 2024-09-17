@@ -72,7 +72,7 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      console.log(currentUser);
+
       const storedIsCustomer = localStorage.getItem("isCustomer");
       const isCustomer = JSON.parse(storedIsCustomer);
       console.log(isCustomer)
