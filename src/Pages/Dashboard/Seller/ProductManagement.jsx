@@ -18,7 +18,7 @@ const ProductManagement = () => {
     queryFn: async () => {
       if (user?.email) {
         const res = await axiosPublic.get(`/products/${user?.email}`);
-        return res.data; // Assuming the products are in res.data.products
+        return res.data;
       }
     },
   });

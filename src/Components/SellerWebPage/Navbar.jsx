@@ -1,10 +1,9 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Link, NavLink, useParams } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
 
 const Navbar = ({ linksPosition, backgroundColor, logo, shopName }) => {
   const { customerInfo, logOut } = useContext(AuthContext);
-  console.log(customerInfo?.photoURL);
   const { name } = useParams();
   const list = (
     <>
@@ -72,7 +71,11 @@ const Navbar = ({ linksPosition, backgroundColor, logo, shopName }) => {
               <div className="dropdown dropdown-bottom dropdown-end">
                 <label tabIndex={0} className="avatar w-16">
                   <div className="hover:cursor-pointer w-16  p-2">
-                    <img className="h-full rounded-full bg-gray-700 ring-black ring-1" src={customerInfo?.photoURL} alt="User Avatar" />
+                    <img
+                      className="h-full rounded-full bg-gray-700 ring-black ring-1"
+                      src={customerInfo?.photoURL}
+                      alt="User Avatar"
+                    />
                   </div>
                 </label>
                 <ul
@@ -89,7 +92,14 @@ const Navbar = ({ linksPosition, backgroundColor, logo, shopName }) => {
                     <Link to={"/dashboard/welcome-page"}>Dashboard</Link>
                   </li>
                   <li>
-                    <button onClick={logOut}>logOut</button>
+                    <button
+                      onClick={() => {
+                        window.location.reload();
+                        localStorage.removeItem("isCustomer");
+                      }}
+                    >
+                      logOut
+                    </button>
                   </li>
                 </ul>
               </div>

@@ -46,6 +46,9 @@ const AuthProvider = ({ children }) => {
   // Log out
   const logOut = () => {
     setLoading(true);
+    if(localStorage.getItem("isCustomer")){
+      localStorage.removeItem("isCustomer");
+    }
     return signOut(auth);
   };
 
@@ -72,6 +75,7 @@ const AuthProvider = ({ children }) => {
       console.log(currentUser);
       const storedIsCustomer = localStorage.getItem("isCustomer");
       const isCustomer = JSON.parse(storedIsCustomer);
+      console.log(isCustomer)
       if (isCustomer) {
         setCustomerInfo(currentUser);
       }
