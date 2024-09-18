@@ -7,9 +7,9 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
-
+import auth from "../Firebase/firebase.config";
 import { createContext, useEffect, useState } from "react";
-import { auth } from "../Firebase/firebase.config";
+
 
 // import useAxiosPublic from "../Hooks/useAxiosPublic";
 
