@@ -5,7 +5,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import CheckOutForm from "../ChackOutForm/CheckOutForm";
 const stripePromise = loadStripe(
-  "pk_test_51PLSF52NHkygt9EvW5PNK63NKBr6kkBTgkG4tl7TmdFHGow5zH3sSxzCDExJEkTgkxbDwxbPJcB8CZ2HQR8UE5C9005BIaeGcY"
+  import.meta.env.VITE_STRIPE_PUBLIC_KEY
 );
 const ProductDetails = () => {
   const { id } = useParams();
