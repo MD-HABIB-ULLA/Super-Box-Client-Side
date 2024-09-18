@@ -20,6 +20,7 @@ import ProductDetails from "../../Pages/SellerWebsite/ProductDetails/ProductDeta
 import SellerPanel from "../../Pages/Dashboard/Admin/SellerPanel/SellerPanel";
 import CustomerPanel from "../../Pages/Dashboard/Admin/CustomerPanel/CustomerPanel";
 import AllProducts from "../../Pages/Dashboard/Admin/AllProducts/AllProducts";
+import Transaction from "../../Pages/Dashboard/Transaction";
 const RoleBasedComponent = () => {
   const { isAdmin, isSeller } = useRole();
 
@@ -69,6 +70,10 @@ const router = createBrowserRouter([
           {
             path: "/dashboard/all-products",
             element: <AllProducts />,
+          },
+          {
+            path: "/dashboard/transaction",
+            element: <Transaction />,
           },
         ],
       },
