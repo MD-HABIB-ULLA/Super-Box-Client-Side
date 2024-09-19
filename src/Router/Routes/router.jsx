@@ -21,6 +21,7 @@ import SellerPanel from "../../Pages/Dashboard/Admin/SellerPanel/SellerPanel";
 import CustomerPanel from "../../Pages/Dashboard/Admin/CustomerPanel/CustomerPanel";
 import AllProducts from "../../Pages/Dashboard/Admin/AllProducts/AllProducts";
 import Transaction from "../../Pages/Dashboard/Transaction";
+import PrivateRouteForCustomer from "../Private/PrivateRouteForCustomer";
 const RoleBasedComponent = () => {
   const { isAdmin, isSeller } = useRole();
 
@@ -104,8 +105,13 @@ const router = createBrowserRouter([
         element: <Products />,
       },
       {
-        path: "products/:id", // Single product details page
-        element: <ProductDetails />, // Your ProductDetails component here
+        path: "products/:id", 
+        element: (
+          <PrivateRouteForCustomer>
+            {" "}
+            <ProductDetails />
+          </PrivateRouteForCustomer>
+        ), 
       },
       {
         path: "login",
