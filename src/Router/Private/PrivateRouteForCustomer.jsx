@@ -5,7 +5,6 @@ const PrivateRouteForCustomer = () => {
   const { customerInfo } = useContext(AuthContext);
   const location = useLocation();
   const {name} = useParams()
-
   if (customerInfo) {
     return children;
   } else {
