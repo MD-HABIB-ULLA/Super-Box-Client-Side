@@ -12,7 +12,7 @@ const WebDataDisProvider = ({ children }) => {
   const { name } = useParams();
   const [webData, setWebData] = useState(null);
   const axiosPublic = useAxiosPublic();
-
+console.log(name)
   // Fetching data using useQuery
   // Fetching website data using useQuery
   const {
@@ -40,7 +40,7 @@ const WebDataDisProvider = ({ children }) => {
     queryKey: [name, "products"],
     queryFn: async () => {
       if (name) {
-        const res = await axiosPublic.get(`/products/${name}`);
+        const res = await axiosPublic.get(`/w/products/${name}`);
         return res.data;
       }
       return null;
@@ -56,7 +56,7 @@ const WebDataDisProvider = ({ children }) => {
   }, [isWebsiteLoading, websiteData]); // Only re-run effect when isLoading or data changes
 
   const { _id, email, sellerInfo, webInfo } = webData || {};
-
+console.log(webInfo)
   return (
     <WebDataDisContext.Provider value={{ webInfo, isWebsiteLoading, products}}>
       {children}

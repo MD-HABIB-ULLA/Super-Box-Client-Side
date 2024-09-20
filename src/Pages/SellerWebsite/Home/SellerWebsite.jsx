@@ -15,6 +15,7 @@ const SellerWebsite = () => {
 
   console.log(name, id);
   const { webInfo, products } = useContext(WebDataDisContext);
+  console.log(products)
 
   return (
     <div className="min-h-screen">
@@ -25,7 +26,7 @@ const SellerWebsite = () => {
         description={webInfo?.banner.description}
       />
 
-      {products && (
+      {products?.length !== 0 && (
         <div className="px-10">
           <div className="py-10">
             <Title title1={"Choose your products"} title2={"Products"}></Title>
