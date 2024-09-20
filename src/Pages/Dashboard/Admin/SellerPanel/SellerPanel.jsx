@@ -38,7 +38,7 @@ const SellerPanel = () => {
                     website
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    Edit
+                    Details
                   </th>
                 </tr>
               </thead>
@@ -68,7 +68,7 @@ const SellerPanel = () => {
                         href="#"
                         className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                       >
-                        Edit
+                        <Link to={`/dashboard/seller-details/${data?.email}`}>Show</Link>
                       </a>
                     </td>
                   </tr>
