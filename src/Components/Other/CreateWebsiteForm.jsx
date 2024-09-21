@@ -5,11 +5,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import Title from "../Common/Title";
-import  { FormContext } from "../../Context/CreateWebFormContext";
+import { FormContext } from "../../Context/CreateWebFormContext";
 
 const CreateWebsiteForm = () => {
-  const {setWebInfo} = useContext(FormContext)
-
+  const { setWebInfo, loading } = useContext(FormContext);
+  console.log(loading);
   const { register, handleSubmit, reset } = useForm();
   const { user } = useContext(AuthContext);
   const axiosPublic = useAxiosPublic();
@@ -85,7 +85,6 @@ const CreateWebsiteForm = () => {
         };
 
         setWebInfo(newWebsite);
-      
       }
     } else {
       navigate("/login", { state: location.pathname });
@@ -403,7 +402,7 @@ const CreateWebsiteForm = () => {
         {/* Submit Button */}
         <div className="flex items-center justify-center">
           <button className="btn btn-outline w-full text-lg ">
-            Create Website
+            {loading ? "loading..." : "Create Website"}
           </button>
         </div>
       </form>

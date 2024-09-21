@@ -9,7 +9,6 @@ import CreateWebsite from "../../Pages/Dashboard/Seller/CreateWebsite";
 import PrivateRoute from "../Private/PrivateRoute";
 import Layout from "../../Pages/SellerWebsite/Layout/Layout";
 import SellerWebsite from "../../Pages/SellerWebsite/Home/SellerWebsite";
-import CreateWebFormContext from "../../Context/CreateWebFormContext";
 import useRole from "../../hooks/useRole";
 import EditWebsite from "../../Pages/Dashboard/Seller/EditWebsite";
 import Products from "../../Pages/SellerWebsite/Products/Products";
@@ -23,6 +22,7 @@ import AllProducts from "../../Pages/Dashboard/Admin/AllProducts/AllProducts";
 import Transaction from "../../Pages/Dashboard/Transaction";
 import PrivateRouteForCustomer from "../Private/PrivateRouteForCustomer";
 import SellerDetails from "../../Pages/Dashboard/Seller/SellerDetails";
+import SellerRequest from "../../Pages/Dashboard/Admin/SellerRequest/SellerRequest";
 const RoleBasedComponent = () => {
   const { isAdmin, isSeller } = useRole();
 
@@ -80,6 +80,10 @@ const router = createBrowserRouter([
           {
             path: "/dashboard/seller-details/:email",
             element: <SellerDetails />,
+          },
+          {
+            path: "/dashboard/seller-request",
+            element: <SellerRequest />,
           },
         ],
       },
