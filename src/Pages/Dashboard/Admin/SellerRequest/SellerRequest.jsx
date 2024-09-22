@@ -49,6 +49,18 @@ const SellerRequest = () => {
       mutateApproveSeller(id); // Trigger the mutation function
     }
   };
+  const handleDelete = (id) => {
+    console.log(id);
+    axiosPublic
+      .delete(`/deleteRequest/${id}`)
+      .then((res) => {
+        toast.success(" successfully deleted");
+        refetch()
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const {
     mutate: mutateApproveSeller,
@@ -62,9 +74,9 @@ const SellerRequest = () => {
     },
     onSuccess: (data) => {
       console.log("Seller approved successfully:", data);
-      toast.success("Seller approved successfully")
-      refetch()
-      
+      toast.success("Seller approved successfully");
+      refetch();
+
       // You can refetch here or handle other success operations
     },
     onError: (error) => {
@@ -112,7 +124,10 @@ const SellerRequest = () => {
                   </span>
                 </td>
                 <th className=" flex gap-2 items-center justify-center">
-                  <button className="btn btn-circle">
+                  <button
+                    onClick={() => handleDelete(info._id)}
+                    className="btn btn-circle"
+                  >
                     <ImCross className="text-red-600"></ImCross>
                   </button>
                   <button
