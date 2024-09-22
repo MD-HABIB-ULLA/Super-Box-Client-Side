@@ -4,20 +4,23 @@ import Title from "../../../Components/Common/Title";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../../../Provider/AuthProvider";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 const ProductManagement = () => {
   const { user } = useContext(AuthContext);
   const axiosPublic = useAxiosPublic();
+  console.log(user?.email);
   const {
     data: products,
     isPending: isRoleLoading,
     refetch,
   } = useQuery({
-    queryKey: [user?.email, "products"],
-    enabled: !!user?.email,
+    queryKey: [user.email, "products"],
+    enabled: !!user.email,
     queryFn: async () => {
-      if (user?.email) {
-        const res = await axiosPublic.get(`/products/${user?.email}`);
+      if (user.email) {
+        const res = await axiosPublic.get(`/sellerProducts/${user?.email}`);
         return res.data;
       }
     },
@@ -30,7 +33,34 @@ const ProductManagement = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
+    const imageFile = { image: data.image[0] };
+
+    axios
+      .post(
+        `https://api.imgbb.com/1/upload?key=e9b3cb55e11b48d4142caf366d77cea6`,
+        imageFile,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
+      .then((res) => {
+        const image = res.data.data.display_url;
+        const productData = { ...data, image, sellerEmail: user.email };
+        console.log(productData);
+
+        axiosPublic.post("/addProducts", productData).then((res) => {
+          toast.success("product added ");
+          refetch();
+        });
+      });
+  };
+  const handleDelete = (id) => {
+    axiosPublic.delete(`/deleteProduct/${id}`).then((res) => {
+      toast.success("successfully deleted");
+      refetch();
+    });
   };
 
   return (
@@ -113,11 +143,19 @@ const ProductManagement = () => {
                   <img src={product.image} alt={product.name} />
                 </figure>
                 <div className="card-body">
-                  <h2 className="card-title">{product.name}</h2>
-                  <p>{product.description}</p>
-                  <div className="card-actions justify-end">
+                  <div className="flex justify-between items-center">
+                    <h2 className="card-title">{product.name}</h2>
                     <span className="text-lg font-bold">${product.price}</span>
-                    <button className="btn btn-primary">Buy Now</button>
+                  </div>
+                  <p>{product.description}</p>
+                  <div className="card-actions justify-center">
+                    <button
+                      onClick={() => handleDelete(product._id)}
+                      className="btn btn-error text-white"
+                    >
+                      Delete
+                    </button>
+                    <button className="btn btn-primary">Edit</button>
                   </div>
                 </div>
               </div>

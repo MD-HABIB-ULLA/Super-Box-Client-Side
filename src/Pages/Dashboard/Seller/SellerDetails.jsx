@@ -46,12 +46,20 @@ const SellerDetails = () => {
       <div>
         {/* Banner */}
         <div className="  ">
-          <div className="py-[15%] relative  bg-center bg-cover bg-no-repeat  " style={{backgroundImage : `url(${webInfo.banner.image})`}}>
-            
+          <div
+            className="py-[15%] relative  bg-center bg-cover bg-no-repeat  "
+            style={{ backgroundImage: `url(${webInfo.banner.image})` }}
+          >
             <div className="max-w-fit mx-auto flex flex-col justify-center items-center gap-3 w-full z-10">
-              <h1 className="text-5xl text-white font-bold">{webInfo.shopName}</h1>
+              <h1 className="text-5xl text-white font-bold">
+                {webInfo.shopName}
+              </h1>
               <button className=" border-2 w-fit py-2 px-8 rounded-3xl text-lg font-semibold bg-blue-600 text-white hover:bg-blue-700">
-                <Link to={"/my-website "}>View Website</Link>
+                <Link
+                  to={`${window.location.origin}/w/${webInfo.shopName}`}
+                >
+                  View Website
+                </Link>
               </button>
             </div>
           </div>
