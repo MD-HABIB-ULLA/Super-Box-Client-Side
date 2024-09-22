@@ -125,7 +125,7 @@ const SignUp = () => {
                 />
               </div>
             </div>
-            <div className="flex flex-row gap-4">
+            <div className="flex flex-row gap-4 ">
               {/* your image */}
               <div className="form-control flex-1 ">
                 <label className="label">
