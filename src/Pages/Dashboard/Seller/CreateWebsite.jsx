@@ -1,11 +1,12 @@
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import CreateWebsiteForm from "../../../Components/Other/CreateWebsiteForm";
-import { FormContext } from "../../../Context/CreateWebFormContext";
+
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import { FormContext } from "../../../Context/createWebFormContext";
 
 const CreateWebsite = () => {
-  const { setSellerInfo, sellerInfo } = useContext(FormContext);
+  const { setSellerInfo, sellerInfo, sellerExist } = useContext(FormContext);
   const axiosPublic = useAxiosPublic();
 
   const { register, handleSubmit } = useForm();
@@ -34,6 +35,20 @@ const CreateWebsite = () => {
       setSellerInfo(sellerData);
     }
   };
+
+  if (sellerExist) {
+    return (
+      <>
+        <div className="min-h-screen flex items-center justify-center text-center">
+          <div className="flex flex-col gap-2">
+            <p className="text-5xl font-bold"> Your request is pending </p>
+            <p>please wait until admin approval</p>
+          </div>
+        </div>
+      </>
+    );
+  }
+
   return (
     <div>
       {!sellerInfo ? (
