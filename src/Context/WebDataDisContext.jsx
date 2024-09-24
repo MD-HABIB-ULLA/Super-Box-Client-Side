@@ -13,8 +13,6 @@ const WebDataDisProvider = ({ children }) => {
   const [webData, setWebData] = useState(null);
   const axiosPublic = useAxiosPublic();
 console.log(name)
-  // Fetching data using useQuery
-  // Fetching website data using useQuery
   const {
     data: websiteData,
     isLoading: isWebsiteLoading,
@@ -28,10 +26,9 @@ console.log(name)
       }
       return null;
     },
-    enabled: !!name, // Only run the query if the name exists
+    enabled: !!name, 
   });
 
-  // Fetching products data using useQuery
   const {
     data: products,
     isLoading: isProductsLoading,

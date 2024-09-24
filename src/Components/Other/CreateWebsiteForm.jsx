@@ -48,7 +48,7 @@ const CreateWebsiteForm = () => {
       console.log(res.data);
       if (res.data?.success && res2.data?.success) {
         const newWebsite = {
-          shopName: data.shopName,
+          shopName: data.shopName.trim(),
           logo: res.data.data.display_url,
           title: {
             color: data.color,
