@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -9,12 +9,34 @@ import { FormContext } from "../../Context/CreateWebFormContext";
 
 const CreateWebsiteForm = () => {
   const { setWebInfo, loading } = useContext(FormContext);
-  console.log(loading);
+ 
   const { register, handleSubmit, reset } = useForm();
   const { user } = useContext(AuthContext);
   const axiosPublic = useAxiosPublic();
   const location = useLocation();
   const navigate = useNavigate();
+  const [selectedBackgroundColor, setSelectedBackgroundColor] =
+    useState("#000000");
+  const [selectedSectionTitleColor, setSelectedSectionTitleColor] =
+    useState("#000000");
+  const [selectedNavColor, setSelectedNavColor] = useState("#000000");
+  const [selectedNavFontColor, setSelectedNavFontColor] = useState("#000000");
+
+  const handleBackgroundColorChange = (e) => {
+    setSelectedBackgroundColor(e.target.value);
+  };
+
+  const handleSectionTitleColorChange = (e) => {
+    setSelectedSectionTitleColor(e.target.value);
+  };
+
+  const handleNavColorChange = (e) => {
+    setSelectedNavColor(e.target.value);
+  };
+
+  const handleNavFontColorChange = (e) => {
+    setSelectedNavFontColor(e.target.value);
+  };
 
   const onSubmit = async (data) => {
     if (user) {
@@ -48,19 +70,19 @@ const CreateWebsiteForm = () => {
       console.log(res.data);
       if (res.data?.success && res2.data?.success) {
         const newWebsite = {
-          shopName: data.shopName,
+          shopName: data.shopName.trim(),
           logo: res.data.data.display_url,
           title: {
-            color: data.color,
+            color: selectedSectionTitleColor,
             textSize: data.textSize,
           },
           body: {
-            backgroundColor: data.backgroundColor,
+            backgroundColor: selectedBackgroundColor,
           },
           navbar: {
             linksPosition: data.linksPosition,
-            backgroundColor: data.navBackground,
-            color: data.navTextColor,
+            backgroundColor: selectedNavColor,
+            color:selectedNavFontColor,
           },
           banner: {
             image: res2.data.data.display_url,
@@ -83,7 +105,7 @@ const CreateWebsiteForm = () => {
             youtube: data.youtube,
           },
         };
-
+     
         setWebInfo(newWebsite);
       }
     } else {
@@ -131,11 +153,51 @@ const CreateWebsiteForm = () => {
             <label className="label">
               <span className="label-text text-xl">Background Color</span>
             </label>
-            <input
-              {...register("backgroundColor", { required: true })}
-              type="color"
-              className="file-input  input-bordered w-full"
-            />
+            <div className="flex items-center gap-4">
+         
+              <input
+                {...register("backgroundColor", { required: true })}
+                type="color"
+                id="backgroundColorPicker"
+                value={selectedBackgroundColor}
+                onChange={handleBackgroundColorChange}
+                className="absolute opacity-0 w-0 h-0"
+              />
+              <div
+                className="w-10 h-10 rounded-full cursor-pointer"
+                style={{ backgroundColor: selectedBackgroundColor }}
+                onClick={() =>
+                  document.getElementById("backgroundColorPicker").click()
+                }
+              ></div>
+              <span>{selectedBackgroundColor}</span>
+            </div>
+          </div>
+                {/* title color */}
+          <div className="form-control w-full my-6">
+            <label className="label">
+              <span className="label-text text-lg">Section title color</span>
+            </label>
+            <div className="flex items-center gap-4">
+          
+              <input
+                {...register("sectionTitleColor", { required: true })}
+                type="color"
+                id="sectionTitleColorPicker"
+                value={selectedSectionTitleColor}
+                onChange={handleSectionTitleColorChange}
+                className="absolute opacity-0 w-0 h-0"
+              />
+    
+              <div
+                className="w-10 h-10 rounded-full cursor-pointer"
+                style={{ backgroundColor: selectedSectionTitleColor }}
+                onClick={() =>
+                  document.getElementById("sectionTitleColorPicker").click()
+                }
+              ></div>
+              <span>{selectedSectionTitleColor}</span>
+            </div>
           </div>
           <div className="form-control w-full my-6">
             <label className="label">
@@ -144,25 +206,15 @@ const CreateWebsiteForm = () => {
               </span>
             </label>
             <input
-              {...register("textSize", { required: true })} // Capture the text size
-              type="number" // Numeric input for text size
+              {...register("textSize", { required: true })}
+              type="number"
               placeholder="Enter text size in pixels"
               className="input input-bordered w-full"
-              min="8" // Minimum text size (optional)
-              max="72" // Maximum text size (optional)
+              min="8" 
+              max="72" 
             />
           </div>
-          {/* title color */}
-          <div className="form-control w-full my-6">
-            <label className="label">
-              <span className="label-text text-lg">Section title color</span>
-            </label>
-            <input
-              {...register("color", { required: true })}
-              type="color"
-              className="file-input  input-bordered w-full"
-            />
-          </div>
+    
         </div>
 
         {/* navbar section */}
@@ -173,11 +225,52 @@ const CreateWebsiteForm = () => {
             <label className="label">
               <span className="label-text text-xl">Navbar Color</span>
             </label>
-            <input
-              {...register("navBackground", { required: true })}
-              type="color"
-              className="file-input  input-bordered w-full"
-            />
+            <div className="flex items-center gap-4">
+              {/* Hidden color input */}
+              <input
+                {...register("navBackground", { required: true })}
+                type="color"
+                id="navColorPicker"
+                value={selectedNavColor}
+                onChange={handleNavColorChange}
+                className="absolute opacity-0 w-0 h-0"
+              />
+              {/* Custom button to show the color */}
+              <div
+                className="w-10 h-10 rounded-full cursor-pointer"
+                style={{ backgroundColor: selectedNavColor }}
+                onClick={() =>
+                  document.getElementById("navColorPicker").click()
+                }
+              ></div>
+              <span>{selectedNavColor}</span>
+            </div>
+          </div>
+          {/* Navbar font Color */}
+          <div className="form-control w-full my-6">
+            <label className="label">
+              <span className="label-text text-xl">Navbar Font Color</span>
+            </label>
+            <div className="flex items-center gap-4">
+              {/* Hidden color input */}
+              <input
+                {...register("navFontColor", { required: true })}
+                type="color"
+                id="navFontColorPicker"
+                value={selectedNavFontColor}
+                onChange={handleNavFontColorChange}
+                className="absolute opacity-0 w-0 h-0"
+              />
+              {/* Custom button to show the color */}
+              <div
+                className="w-10 h-10 rounded-full cursor-pointer"
+                style={{ backgroundColor: selectedNavFontColor }}
+                onClick={() =>
+                  document.getElementById("navFontColorPicker").click()
+                }
+              ></div>
+              <span>{selectedNavFontColor}</span>
+            </div>
           </div>
           {/* Navbar Layout */}
           <div className="form-control w-full my-6">
@@ -192,23 +285,12 @@ const CreateWebsiteForm = () => {
               <option disabled value="default">
                 Select a Layout
               </option>
-              <option value="default">center</option>
-              <option value="default">end</option>
+              <option value="center">center</option>
+              <option value="left">left</option>
               {/* {
                   guideList?.map((item, index) => <option key={index} value={item.name}>{item.name}</option>)
               } */}
             </select>
-          </div>
-          {/* Navbar font Color */}
-          <div className="form-control w-full my-6">
-            <label className="label">
-              <span className="label-text text-xl">Navbar Font Color</span>
-            </label>
-            <input
-              {...register("navTextColor", { required: true })}
-              type="color"
-              className="file-input  input-bordered w-full"
-            />
           </div>
         </div>
 
@@ -242,7 +324,7 @@ const CreateWebsiteForm = () => {
           {/* banner title position  */}
           <div className="form-control w-full my-6">
             <label className="label">
-              <span className="label-text text-xl">Navbar link position</span>
+              <span className="label-text text-xl">Banner title position</span>
             </label>
             <select
               defaultValue="default"
@@ -252,20 +334,20 @@ const CreateWebsiteForm = () => {
               <option disabled value="default">
                 Select a Layout
               </option>
-              <option value="default">center</option>
-              <option value="default">left</option>
+              <option value="center">center</option>
+              <option value="left">left</option>
             </select>
           </div>
           {/* banner description  */}
           <div className="form-control w-full  col-span-3">
             <label className="label">
-              <span className="label-text text-lg">Title </span>
+              <span className="label-text text-lg">Banner description </span>
             </label>
             <textarea
               {...register("description", { required: true })} // Keeping the same React Hook Form setup
               placeholder="Enter a Brand Name"
               className="textarea textarea-bordered" // Tailwind class for textarea styling
-              rows="4" // Optional: specify rows for height
+              rows="2" // Optional: specify rows for height
             ></textarea>
           </div>
         </div>
@@ -345,7 +427,7 @@ const CreateWebsiteForm = () => {
             <input
               type="url"
               placeholder="Enter Tripe Tile"
-              {...register("facebook", { required: true })}
+              {...register("facebook")}
               className="input input-bordered  "
             />
           </div>
@@ -357,7 +439,7 @@ const CreateWebsiteForm = () => {
             <input
               type="url"
               placeholder="Enter Tripe Tile"
-              {...register("instagram", { required: true })}
+              {...register("instagram")}
               className="input input-bordered  "
             />
           </div>
@@ -369,7 +451,7 @@ const CreateWebsiteForm = () => {
             <input
               type="url"
               placeholder="Enter Tripe Tile"
-              {...register("linkedin", { required: true })}
+              {...register("linkedin")}
               className="input input-bordered "
             />
           </div>
@@ -381,7 +463,7 @@ const CreateWebsiteForm = () => {
             <input
               type="url"
               placeholder="Enter Tripe Tile"
-              {...register("twitter", { required: true })}
+              {...register("twitter")}
               className="input input-bordered  "
             />
           </div>
@@ -393,7 +475,7 @@ const CreateWebsiteForm = () => {
             <input
               type="url"
               placeholder="Enter Tripe Tile"
-              {...register("youtube", { required: true })}
+              {...register("youtube")}
               className="input input-bordered   "
             />
           </div>
