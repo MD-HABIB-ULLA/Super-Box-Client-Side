@@ -8,9 +8,11 @@ import axios from "axios";
 import { useContext } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
+import toast from "react-hot-toast";
 
 const SignUp = () => {
-  const { updateUserProfile, signUpWithEmailAndPassword } = useContext(AuthContext);
+  const { updateUserProfile, signUpWithEmailAndPassword } =
+    useContext(AuthContext);
   const { register, handleSubmit } = useForm();
   const location = useLocation();
   const navigate = useNavigate();
@@ -32,7 +34,7 @@ const SignUp = () => {
       )
       .then((res) => {
         const image = res.data.data.display_url;
-        console.log(res.data.success)
+        console.log(res.data.success);
         if (res.data.success) {
           signUpWithEmailAndPassword(email, password)
             .then((res) => {
@@ -47,8 +49,10 @@ const SignUp = () => {
                     .then((res) => {
                       if (res.data.insertedId) {
                         navigate("/dashboard");
+                        toast.success("Sing Up successful");
                       } else {
                         navigate("/dashboard");
+                        toast.success("Sing Up successful");
                       }
                     })
                     .catch((err) => console.log(err));
@@ -202,4 +206,3 @@ const SignUp = () => {
 };
 
 export default SignUp;
-

@@ -8,6 +8,7 @@ import { Toaster } from "react-hot-toast";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import CreateWebFormContext from "./Context/CreateWebFormContext";
 import WebDataDisProvider from "./Context/WebDataDisContext";
+
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")).render(
