@@ -71,7 +71,7 @@ console.log(name)
   const { _id, email, sellerInfo, webInfo } = webData || {};
 console.log(webInfo)
   return (
-    <WebDataDisContext.Provider value={{ webInfo, isWebsiteLoading, products,data}}>
+    <WebDataDisContext.Provider value={{ webInfo,refetch, isWebsiteLoading, products,data,isPending}}>
       {children}
     </WebDataDisContext.Provider>
   );

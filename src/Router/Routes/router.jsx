@@ -34,7 +34,6 @@ const RoleBasedComponent = () => {
   if (isSeller) {
     return (
       <WebDataDisProvider>
-
         <SellerDHome />
       </WebDataDisProvider>
     );
@@ -90,6 +89,14 @@ const router = createBrowserRouter([
           {
             path: "/dashboard/seller-request",
             element: <SellerRequest />,
+          },
+          {
+            path: "/dashboard/preview&edit",
+            element: (
+              <WebDataDisProvider>
+                <EditWebsite />
+              </WebDataDisProvider>
+            ),
           },
         ],
       },

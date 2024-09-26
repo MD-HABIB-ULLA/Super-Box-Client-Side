@@ -1,7 +1,53 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { WebDataDisContext } from "../../../Context/WebDataDisContext";
-
+import ApexCharts from "apexcharts";
 const SellerDHome = () => {
+  // chart
+  var options = {
+    series: [
+      {
+        name: "series1",
+        data: [31, 40, 28, 51, 42, 109, 100],
+      },
+      {
+        name: "series2",
+        data: [11, 32, 45, 32, 34, 52, 41],
+      },
+    ],
+    chart: {
+      height: 350,
+      type: "area",
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    stroke: {
+      curve: "smooth",
+    },
+    xaxis: {
+      type: "datetime",
+      categories: [
+        "2018-09-19T00:00:00.000Z",
+        "2018-09-19T01:30:00.000Z",
+        "2018-09-19T02:30:00.000Z",
+        "2018-09-19T03:30:00.000Z",
+        "2018-09-19T04:30:00.000Z",
+        "2018-09-19T05:30:00.000Z",
+        "2018-09-19T06:30:00.000Z",
+      ],
+    },
+    tooltip: {
+      x: {
+        format: "dd/MM/yy HH:mm",
+      },
+    },
+    colors: ['#593C90', '#ED7725']
+  };
+
+  useEffect(() => {
+    var chart = new ApexCharts(document.querySelector("#chart"), options);
+    chart.render();
+  }, []);
   const { data } = useContext(WebDataDisContext);
 
   const url = `${window.location.origin}/w/${data?.webInfo.shopName}`;
@@ -156,7 +202,7 @@ const SellerDHome = () => {
           </div>
           <div className="flex w-full items-center justify-start ">
             <div className="flex gap-2">
-            <a
+              <a
                 href="#"
                 className="relative inline-flex items-center justify-center h-14 w-14 text-lg text-white rounded-full bg-yellow-500"
               >
@@ -197,7 +243,7 @@ const SellerDHome = () => {
                 </span>
                 JL
               </a>
-          
+
               <a
                 href="#"
                 className="relative inline-flex items-center justify-center h-14 w-14 text-lg text-white rounded-full bg-yellow-500"
@@ -251,6 +297,16 @@ const SellerDHome = () => {
             </div>
           </div>
         </div>
+      </div>
+      <div className="text-center font-bold">
+        <p className="text-4xl py-10 mt-10 capitalize text-center">
+          {" "}
+          overall growth
+        </p>
+      </div>
+
+      <div className=" px-10 border  py-3 rounded-lg shadow-xl border-black/15 overflow-hidden">
+        <div className="w-full   " id="chart"></div>
       </div>
     </div>
   );
