@@ -23,6 +23,7 @@ import Transaction from "../../Pages/Dashboard/Transaction";
 import PrivateRouteForCustomer from "../Private/PrivateRouteForCustomer";
 import SellerDetails from "../../Pages/Dashboard/Seller/SellerDetails";
 import SellerRequest from "../../Pages/Dashboard/Admin/SellerRequest/SellerRequest";
+import SellerDHome from "../../Pages/Dashboard/Seller/SellerDHome";
 const RoleBasedComponent = () => {
   const { isAdmin, isSeller } = useRole();
 
@@ -31,7 +32,11 @@ const RoleBasedComponent = () => {
   }
 
   if (isSeller) {
-    return <EditWebsite />;
+    return (
+      <WebDataDisProvider>
+        <SellerDHome />
+      </WebDataDisProvider>
+    );
   }
 
   return <CreateWebsite />;
@@ -85,6 +90,14 @@ const router = createBrowserRouter([
             path: "/dashboard/seller-request",
             element: <SellerRequest />,
           },
+          {
+            path: "/dashboard/preview&edit",
+            element: (
+              <WebDataDisProvider>
+                <EditWebsite />
+              </WebDataDisProvider>
+            ),
+          },
         ],
       },
     ],
@@ -114,13 +127,13 @@ const router = createBrowserRouter([
         element: <Products />,
       },
       {
-        path: "products/:id", 
+        path: "products/:id",
         element: (
           <PrivateRouteForCustomer>
             {" "}
             <ProductDetails />
           </PrivateRouteForCustomer>
-        ), 
+        ),
       },
       {
         path: "login",

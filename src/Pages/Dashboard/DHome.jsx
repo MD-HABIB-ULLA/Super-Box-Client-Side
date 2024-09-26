@@ -1,5 +1,5 @@
 import { AiOutlineProduct } from "react-icons/ai";
-import { FaRegQuestionCircle } from "react-icons/fa";
+import { FaEdit, FaHome, FaRegQuestionCircle } from "react-icons/fa";
 import { GrAtm, GrResources } from "react-icons/gr";
 import { HiChatBubbleLeftRight, HiUserGroup } from "react-icons/hi2";
 import { MdAddBusiness } from "react-icons/md";
@@ -19,8 +19,20 @@ const DHome = () => {
           }
           end // Makes sure this matches exactly for /dashboard
         >
-          <AiOutlineProduct className="text-3xl" />
-          Edit your site
+          <FaHome className="text-3xl text-[#ED7725]" />
+          Home 
+        </NavLink>
+      </li>
+
+      <li>
+        <NavLink
+          to="/dashboard/preview&edit"
+          className={({ isActive }) =>
+            `p-2 text-lg rounded-sm ${isActive ? " bg-gray-600/30" : ""}`
+          }
+        >
+        <FaEdit className="text-3xl text-[#ED7725]" />
+        Website Preview and Edit
         </NavLink>
       </li>
       <li>
@@ -107,7 +119,7 @@ const DHome = () => {
         <details>
           <summary className="px-3 rounded-sm">
             <NavLink
-              to="/dashboard/welcome-page"
+   
               className={` text-lg flex flex-row justify-between items-center gap-2`}
             >
               <HiUserGroup className="text-3xl" />
