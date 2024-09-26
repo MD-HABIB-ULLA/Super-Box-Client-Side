@@ -298,6 +298,7 @@ const Navbar = () => {
                     </option>
                     <option value="center">Center</option>
                     <option value="left">Left</option>
+                    <option value="end">Right</option>
                   </select>
                 </div>
               </div>

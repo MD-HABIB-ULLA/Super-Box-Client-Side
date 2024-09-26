@@ -3,10 +3,11 @@ import Title from "../../../Components/Common/Title";
 import { WebDataDisContext } from "../../../Context/WebDataDisContext";
 import Banner from "./EditPageComponents/Banner";
 import Navbar from "./EditPageComponents/Navbar";
+import Contact from "./EditPageComponents/Contact";
 
 const EditWebsite = () => {
   const { data, isPending } = useContext(WebDataDisContext);
-  
+
   return (
     <div className="my-10">
       <Title
@@ -21,10 +22,13 @@ const EditWebsite = () => {
         </>
       ) : (
         <>
-          <div className="px-4 rounded-lg overflow-hidden mt-10">
-            {/* banner */}
-            <Navbar/>
-            <Banner/>
+          <div className="px-4">
+            <div className=" rounded-lg overflow-hidden mt-10 border-[1px] border-black">
+              {/* banner */}
+              <Navbar />
+              <Banner />
+              <Contact />
+            </div>
           </div>
         </>
       )}
