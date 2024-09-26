@@ -107,7 +107,7 @@ const DHome = () => {
         <details>
           <summary className="px-3 rounded-sm">
             <NavLink
-              to="/dashboard/welcome-page"
+   
               className={` text-lg flex flex-row justify-between items-center gap-2`}
             >
               <HiUserGroup className="text-3xl" />

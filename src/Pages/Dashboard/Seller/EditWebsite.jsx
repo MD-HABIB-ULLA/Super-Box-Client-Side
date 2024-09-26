@@ -6,33 +6,21 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import Title from "../../../Components/Common/Title";
 import toast from "react-hot-toast";
+import { WebDataDisContext } from "../../../Context/WebDataDisContext";
 
 const EditWebsite = () => {
-  // State to manage the URL
 
-  // Function to copy URL to clipboard
-
+ 
   const { register, handleSubmit, reset } = useForm();
+  const {data} = useContext(WebDataDisContext)
   const onSubmit = async (data) => {
     console.log(data);
   };
   const { user } = useContext(AuthContext);
-  const email = user.email;
-  console.log(email);
+
 
   const axiosPublic = useAxiosPublic();
-  const { data, isPending, refetch } = useQuery({
-    queryKey: [user?.email, "websiteData"],
-    enabled: !!user?.email, // This ensures the query runs only when user.email is defined
-    queryFn: async () => {
-      if (user?.email) {
-        const res = await axiosPublic.get(`/webData/${user?.email}`);
-        // Make sure you return the correct data
-        return res.data ? res.data : {}; // Return res.data or an empty object if it's undefined
-      }
-      return {}; // Return an empty object if user.email doesn't exist
-    },
-  });
+
 
   const url = `${window.location.origin}/w/${data?.webInfo.shopName}`;
   console.log(url);
