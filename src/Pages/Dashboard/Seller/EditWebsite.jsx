@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import Title from "../../../Components/Common/Title";
 import { WebDataDisContext } from "../../../Context/WebDataDisContext";
 import Banner from "./EditPageComponents/Banner";
+import Navbar from "./EditPageComponents/Navbar";
 
 const EditWebsite = () => {
   const { data, isPending } = useContext(WebDataDisContext);
@@ -20,9 +21,9 @@ const EditWebsite = () => {
         </>
       ) : (
         <>
-          <div className="px-4 rounded-lg overflow-hidden">
+          <div className="px-4 rounded-lg overflow-hidden mt-10">
             {/* banner */}
-
+            <Navbar/>
             <Banner/>
           </div>
         </>

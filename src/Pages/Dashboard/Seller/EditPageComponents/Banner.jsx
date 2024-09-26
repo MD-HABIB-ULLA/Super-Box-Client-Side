@@ -9,10 +9,10 @@ import toast from "react-hot-toast";
 
 const Banner = () => {
   const { register, handleSubmit, reset } = useForm();
-  const { data, isPending ,refetch} = useContext(WebDataDisContext);
+  const { data, isPending, refetch } = useContext(WebDataDisContext);
   const { user } = useContext(AuthContext);
   const axiosPublic = useAxiosPublic();
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const handleImageUpload = async (file) => {
     const formData = new FormData();
@@ -33,14 +33,14 @@ const Banner = () => {
     }
   };
   const onSubmit = async (formData) => {
-    console.log(formData)
+    console.log(formData);
     setLoading(true);
 
     // Handle image upload if a new image is selected
     let uploadedImageUrl = data.webInfo.banner.image; // Default to existing image
     if (formData.image[0]) {
       const imageFile = formData.image[0];
-      console.log(imageFile)
+      console.log(imageFile);
       uploadedImageUrl = await handleImageUpload(imageFile);
     }
 
@@ -61,9 +61,9 @@ const Banner = () => {
     // Call your API to submit the banner data
     try {
       await axiosPublic.put(`/webData/${user.email}`, { banner: bannerData });
-      toast.success("Banner updated successfully!")
-      document.getElementById("my_modal_banner").close()
-      refetch()
+      toast.success("Banner updated successfully!");
+      document.getElementById("my_modal_banner").close();
+      refetch();
     } catch (error) {
       console.error("Error updating banner:", error);
       alert("Error updating banner.");
@@ -73,7 +73,7 @@ const Banner = () => {
   };
 
   return (
-    <div className="mt-10 relative group rounded-lg hover:border-blue-500 border-transparent border-[4px]  ">
+    <div className=" relative group  hover:border-blue-500 border-transparent border-[4px]  ">
       <div className="absolute top-0 group-hover:block hidden">
         <FaEdit
           onClick={() => document.getElementById("my_modal_banner").showModal()}
@@ -81,14 +81,14 @@ const Banner = () => {
         ></FaEdit>
       </div>
       <div
-        className="hero min-h-screen rounded-lg"
+        className="hero min-h-screen "
         style={{
           backgroundImage: `url(${data.webInfo.banner.image})`,
         }}
       >
         <div className="hero-overlay bg-black bg-opacity-60 rounded-lg"></div>
-        <div className="hero-content text-neutral-content text-center">
-          <div className="max-w-lg">
+        <div className={` text-neutral-content  w-full text-${data.webInfo.banner.textPosition} px-20`}>
+          <div className="w-full ">
             <h1 className="mb-5 text-5xl font-bold">
               {data.webInfo.banner.title}
             </h1>

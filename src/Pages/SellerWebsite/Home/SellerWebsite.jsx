@@ -24,6 +24,7 @@ const SellerWebsite = () => {
         image={webInfo?.banner.image}
         title={webInfo?.banner.title}
         description={webInfo?.banner.description}
+        textPosition={webInfo?.banner.textPosition}
       />
 
       {products?.length !== 0 && (

@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 
-const Banner = ({ image, title, description }) => {
+const Banner = ({ image, title, description, textPosition }) => {
     const { name } = useParams();
   console.log(image);
   return (
@@ -12,8 +12,8 @@ const Banner = ({ image, title, description }) => {
         }}
       >
         <div className="hero-overlay bg-black bg-opacity-60"></div>
-        <div className="hero-content text-neutral-content text-center">
-          <div className="max-w-lg">
+        <div className={`w-full text-neutral-content text-${textPosition} px-10`}>
+          <div className="w-full">
             <h1 className="mb-5 text-5xl font-bold">{title}</h1>
             <p className="mb-5">{description}</p>
             <Link to={`/w/${name}/products`}>
@@ -21,6 +21,7 @@ const Banner = ({ image, title, description }) => {
             </Link>
           </div>
         </div>
+     
       </div>
     </div>
   );
