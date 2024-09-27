@@ -8,14 +8,28 @@ import { FcHome } from "react-icons/fc";
 import Title from "../../../../Components/Common/Title";
 import { BiMailSend } from "react-icons/bi";
 import { FaEdit } from "react-icons/fa";
+import toast from "react-hot-toast";
 
 const Contact = () => {
   const { register, handleSubmit, reset } = useForm();
   const { data, isPending, refetch } = useContext(WebDataDisContext);
+  console.log(data);
   const { user } = useContext(AuthContext);
   const axiosPublic = useAxiosPublic();
   const [loading, setLoading] = useState(false);
   const onSubmit = async (formData) => {
+    console.log(formData);
+    try {
+      await axiosPublic.put(`/webData/${user.email}`, {
+        contactInfo: formData,
+      });
+      toast.success("navbar updated successfully!");
+      document.getElementById("my_modal_contact").close();
+      refetch();
+    } catch (error) {
+      console.error("Error updating banner:", error);
+      alert("Error updating banner.");
+    }
     setLoading(true);
   };
   return (
@@ -125,8 +139,8 @@ const Contact = () => {
                 <input
                   type="text"
                   placeholder="Enter Tripe Tile"
-                  {...register("infoEmail")}
-                  defaultValue={data.webInfo.contactInfo.infoEmail}
+                  {...register("emailInfo")}
+                  defaultValue={data.webInfo.contactInfo.emailInfo}
                   className="input input-bordered w-full "
                 />
               </div>
@@ -138,8 +152,8 @@ const Contact = () => {
                 <input
                   type="text"
                   placeholder="Enter Tripe Tile"
-                  {...register("supportEmail")}
-                  defaultValue={data.webInfo.contactInfo.supportEmail}
+                  {...register("emailSupport")}
+                  defaultValue={data.webInfo.contactInfo.emailSupport}
                   className="input input-bordered w-full "
                 />
               </div>
