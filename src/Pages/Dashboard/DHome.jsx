@@ -48,13 +48,13 @@ const DHome = () => {
       </li>
       <li>
         <NavLink
-          to="/dashboard/Transaction"
+          to="/dashboard/blogs"
           className={({ isActive }) =>
             `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
           }
         >
-          <TbLogs className="text-3xl" />
-          Blogs
+          <TbLogs className="text-3xl text-[#ED7725]" />
+          Blogs Management
         </NavLink>
       </li>
       <li>
