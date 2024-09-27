@@ -42,7 +42,7 @@ const DHome = () => {
             `p-2 text-lg rounded-sm ${isActive ? " bg-gray-600/30" : ""}`
           }
         >
-          <AiOutlineProduct className="text-3xl" />
+          <AiOutlineProduct className="text-3xl text-[#ED7725]" />
           Product Management
         </NavLink>
       </li>
