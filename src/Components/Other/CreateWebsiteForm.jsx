@@ -161,10 +161,10 @@ const CreateWebsiteForm = () => {
                 id="backgroundColorPicker"
                 value={selectedBackgroundColor}
                 onChange={handleBackgroundColorChange}
-                className="absolute opacity-0 w-0 h-0"
+                className="absolute opacity-0 w-0 h-0 "
               />
               <div
-                className="w-10 h-10 rounded-full cursor-pointer"
+                className="w-10 h-10 rounded-full cursor-pointer border"
                 style={{ backgroundColor: selectedBackgroundColor }}
                 onClick={() =>
                   document.getElementById("backgroundColorPicker").click()
@@ -186,11 +186,11 @@ const CreateWebsiteForm = () => {
                 id="sectionTitleColorPicker"
                 value={selectedSectionTitleColor}
                 onChange={handleSectionTitleColorChange}
-                className="absolute opacity-0 w-0 h-0"
+                className="absolute opacity-0 w-0 h-0 "
               />
     
               <div
-                className="w-10 h-10 rounded-full cursor-pointer"
+                className="w-10 h-10 rounded-full cursor-pointer border"
                 style={{ backgroundColor: selectedSectionTitleColor }}
                 onClick={() =>
                   document.getElementById("sectionTitleColorPicker").click()
@@ -233,11 +233,11 @@ const CreateWebsiteForm = () => {
                 id="navColorPicker"
                 value={selectedNavColor}
                 onChange={handleNavColorChange}
-                className="absolute opacity-0 w-0 h-0"
+                className="absolute opacity-0 w-0 h-0 "
               />
               {/* Custom button to show the color */}
               <div
-                className="w-10 h-10 rounded-full cursor-pointer"
+                className="w-10 h-10 rounded-full cursor-pointer border"
                 style={{ backgroundColor: selectedNavColor }}
                 onClick={() =>
                   document.getElementById("navColorPicker").click()
@@ -259,11 +259,11 @@ const CreateWebsiteForm = () => {
                 id="navFontColorPicker"
                 value={selectedNavFontColor}
                 onChange={handleNavFontColorChange}
-                className="absolute opacity-0 w-0 h-0"
+                className="absolute opacity-0 w-0 h-0 "
               />
               {/* Custom button to show the color */}
               <div
-                className="w-10 h-10 rounded-full cursor-pointer"
+                className="w-10 h-10 rounded-full cursor-pointer border"
                 style={{ backgroundColor: selectedNavFontColor }}
                 onClick={() =>
                   document.getElementById("navFontColorPicker").click()
