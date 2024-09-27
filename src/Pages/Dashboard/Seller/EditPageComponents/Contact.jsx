@@ -30,7 +30,7 @@ const Contact = () => {
       console.error("Error updating banner:", error);
       alert("Error updating banner.");
     }
-    setLoading(true);
+  
   };
   return (
     <div className=" relative group  hover:border-blue-500 border-transparent border-[4px]  ">

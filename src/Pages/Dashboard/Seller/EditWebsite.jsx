@@ -4,6 +4,7 @@ import { WebDataDisContext } from "../../../Context/WebDataDisContext";
 import Banner from "./EditPageComponents/Banner";
 import Navbar from "./EditPageComponents/Navbar";
 import Contact from "./EditPageComponents/Contact";
+import FollowUs from "./EditPageComponents/FollowUs";
 
 const EditWebsite = () => {
   const { data, isPending } = useContext(WebDataDisContext);
@@ -23,11 +24,14 @@ const EditWebsite = () => {
       ) : (
         <>
           <div className="px-4">
-            <div className=" rounded-lg overflow-hidden mt-10 border-[1px] border-black">
+            <div style={{backgroundColor : `${data.webInfo.body.backgroundColor}`}}
+              className={` rounded-lg overflow-hidden mt-10 border-[1px] border-black  `}
+            >
               {/* banner */}
               <Navbar />
               <Banner />
               <Contact />
+              <FollowUs />
             </div>
           </div>
         </>

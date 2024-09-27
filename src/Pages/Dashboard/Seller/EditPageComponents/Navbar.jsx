@@ -190,10 +190,10 @@ const Navbar = () => {
                       id="backgroundColorPicker"
                       value={selectedBackgroundColor}
                       onChange={handleBackgroundColorChange}
-                      className="absolute opacity-0 w-0 h-0"
+                      className="absolute opacity-0 w-0 h-0 "
                     />
                     <div
-                      className="w-10 h-10 rounded-full cursor-pointer"
+                      className="w-10 h-10 rounded-full cursor-pointer border"
                       style={{ backgroundColor: selectedBackgroundColor }}
                       onClick={() =>
                         document.getElementById("backgroundColorPicker").click()
@@ -241,10 +241,10 @@ const Navbar = () => {
                       id="navColorPicker"
                       value={selectedNavColor}
                       onChange={handleNavColorChange}
-                      className="absolute opacity-0 w-0 h-0"
+                      className="absolute opacity-0 w-0 h-0 "
                     />
                     <div
-                      className="w-10 h-10 rounded-full cursor-pointer"
+                      className="w-10 h-10 rounded-full cursor-pointer border"
                       style={{ backgroundColor: selectedNavColor }}
                       onClick={() =>
                         document.getElementById("navColorPicker").click()
@@ -268,10 +268,10 @@ const Navbar = () => {
                       id="navFontColorPicker"
                       value={selectedNavFontColor}
                       onChange={handleNavFontColorChange}
-                      className="absolute opacity-0 w-0 h-0"
+                      className="absolute opacity-0 w-0 h-0 "
                     />
                     <div
-                      className="w-10 h-10 rounded-full cursor-pointer"
+                      className="w-10 h-10 rounded-full cursor-pointer border"
                       style={{ backgroundColor: selectedNavFontColor }}
                       onClick={() =>
                         document.getElementById("navFontColorPicker").click()

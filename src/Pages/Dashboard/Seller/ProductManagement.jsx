@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Title from "../../../Components/Common/Title";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
@@ -10,6 +10,7 @@ import { Trash2, Edit } from "lucide-react";
 import { MdAddCircle } from "react-icons/md";
 const ProductManagement = () => {
   const { user } = useContext(AuthContext);
+  const [productDetails, setProductDetails] = useState(null);
   const axiosPublic = useAxiosPublic();
   console.log(user?.email);
   const {
@@ -26,7 +27,24 @@ const ProductManagement = () => {
       }
     },
   });
-  console.log(products);
+  const handleImageUpload = async (file) => {
+    const formData = new FormData();
+    formData.append("image", file);
+
+    // Replace with your imgbb API key
+    const imgbbAPIKey = "e9b3cb55e11b48d4142caf366d77cea6";
+
+    try {
+      const response = await axiosPublic.post(
+        `https://api.imgbb.com/1/upload?key=${imgbbAPIKey}`,
+        formData
+      );
+      return response.data.data.url; // Return the uploaded image URL
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      return null;
+    }
+  };
   const {
     register,
     handleSubmit,
@@ -54,7 +72,7 @@ const ProductManagement = () => {
         axiosPublic.post("/addProducts", productData).then((res) => {
           toast.success("product added ");
           refetch();
-          document.getElementById("my_modal_2").close();
+          document.getElementById("my_modal_add").close();
         });
       });
   };
@@ -65,6 +83,49 @@ const ProductManagement = () => {
     });
   };
 
+  const handleUpdate = async (e) => {
+    e.preventDefault(); // Prevent default form submission behavior
+
+    const form = e.target;
+    const productName = form.productName.value;
+    const description = form.description.value;
+    const price = form.price.value;
+
+    let image = productDetails.image;
+
+    // Check if a new image has been uploaded
+    if (form.image.files && form.image.files[0]) {
+      const imageFile = form.image.files[0];
+      console.log(imageFile);
+
+      image = await handleImageUpload(imageFile);
+
+      if (!image) {
+        alert("Image upload failed. Please try again.");
+        return;
+      }
+    }
+    const data = {
+      productName,
+      description,
+      price,
+      image,
+    };
+
+    axiosPublic
+      .put(`/product/${productDetails._id}`, data)
+      .then((response) => {
+        toast.success("Product updated successfully!");
+        document.getElementById("my_modal_update").close();
+        refetch();
+        setProductDetails(null)
+      })
+      .catch((error) => {
+        toast.error("Failed to update product.");
+        console.error(error);
+      });
+  };
+
   return (
     <div className="px-2">
       <div className="mt-10 ">
@@ -72,7 +133,7 @@ const ProductManagement = () => {
         <div className="flex justify-end">
           <button
             onClick={() => {
-              document.getElementById("my_modal_2").showModal();
+              document.getElementById("my_modal_add").showModal();
             }}
             className="flex flex-row items-center gap-1 justify-end text-2xl mt-20 mr-5"
           >
@@ -101,7 +162,7 @@ const ProductManagement = () => {
                       className="w-16 h-16 object-cover rounded"
                     />
                   </td>
-                  <td className="font-medium">{product.name}</td>
+                  <td className="font-medium">{product.productName}</td>
                   <td className="max-w-xs truncate">{product.description}</td>
                   <td className="font-bold">${product.price}</td>
                   <td>
@@ -113,7 +174,18 @@ const ProductManagement = () => {
                       >
                         <Trash2 size={16} />
                       </button>
-                      <button className="btn btn-sm btn-primary" title="Edit">
+                      <button
+                        onClick={() => {
+                          setProductDetails(product);
+                          setTimeout(() => {
+                            document
+                              .getElementById("my_modal_update")
+                              .showModal(); // Open the modal after a short delay to ensure state is set
+                          }, 100);
+                        }}
+                        className="btn btn-sm btn-primary"
+                        title="Edit"
+                      >
                         <Edit size={16} />
                       </button>
                     </div>
@@ -126,7 +198,7 @@ const ProductManagement = () => {
       </div>
 
       {/* add product modal  */}
-      <dialog id="my_modal_2" className="modal">
+      <dialog id="my_modal_add" className="modal">
         <div className="modal-box">
           <form method="dialog">
             {/* if there is a button in form, it will close the modal */}
@@ -208,24 +280,89 @@ const ProductManagement = () => {
               Submit
             </button>
           </form>
-          <dialog id="my_modal_2" className="modal">
-            <div className="modal-box">
-              <h3 className="font-bold text-lg">Hello!</h3>
-              <p className="py-4">Press ESC key or click outside to close</p>
+        </div>
+        <form method="dialog" className="modal-backdrop">
+          <button>close</button>
+        </form>
+      </dialog>
+      {/* update product modal  */}
+
+      <dialog id="my_modal_update" className="modal ">
+        <div className="modal-box">
+          <form method="dialog">
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+              ✕
+            </button>
+          </form>
+
+          {/* Open the modal using document.getElementById('ID').showModal() method */}
+          <form onSubmit={(e) => handleUpdate(e)} className="w-full">
+            {/* Product Name */}
+            <div className="mb-4">
+              <label className="block text-gray-700">Product Name</label>
+              <input
+                type="text"
+                name="productName"
+                defaultValue={productDetails?.productName}
+                className="input input-bordered w-full"
+                placeholder="Enter product name"
+              />
             </div>
-            <form method="dialog" className="modal-backdrop">
-              <button>close</button>
-            </form>
-          </dialog>
+
+            {/* Description */}
+            <div className="mb-4">
+              <label className="block text-gray-700 ">Description</label>
+              <textarea
+                name="description"
+                className="textarea textarea-bordered w-full"
+                placeholder="Enter product description"
+                defaultValue={productDetails?.description}
+              ></textarea>
+            </div>
+
+            {/* Price */}
+            <div className="mb-4">
+              <label className="block text-gray-700">Price</label>
+              <input
+                type="number"
+                name="price"
+                defaultValue={productDetails?.price}
+                className="input input-bordered w-full"
+                placeholder="Enter product price"
+              />
+            </div>
+
+            {/* Image Upload */}
+            <div className="grid grid-cols-2 gap-2 mb-2">
+              <div>
+                <img
+                  src={productDetails?.image}
+                  className="rounded-lg"
+                  alt=""
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700">Product Image</label>
+                <input
+                  type="file"
+                  name="image"
+                  className="file-input file-input-bordered w-full"
+                />
+              </div>
+            </div>
+
+            {/* Submit Button */}
+            <button type="submit" className="btn btn-primary w-full">
+              Submit
+            </button>
+          </form>
         </div>
         <form method="dialog" className="modal-backdrop">
           <button>close</button>
         </form>
       </dialog>
 
-
       {/* edit product modal  */}
-      
     </div>
   );
 };
