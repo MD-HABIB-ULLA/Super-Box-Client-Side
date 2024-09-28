@@ -87,7 +87,7 @@ const DHome = () => {
             `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
           }
         >
-          <GrResources className="text-3xl" />
+          <GrResources className="text-3xl text-[#ED7725]" />
           Business Revenue
         </NavLink>
       </li>
@@ -98,8 +98,8 @@ const DHome = () => {
             `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
           }
         >
-          <GrResources className="text-3xl" />
-          Business and Marketing Resources
+          <GrResources className="text-3xl text-[#ED7725]" />
+          Business and Marketing Resources <FaCrown />
         </NavLink>
       </li>
     </>
