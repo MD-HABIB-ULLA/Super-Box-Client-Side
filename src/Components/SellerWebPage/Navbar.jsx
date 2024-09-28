@@ -14,8 +14,8 @@ const Navbar = ({ linksPosition, backgroundColor, logo, shopName }) => {
         className={({ isActive }) =>
           `text-base font-bold px-6 py-2 w-full flex items-center hover:bg-gray-200 dark:hover:bg-gray-700 duration-500 hover:text-gray-700 dark:hover:text-gray-200 uppercase ${
             isActive
-              ? "inter text-[#646668] border-x-0 rounded-none border-t-0 bg-transparent"
-              : "md:text-white text-white"
+              ? "inter text-[#021f3c] border-x-0 rounded-none border-t-0 bg-transparent"
+              : " text-gray-600"
           }`
         }
       >
@@ -27,8 +27,8 @@ const Navbar = ({ linksPosition, backgroundColor, logo, shopName }) => {
         className={({ isActive }) =>
           `text-base font-bold px-6 py-2  w-full flex items-center hover:bg-gray-200 dark:hover:bg-gray-700 duration-500 hover:text-gray-700 dark:hover:text-gray-200 uppercase text-nowrap ${
             isActive
-              ? "inter text-[#646668] border-x-0 rounded-none border-t-0 bg-transparent"
-              : "md:text-white text-white"
+              ? "inter text-[#021f3c] border-x-0 rounded-none border-t-0 bg-transparent"
+              : " text-gray-600"
           }`
         }
       >
@@ -41,8 +41,8 @@ const Navbar = ({ linksPosition, backgroundColor, logo, shopName }) => {
         className={({ isActive }) =>
           `text-base font-bold px-6 py-2  w-full flex items-center hover:bg-gray-200 dark:hover:bg-gray-700 duration-500 hover:text-gray-700 dark:hover:text-gray-200 uppercase ${
             isActive
-              ? "inter text-[#646668] border-x-0 rounded-none border-t-0 bg-transparent"
-              : "md:text-white text-white"
+              ? "inter text-[#021f3c] border-x-0 rounded-none border-t-0 bg-transparent"
+              : " text-gray-600"
           }`
         }
       >
@@ -56,7 +56,7 @@ const Navbar = ({ linksPosition, backgroundColor, logo, shopName }) => {
       <div className="flex py-2 px-5 h-full">
         <div className=" h-full flex gap-2 items-center">
           <img src={logo} className="h-full" alt="" />
-          <h1 className="text-2xl text-white font-bold  capitalize">
+          <h1 className="text-2xl text-white font-bold  capitalize text-sky-400/65">
             {shopName}
           </h1>
         </div>
@@ -84,7 +84,7 @@ const Navbar = ({ linksPosition, backgroundColor, logo, shopName }) => {
                   className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-fit"
                 >
                   <li>
-                    <p className="text-center">{customerInfo?.displayName}</p>
+                    <p className="text-center ">{customerInfo?.displayName}</p>
                   </li>
                   <li>
                     <p>{customerInfo?.email}</p>
