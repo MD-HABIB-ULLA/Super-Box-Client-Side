@@ -24,6 +24,7 @@ import PrivateRouteForCustomer from "../Private/PrivateRouteForCustomer";
 import SellerDetails from "../../Pages/Dashboard/Seller/SellerDetails";
 import SellerRequest from "../../Pages/Dashboard/Admin/SellerRequest/SellerRequest";
 import SellerDHome from "../../Pages/Dashboard/Seller/SellerDHome";
+import BlogManagement from "../../Pages/Dashboard/Seller/BlogManagement";
 const RoleBasedComponent = () => {
   const { isAdmin, isSeller } = useRole();
 
@@ -95,6 +96,14 @@ const router = createBrowserRouter([
             element: (
               <WebDataDisProvider>
                 <EditWebsite />
+              </WebDataDisProvider>
+            ),
+          },
+          {
+            path: "/dashboard/blogs",
+            element: (
+              <WebDataDisProvider>
+                <BlogManagement />
               </WebDataDisProvider>
             ),
           },
