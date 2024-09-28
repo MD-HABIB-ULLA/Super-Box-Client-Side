@@ -28,6 +28,7 @@ import BlogManagement from "../../Pages/Dashboard/Seller/BlogManagement";
 import PointOfSell from "../../Pages/Dashboard/Seller/PointOfSell";
 import ChatUs from "../../Pages/Dashboard/Seller/ChatUs";
 import BusinessRevenue from "../../Pages/Dashboard/Seller/BusinessRevenue";
+import BmResources from "../../Pages/Dashboard/Seller/BmResources";
 const RoleBasedComponent = () => {
   const { isAdmin, isSeller } = useRole();
 
@@ -106,6 +107,10 @@ const router = createBrowserRouter([
           {
             path: "/dashboard/business-revenue",
             element: <BusinessRevenue />,
+          },
+          {
+            path: "/dashboard/bm-resources",
+            element: <BmResources />,
           },
           {
             path: "/dashboard/preview&edit",
