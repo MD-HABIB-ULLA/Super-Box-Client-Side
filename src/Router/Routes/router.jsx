@@ -25,6 +25,7 @@ import SellerDetails from "../../Pages/Dashboard/Seller/SellerDetails";
 import SellerRequest from "../../Pages/Dashboard/Admin/SellerRequest/SellerRequest";
 import SellerDHome from "../../Pages/Dashboard/Seller/SellerDHome";
 import BlogManagement from "../../Pages/Dashboard/Seller/BlogManagement";
+import PointOfSell from "../../Pages/Dashboard/Seller/PointOfSell";
 const RoleBasedComponent = () => {
   const { isAdmin, isSeller } = useRole();
 
@@ -90,6 +91,10 @@ const router = createBrowserRouter([
           {
             path: "/dashboard/seller-request",
             element: <SellerRequest />,
+          },
+          {
+            path: "/dashboard/pos",
+            element: <PointOfSell />,
           },
           {
             path: "/dashboard/preview&edit",

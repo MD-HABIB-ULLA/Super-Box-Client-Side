@@ -1,5 +1,5 @@
 import { AiOutlineProduct } from "react-icons/ai";
-import { FaEdit, FaHome, FaRegQuestionCircle } from "react-icons/fa";
+import { FaCrown, FaEdit, FaHome, FaRegQuestionCircle } from "react-icons/fa";
 import { GrAtm, GrResources } from "react-icons/gr";
 import { HiChatBubbleLeftRight, HiUserGroup } from "react-icons/hi2";
 import { MdAddBusiness } from "react-icons/md";
@@ -20,7 +20,7 @@ const DHome = () => {
           end // Makes sure this matches exactly for /dashboard
         >
           <FaHome className="text-3xl text-[#ED7725]" />
-          Home 
+          Home
         </NavLink>
       </li>
 
@@ -31,8 +31,8 @@ const DHome = () => {
             `p-2 text-lg rounded-sm ${isActive ? " bg-gray-600/30" : ""}`
           }
         >
-        <FaEdit className="text-3xl text-[#ED7725]" />
-        Website Preview and Edit
+          <FaEdit className="text-3xl text-[#ED7725]" />
+          Website Preview and Edit
         </NavLink>
       </li>
       <li>
@@ -61,11 +61,11 @@ const DHome = () => {
         <NavLink
           to="/dashboard/pos"
           className={({ isActive }) =>
-            `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
+            `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""} `
           }
         >
-          <GrAtm className="text-3xl" />
-          POS
+          <GrAtm className="text-3xl text-[#ED7725]" />
+          POS <FaCrown />
         </NavLink>
       </li>
 
@@ -76,8 +76,8 @@ const DHome = () => {
             `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
           }
         >
-          <HiChatBubbleLeftRight className="text-3xl" />
-          Chat with us
+          <HiChatBubbleLeftRight className="text-3xl text-[#ED7725]" />
+          Chat with us <FaCrown />
         </NavLink>
       </li>
       <li>
@@ -119,7 +119,6 @@ const DHome = () => {
         <details>
           <summary className="px-3 rounded-sm">
             <NavLink
-   
               className={` text-lg flex flex-row justify-between items-center gap-2`}
             >
               <HiUserGroup className="text-3xl" />
@@ -146,7 +145,10 @@ const DHome = () => {
         </NavLink>
       </li>
       <li>
-        <NavLink to="/dashboard/transaction" className={`p-2 text-lg rounded-sm`}>
+        <NavLink
+          to="/dashboard/transaction"
+          className={`p-2 text-lg rounded-sm`}
+        >
           <TbLogs className="text-3xl" />
           Selling details
         </NavLink>
