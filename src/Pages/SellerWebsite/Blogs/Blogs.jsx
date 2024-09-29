@@ -20,11 +20,13 @@ const Blogs = () => {
               <div className="p-4">
                 <h2 className="text-xl font-bold mb-2">{blog.title}</h2>
                 <p className="text-sm text-gray-500 mb-4">{blog.upload_date}</p>
+                <div className="h-56">
                 <img
                   src={blog.image}
                   alt={blog.title}
-                  className="w-full h-40 object-cover mb-4 rounded"
+                  className=" h-full  mb-4 rounded"
                 />
+                </div>
                 <p className="text-sm text-gray-600 mb-4">{blog.description}</p>
                 <p className="text-xs text-gray-500">Posted by: {blog.email}</p>
               </div>
