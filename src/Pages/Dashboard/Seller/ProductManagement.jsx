@@ -53,7 +53,7 @@ const ProductManagement = () => {
 
   const onSubmit = (data) => {
     const imageFile = { image: data.image[0] };
-
+    const price = parseFloat(data.price);
     axios
       .post(
         `https://api.imgbb.com/1/upload?key=e9b3cb55e11b48d4142caf366d77cea6`,
@@ -66,7 +66,7 @@ const ProductManagement = () => {
       )
       .then((res) => {
         const image = res.data.data.display_url;
-        const productData = { ...data, image, sellerEmail: user.email };
+        const productData = { ...data, price, image, sellerEmail: user.email };
         console.log(productData);
 
         axiosPublic.post("/addProducts", productData).then((res) => {
@@ -89,7 +89,7 @@ const ProductManagement = () => {
     const form = e.target;
     const productName = form.productName.value;
     const description = form.description.value;
-    const price = form.price.value;
+    const price = parseInt(form.price.value);
 
     let image = productDetails.image;
 
@@ -118,7 +118,7 @@ const ProductManagement = () => {
         toast.success("Product updated successfully!");
         document.getElementById("my_modal_update").close();
         refetch();
-        setProductDetails(null)
+        setProductDetails(null);
       })
       .catch((error) => {
         toast.error("Failed to update product.");

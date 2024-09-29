@@ -56,7 +56,7 @@ const Navbar = ({ linksPosition, backgroundColor, logo, shopName }) => {
       <div className="flex py-2 px-5 h-full">
         <div className=" h-full flex gap-2 items-center">
           <img src={logo} className="h-full" alt="" />
-          <h1 className="text-2xl text-white font-bold  capitalize text-sky-400/65">
+          <h1 className="text-2xl  font-bold  capitalize text-sky-400/65">
             {shopName}
           </h1>
         </div>
