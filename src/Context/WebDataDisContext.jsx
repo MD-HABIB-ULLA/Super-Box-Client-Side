@@ -10,12 +10,13 @@ export const WebDataDisContext = createContext(null);
 
 // Create the provider component
 const WebDataDisProvider = ({ children }) => {
-  const {user} = useContext(AuthContext)
-  console.log(user.email)
+  const { user } = useContext(AuthContext);
+  console.log(user.email);
   const { name } = useParams();
   const [webData, setWebData] = useState(null);
+  const [blogs, setBlogs] = useState(null);
   const axiosPublic = useAxiosPublic();
-console.log(name)
+  console.log(name);
   const {
     data: websiteData,
     isLoading: isWebsiteLoading,
@@ -29,7 +30,7 @@ console.log(name)
       }
       return null;
     },
-    enabled: !!name, 
+    enabled: !!name,
   });
 
   const {
@@ -69,9 +70,30 @@ console.log(name)
   }, [isWebsiteLoading, websiteData]); // Only re-run effect when isLoading or data changes
 
   const { _id, email, sellerInfo, webInfo } = webData || {};
-console.log(webInfo)
+
+  console.log(blogs);
+  useEffect(() => {
+    axiosPublic
+      .get(`/blogs/${email}`)
+      .then((res) => {
+        setBlogs(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, [email]);
+
   return (
-    <WebDataDisContext.Provider value={{ webInfo,refetch, isWebsiteLoading, products,data,isPending}}>
+    <WebDataDisContext.Provider
+      value={{
+        email,
+        blogs,
+        webInfo,
+        refetch,
+        isWebsiteLoading,
+        products,
+        data,
+        isPending,
+      }}
+    >
       {children}
     </WebDataDisContext.Provider>
   );
