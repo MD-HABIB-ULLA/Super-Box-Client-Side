@@ -4,7 +4,7 @@ import { BiMailSend } from "react-icons/bi";
 import Title from "../Common/Title";
 const Contact = () => {
   return (
-    <div>
+    <div className="">
       {/* information  */}
       <div>
         <Title title1="any queries?" title2={"contact with us"}></Title>

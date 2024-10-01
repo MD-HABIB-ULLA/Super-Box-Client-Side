@@ -24,7 +24,7 @@ const Blogs = () => {
                 <img
                   src={blog.image}
                   alt={blog.title}
-                  className=" h-full  mb-4 rounded m-auto"
+                className=" h-full  mb-4 rounded m-auto "
                 />
                 </div>
                 <p className="text-sm text-gray-600 mb-4">{blog.description}</p>
