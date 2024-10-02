@@ -30,6 +30,7 @@ import ChatUs from "../../Pages/Dashboard/Seller/ChatUs";
 import BusinessRevenue from "../../Pages/Dashboard/Seller/BusinessRevenue";
 import BmResources from "../../Pages/Dashboard/Seller/BmResources";
 import Blogs from "../../Pages/SellerWebsite/Blogs/Blogs";
+import ServiceManagement from "../../Pages/Dashboard/Seller/ServiceManagement";
 const RoleBasedComponent = () => {
   const { isAdmin, isSeller } = useRole();
 
@@ -60,7 +61,9 @@ const router = createBrowserRouter([
         path: "/dashboard",
         element: (
           <PrivateRoute>
-            <DHome />
+            <WebDataDisProvider>
+              <DHome />
+            </WebDataDisProvider>
           </PrivateRoute>
         ),
         children: [
@@ -104,7 +107,7 @@ const router = createBrowserRouter([
             path: "/dashboard/chat-us",
             element: <ChatUs />,
           },
-         
+
           {
             path: "/dashboard/business-revenue",
             element: <BusinessRevenue />,
@@ -112,6 +115,10 @@ const router = createBrowserRouter([
           {
             path: "/dashboard/bm-resources",
             element: <BmResources />,
+          },
+          {
+            path: "/dashboard/serviceManagement",
+            element: <ServiceManagement />,
           },
           {
             path: "/dashboard/preview&edit",

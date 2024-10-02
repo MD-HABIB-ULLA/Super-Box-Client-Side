@@ -4,7 +4,8 @@ import { AuthContext } from "../../Provider/AuthProvider";
 import { WebDataDisContext } from "../../Context/WebDataDisContext";
 
 const Navbar = ({ linksPosition, backgroundColor, logo, shopName }) => {
-  const { products, blogs } = useContext(WebDataDisContext);
+  const { products, blogs, services } = useContext(WebDataDisContext);
+  console.log(services);
 
   const { customerInfo, logOut } = useContext(AuthContext);
   const { name } = useParams();
@@ -25,7 +26,7 @@ const Navbar = ({ linksPosition, backgroundColor, logo, shopName }) => {
         Home
       </NavLink>
 
-      {products.length !== 0 && (
+      {products?.length !== 0 && (
         <NavLink
           to={`/w/${name}/products`}
           className={({ isActive }) =>

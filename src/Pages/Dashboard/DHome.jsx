@@ -1,8 +1,29 @@
 import { AiOutlineProduct } from "react-icons/ai";
-import { FaCrown, FaEdit, FaHome, FaRegQuestionCircle } from "react-icons/fa";
+import {
+  FaCrown,
+  FaEdit,
+  FaHome,
+  FaRegQuestionCircle,
+  FaTruck,
+} from "react-icons/fa";
 import { GrAtm, GrResources } from "react-icons/gr";
 import { HiChatBubbleLeftRight, HiUserGroup } from "react-icons/hi2";
-import { MdAddBusiness } from "react-icons/md";
+import {
+  MdAccountBalanceWallet,
+  MdAddBusiness,
+  MdAttachMoney,
+  MdBusinessCenter,
+  MdHomeRepairService,
+  MdLocalOffer,
+  MdManageAccounts,
+  MdOutlineInventory2,
+  MdOutlineSupportAgent,
+  MdPointOfSale,
+  MdReportProblem,
+  MdSchool,
+  MdSettings,
+  MdVerified,
+} from "react-icons/md";
 import { TbLogs } from "react-icons/tb";
 import { NavLink, Outlet } from "react-router-dom";
 import useRole from "../../hooks/useRole";
@@ -11,97 +32,226 @@ const DHome = () => {
   const { isAdmin, isSeller } = useRole();
   const sellerNavLinks = (
     <>
-      <li>
-        <NavLink
-          to="/dashboard"
-          className={({ isActive }) =>
-            `p-2 text-lg rounded-sm ${isActive ? " bg-gray-600/30" : ""}`
-          }
-          end // Makes sure this matches exactly for /dashboard
-        >
-          <FaHome className="text-3xl text-[#ED7725]" />
-          Home
-        </NavLink>
-      </li>
+      {/* Part 1: Main E-commerce Functionalities */}
+      <div>
+        <h1 className="text-base font-bold mb-2">
+          Main E-commerce Functionalities
+        </h1>
+        <div className="pl-4 border-l-2 border-black ">
+          <li>
+            <NavLink
+              to="/dashboard"
+              className={({ isActive }) =>
+                `p-2 text-lg rounded-sm ${isActive ? " bg-gray-600/30" : ""}`
+              }
+              end // Makes sure this matches exactly for /dashboard
+            >
+              <FaHome className="text-3xl text-[#ED7725]" />
+              Home
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/dashboard/preview&edit"
+              className={({ isActive }) =>
+                `p-2 text-lg rounded-sm ${isActive ? " bg-gray-600/30" : ""}`
+              }
+            >
+              <FaEdit className="text-3xl text-[#ED7725]" />
+              Website Preview and Edit
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/dashboard/productManagement"
+              className={({ isActive }) =>
+                `p-2 text-lg rounded-sm ${isActive ? " bg-gray-600/30" : ""}`
+              }
+            >
+              <AiOutlineProduct className="text-3xl text-[#ED7725]" />
+              Product Management
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/dashboard/serviceManagement"
+              className={({ isActive }) =>
+                `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
+              }
+            >
+              <MdHomeRepairService className="text-3xl text-[#ED7725]" />
+              Service Management
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/dashboard/blogs"
+              className={({ isActive }) =>
+                `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
+              }
+            >
+              <TbLogs className="text-3xl text-[#ED7725]" />
+              Blogs Management
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/dashboard/walletManagement"
+              className={({ isActive }) =>
+                `p-2 text-lg rounded-sm ${isActive ? " bg-gray-600/30" : ""}`
+              }
+            >
+              <MdAccountBalanceWallet className="text-3xl text-[#ED7725]" />
+              Wallet Management
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/dashboard/logisticsReport"
+              className={({ isActive }) =>
+                `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
+              }
+            >
+              <FaTruck className="text-3xl text-[#ED7725]" />
+              Logistics Report
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/dashboard/messaging"
+              className={({ isActive }) =>
+                `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
+              }
+            >
+              <HiChatBubbleLeftRight className="text-3xl text-[#ED7725]" />
+              Messaging
+            </NavLink>
+          </li>
+        </div>
+      </div>
 
-      <li>
-        <NavLink
-          to="/dashboard/preview&edit"
-          className={({ isActive }) =>
-            `p-2 text-lg rounded-sm ${isActive ? " bg-gray-600/30" : ""}`
-          }
-        >
-          <FaEdit className="text-3xl text-[#ED7725]" />
-          Website Preview and Edit
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          to="/dashboard/productManagement"
-          className={({ isActive }) =>
-            `p-2 text-lg rounded-sm ${isActive ? " bg-gray-600/30" : ""}`
-          }
-        >
-          <AiOutlineProduct className="text-3xl text-[#ED7725]" />
-          Product Management
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          to="/dashboard/blogs"
-          className={({ isActive }) =>
-            `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
-          }
-        >
-          <TbLogs className="text-3xl text-[#ED7725]" />
-          Blogs Management
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          to="/dashboard/pos"
-          className={({ isActive }) =>
-            `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""} `
-          }
-        >
-          <GrAtm className="text-3xl text-[#ED7725]" />
-          POS <FaCrown />
-        </NavLink>
-      </li>
+      {/* Part 2: Account Management and Support */}
+      <h1 className="text-base font-bold my-2">
+        Account Management and Support
+      </h1>
+      <div className="pl-4 border-l-2 border-black ">
+        <li>
+          <NavLink
+            to="/dashboard/accountManagement"
+            className={({ isActive }) =>
+              `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
+            }
+          >
+            <MdManageAccounts className="text-3xl text-[#ED7725]" />
+            Account Management <FaCrown />
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="/dashboard/conflictManagement"
+            className={({ isActive }) =>
+              `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
+            }
+          >
+            <MdReportProblem className="text-3xl text-[#ED7725]" />
+            Conflict Report & Management <FaCrown />
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="/dashboard/businessAuthorization"
+            className={({ isActive }) =>
+              `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
+            }
+          >
+            <MdVerified className="text-3xl text-[#ED7725]" />
+            Business Authorizations<FaCrown />
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="/dashboard/settingsSupport"
+            className={({ isActive }) =>
+              `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
+            }
+          >
+            <MdSettings className="text-3xl text-[#ED7725]" />
+            Settings & Support <FaCrown />
+          </NavLink>
+        </li>
+      </div>
 
-      <li>
-        <NavLink
-          to="/dashboard/chat-us"
-          className={({ isActive }) =>
-            `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
-          }
-        >
-          <HiChatBubbleLeftRight className="text-3xl text-[#ED7725]" />
-          Chat with us <FaCrown />
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          to="/dashboard/business-revenue"
-          className={({ isActive }) =>
-            `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
-          }
-        >
-          <GrResources className="text-3xl text-[#ED7725]" />
-          Business Revenue
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          to="/dashboard/bm-resources"
-          className={({ isActive }) =>
-            `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
-          }
-        >
-          <GrResources className="text-3xl text-[#ED7725]" />
-          Business and Marketing Resources <FaCrown />
-        </NavLink>
-      </li>
+      <h1 className="text-base font-bold my-2">
+        Business Development and Management Support
+      </h1>
+      <div className="pl-4 border-l-2 border-black ">
+        <li>
+          <NavLink
+            to="/dashboard/bm-resources"
+            className={({ isActive }) =>
+              `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
+            }
+          >
+            <MdBusinessCenter className="text-3xl text-[#ED7725]" />
+            Business Development & Management <FaCrown />
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="/dashboard/marketingBranding"
+            className={({ isActive }) =>
+              `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
+            }
+          >
+            <MdLocalOffer className="text-3xl text-[#ED7725]" />
+            Marketing & Branding <FaCrown />
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="/dashboard/supplyPackaging"
+            className={({ isActive }) =>
+              `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
+            }
+          >
+            <MdOutlineInventory2 className="text-3xl text-[#ED7725]" />
+            Supply Packaging <FaCrown />
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="/dashboard/coursesTutorials"
+            className={({ isActive }) =>
+              `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
+            }
+          >
+            <MdSchool className="text-3xl text-[#ED7725]" />
+            Courses & Tutorials <FaCrown />
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="/dashboard/businessConsulting"
+            className={({ isActive }) =>
+              `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
+            }
+          >
+            <MdOutlineSupportAgent className="text-3xl text-[#ED7725]" />
+            Business Consulting <FaCrown />
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="/dashboard/loansFinance"
+            className={({ isActive }) =>
+              `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
+            }
+          >
+            <MdAttachMoney className="text-3xl text-[#ED7725]" />
+            Loans & Finance <FaCrown />
+          </NavLink>
+        </li>
+      </div>
     </>
   );
 
