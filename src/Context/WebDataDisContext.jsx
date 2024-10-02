@@ -11,12 +11,15 @@ export const WebDataDisContext = createContext(null);
 // Create the provider component
 const WebDataDisProvider = ({ children }) => {
   const { user } = useContext(AuthContext);
-  console.log(user.email);
+  console.log(user?.email);
   const { name } = useParams();
   const [webData, setWebData] = useState(null);
   const [blogs, setBlogs] = useState(null);
   const axiosPublic = useAxiosPublic();
   console.log(name);
+
+  // website data related api call
+
   const {
     data: websiteData,
     isLoading: isWebsiteLoading,
@@ -32,6 +35,8 @@ const WebDataDisProvider = ({ children }) => {
     },
     enabled: !!name,
   });
+
+  // product related api call
 
   const {
     data: products,
@@ -49,6 +54,8 @@ const WebDataDisProvider = ({ children }) => {
     enabled: !!name, // Only run the query if the name exists
   });
 
+  //  web data with email api call
+
   const { data, isPending, refetch } = useQuery({
     queryKey: [user?.email, "websiteData"],
     enabled: !!user?.email, // This ensures the query runs only when user.email is defined
@@ -59,6 +66,18 @@ const WebDataDisProvider = ({ children }) => {
         return res.data ? res.data : {}; // Return res.data or an empty object if it's undefined
       }
       return {}; // Return an empty object if user.email doesn't exist
+    },
+  });
+
+  // services related api call
+  const { data: services } = useQuery({
+    queryKey: [name, "services"],
+    enabled: !!name, // Add more conditions here
+    queryFn: async () => {
+      if (name) {
+        const res = await axiosPublic.get(`/service/${name}`);
+        return res.data;
+      }
     },
   });
 
@@ -92,6 +111,7 @@ const WebDataDisProvider = ({ children }) => {
         products,
         data,
         isPending,
+        services,
       }}
     >
       {children}

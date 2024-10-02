@@ -15,12 +15,10 @@ createRoot(document.getElementById("root")).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        
-          <CreateWebFormContext>
-            <Toaster />
-            <RouterProvider router={router} />
-          </CreateWebFormContext>
-      
+        <CreateWebFormContext>
+          <Toaster />
+          <RouterProvider router={router} />
+        </CreateWebFormContext>
       </AuthProvider>
     </QueryClientProvider>
   </StrictMode>

@@ -4,8 +4,8 @@ import { useContext } from "react";
 import { WebDataDisContext } from "../../../Context/WebDataDisContext";
 
 const Layout = () => {
-  const { webInfo } = useContext(WebDataDisContext);
-  const { name } = useParams();
+  const { webInfo} = useContext(WebDataDisContext);
+  
 
 
   return (

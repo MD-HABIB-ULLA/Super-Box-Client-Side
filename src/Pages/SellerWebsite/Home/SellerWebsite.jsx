@@ -6,6 +6,7 @@ import Navbar from "../../../Components/SellerWebPage/Navbar";
 import { useContext } from "react";
 import { WebDataDisContext } from "../../../Context/WebDataDisContext";
 import Title from "../../../Components/Common/Title";
+import Services from "../../../Components/SellerWebPage/Services";
 
 const SellerWebsite = () => {
   const { name } = useParams();
@@ -14,7 +15,7 @@ const SellerWebsite = () => {
   const id = searchParams.get("id");
 
   console.log(name, id);
-  const { webInfo, products, blogs } = useContext(WebDataDisContext);
+  const { webInfo, products, blogs, services } = useContext(WebDataDisContext);
   console.log(products);
 
   return (
@@ -96,6 +97,11 @@ const SellerWebsite = () => {
           </div>
         </div>
       )}
+      {services?.length !== 0 && (
+       <Services services={services}/>
+      )}
+
+
       {/* Contact Information */}
       <ContactInfo
         location={webInfo?.contactInfo.location}
