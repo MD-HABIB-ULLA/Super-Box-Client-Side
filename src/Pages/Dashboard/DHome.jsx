@@ -170,13 +170,24 @@ const DHome = () => {
         </li>
         <li>
           <NavLink
-            to="/dashboard/settingsSupport"
+            to="/dashboard/support"
             className={({ isActive }) =>
               `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
             }
           >
             <MdSettings className="text-3xl text-[#ED7725]" />
-            Settings & Support <FaCrown />
+            Support <FaCrown />
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="/dashboard/settings"
+            className={({ isActive }) =>
+              `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
+            }
+          >
+            <MdSettings className="text-3xl text-[#ED7725]" />
+            Settings  <FaCrown />
           </NavLink>
         </li>
       </div>

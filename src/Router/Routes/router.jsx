@@ -32,6 +32,13 @@ import BmResources from "../../Pages/Dashboard/Seller/BmResources";
 import Blogs from "../../Pages/SellerWebsite/Blogs/Blogs";
 import ServiceManagement from "../../Pages/Dashboard/Seller/ServiceManagement";
 import Services from "../../Pages/SellerWebsite/services/Services";
+import ShippingDashboard from "../../Pages/Dashboard/Seller/ShippingDashboard ";
+import UserProfileDashboard from "../../Pages/Dashboard/Seller/UserProfileDashboard";
+import ConflictReportManagement from "../../Pages/Dashboard/Seller/ConflictReportManagement";
+import BusinessAuthorizations from "../../Pages/Dashboard/Seller/BusinessAuthorizations";
+import Settings from "../../Pages/Dashboard/Seller/Settings";
+import Support from "../../Pages/Dashboard/Seller/Support";
+import Process from "../../Pages/Dashboard/Seller/Process";
 const RoleBasedComponent = () => {
   const { isAdmin, isSeller } = useRole();
 
@@ -105,12 +112,67 @@ const router = createBrowserRouter([
             element: <PointOfSell />,
           },
           {
-            path: "/dashboard/chat-us",
+            path: "/dashboard/messaging",
             element: <ChatUs />,
+          },
+          {
+            path: "/dashboard/logisticsReport",
+            element: <ShippingDashboard />,
+          },
+          {
+            path: "/dashboard/accountManagement",
+            element: <UserProfileDashboard />,
+          },
+          {
+            path: "/dashboard/conflictManagement",
+            element: <ConflictReportManagement />,
+          },
+          {
+            path: "/dashboard/businessAuthorization",
+            element: <BusinessAuthorizations />,
+          },
+          {
+            path: "/dashboard/settings",
+            element: <Settings />,
           },
 
           {
-            path: "/dashboard/business-revenue",
+            path: "/dashboard/bm-resources",
+            element: <Process />,
+          },
+
+          {
+            path: "/dashboard/marketingBranding",
+            element: <Process />,
+          },
+
+          {
+            path: "/dashboard/coursesTutorials",
+            element: <Process />,
+          },
+
+          {
+            path: "/dashboard/supplyPackaging",
+            element: <Process />,
+          },
+
+          {
+            path: "/dashboard/businessConsulting",
+            element: <Process />,
+          },
+
+          {
+            path: "/dashboard/loansFinance",
+            element: <Process />,
+          },
+
+          {
+            path: "/dashboard/support",
+            element: <Support />,
+          },
+
+          {
+            path: "/dashboard/walletManagement",
             element: <BusinessRevenue />,
           },
           {
