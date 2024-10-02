@@ -1,16 +1,21 @@
+import { useContext } from "react";
+import { WebDataDisContext } from "../../../Context/WebDataDisContext";
+import Title from "../../../Components/Common/Title";
 import { AiFillClockCircle, AiOutlineCalendar } from "react-icons/ai";
-import Title from "../Common/Title";
 
-const Services = ({ services }) => {
+const Services = () => {
+  const { services } = useContext(WebDataDisContext);
   return (
-    <div>
-      <div className="px-10 max-w-7xl m-auto">
-        <div className="py-10 border-b-2 border-dashed  ">
+    <div className="mb-20">
+      {" "}
+      <div>
+        <div className="py-10 border-b-2 border-dashed ">
           <Title title2={"Service Management"} />
+          <div className="flex justify-end"></div>
         </div>
         <div className="grid grid-cols-3 gap-8">
           {services &&
-            services?.slice(0, 3).map((service) => (
+            services.map((service) => (
               <div
                 key={service._id}
                 className="bg-white relative group rounded-lg shadow-md overflow-hidden w-full mx-auto px-6 py-4"
@@ -41,6 +46,7 @@ const Services = ({ services }) => {
               </div>
             ))}
         </div>
+ 
       </div>
     </div>
   );

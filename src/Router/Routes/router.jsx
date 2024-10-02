@@ -31,6 +31,7 @@ import BusinessRevenue from "../../Pages/Dashboard/Seller/BusinessRevenue";
 import BmResources from "../../Pages/Dashboard/Seller/BmResources";
 import Blogs from "../../Pages/SellerWebsite/Blogs/Blogs";
 import ServiceManagement from "../../Pages/Dashboard/Seller/ServiceManagement";
+import Services from "../../Pages/SellerWebsite/services/Services";
 const RoleBasedComponent = () => {
   const { isAdmin, isSeller } = useRole();
 
@@ -163,6 +164,10 @@ const router = createBrowserRouter([
       {
         path: "products", // List of products
         element: <Products />,
+      },
+      {
+        path: "services", // List of products
+        element: <Services />,
       },
       {
         path: "blogs", // List of products
