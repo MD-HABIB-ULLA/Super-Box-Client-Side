@@ -6,8 +6,11 @@ import { AuthContext } from "../../../Provider/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import { Link } from "react-router-dom";
+import { AiFillClockCircle, AiOutlineCalendar } from "react-icons/ai";
 const PointOfSell = () => {
   // const { services, products } = useContext(WebDataDisContext);
+
+  // for product api call
   const axiosPublic = useAxiosPublic();
   const { user } = useContext(AuthContext);
   console.log(user);
@@ -25,9 +28,25 @@ const PointOfSell = () => {
       }
     },
   });
-  console.log(products);
+  // console.log(products);
+  // for service api call
+
+  const { data } = useContext(WebDataDisContext);
+
+  const [submittedData, setSubmittedData] = useState(null);
+  const { data: services, isPending } = useQuery({
+    queryKey: [data?.webInfo, "posServices"],
+    enabled: !!data?.webInfo && !!data?.webInfo.shopName, // Add more conditions here
+    queryFn: async () => {
+      if (data?.webInfo) {
+        const res = await axiosPublic.get(`/service/${data?.webInfo.shopName}`);
+        return res.data;
+      }
+    },
+  });
+
   const [isProductShow, showProduct] = useState(true);
-  const [service, showServices] = useState(false);
+  const [isServiceShow, showServices] = useState(false);
   return (
     <div>
       <div className="py-10 border-b border-dashed border-gray-600">
@@ -51,17 +70,13 @@ const PointOfSell = () => {
             showProduct(false);
           }}
           className={` text-white font-bold btn ${
-            service ? "bg-blue-500" : "bg-gray-500"
+            isServiceShow ? "bg-blue-500" : "bg-gray-500"
           }`}
         >
           Services
         </button>
       </div>
-      <div
-        className={`${
-          isProductShow ? "block" : "hidden"
-        } h-full w-full `}
-      >
+      <div className={`${isProductShow ? "block" : "hidden"} h-full w-full `}>
         <div className="grid grid-cols-3 gap-3 px-2">
           {products?.map((product) => (
             <div key={product._id} className="card bg-base-100 shadow-xl">
@@ -86,7 +101,46 @@ const PointOfSell = () => {
           ))}
         </div>
       </div>
-      <div className={`${service ? "block" : "hidden"}`}></div>
+      <div className={`${isServiceShow ? "block" : "hidden"}`}>
+        {" "}
+        <div className="grid grid-cols-3 gap-8">
+          {services &&
+            services.map((service) => (
+              <div
+                key={service._id}
+                className="bg-white relative group rounded-lg shadow-md overflow-hidden w-full mx-auto px-6 py-4"
+              >
+                <FaTrash
+                  onClick={() => handleDelete(service._id)}
+                  className="bg-red-500 absolute right-0  cursor-pointer  box-content text-white p-2 rounded-full group-hover:block hidden"
+                />
+                <img
+                  className="w-full h-48 object-cover rounded-t-lg"
+                  src={service.image}
+                  alt={service.serviceTitle}
+                />
+                <div className="p-4">
+                  <p className="text-gray-700 mb-2">{service.serviceTitle}</p>
+                  <div className="flex items-center mb-2">
+                    <AiOutlineCalendar className="mr-2 text-blue-500" />
+                    <span>{service.requiredTime} hours</span>
+                  </div>
+                  <div className="flex items-center mb-2">
+                    <AiFillClockCircle className="mr-2 text-blue-500" />
+                    <span>{service.availableSlots} slots available</span>
+                  </div>
+                  <p className="text-gray-700">{service.serviceDescription}</p>
+                  <div className=" justify-between items-center mt-4">
+                    <span className="text-gray-700">Starting from:</span>
+                    <span className="text-blue-500 font-bold">
+                      ${service.serviceCost}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))}
+        </div>
+      </div>
     </div>
   );
 };
