@@ -3,6 +3,7 @@ import {
   FaCrown,
   FaEdit,
   FaHome,
+  FaReceipt,
   FaRegQuestionCircle,
   FaTruck,
 } from "react-icons/fa";
@@ -123,8 +124,20 @@ const DHome = () => {
                 `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
               }
             >
-              <HiChatBubbleLeftRight className="text-3xl text-[#ED7725]" />
+           <HiChatBubbleLeftRight className="text-3xl text-[#ED7725]" />
               Messaging
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/dashboard/pos"
+              className={({ isActive }) =>
+                `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
+              }
+            >
+              
+              <FaReceipt className="text-3xl text-[#ED7725]" />
+              Point Of Sell (pos)
             </NavLink>
           </li>
         </div>
@@ -165,7 +178,8 @@ const DHome = () => {
             }
           >
             <MdVerified className="text-3xl text-[#ED7725]" />
-            Business Authorizations<FaCrown />
+            Business Authorizations
+            <FaCrown />
           </NavLink>
         </li>
         <li>
@@ -187,7 +201,7 @@ const DHome = () => {
             }
           >
             <MdSettings className="text-3xl text-[#ED7725]" />
-            Settings  <FaCrown />
+            Settings <FaCrown />
           </NavLink>
         </li>
       </div>
