@@ -39,6 +39,7 @@ import BusinessAuthorizations from "../../Pages/Dashboard/Seller/BusinessAuthori
 import Settings from "../../Pages/Dashboard/Seller/Settings";
 import Support from "../../Pages/Dashboard/Seller/Support";
 import Process from "../../Pages/Dashboard/Seller/Process";
+import Provide from "../../Pages/Dashboard/Seller/Provide";
 const RoleBasedComponent = () => {
   const { isAdmin, isSeller } = useRole();
 
@@ -112,6 +113,14 @@ const router = createBrowserRouter([
             element: (
           
                 <PointOfSell />
+       
+            ),
+          },
+          {
+            path: "/dashboard/pos/provide/:id",
+            element: (
+          
+                <Provide />
        
             ),
           },
