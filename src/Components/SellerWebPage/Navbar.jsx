@@ -92,39 +92,27 @@ const Navbar = ({ linksPosition, backgroundColor, logo, shopName }) => {
           {customerInfo?.email ? (
             <div className=" flex flex-row justify-center items-center gap-5">
               <div className="dropdown dropdown-bottom dropdown-end">
-                <label tabIndex={0} className="avatar w-16">
-                  <div className="hover:cursor-pointer w-16  p-2">
-                    <img
-                      className="h-full rounded-full bg-gray-700 ring-black ring-1"
-                      src={customerInfo?.photoURL}
-                      alt="User Avatar"
-                    />
-                  </div>
-                </label>
-                <ul
+                <label
+                  htmlFor="customer"
                   tabIndex={0}
-                  className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-fit"
+                  className="avatar w-16 drawer-button"
                 >
-                  <li>
-                    <p className="text-center ">{customerInfo?.displayName}</p>
-                  </li>
-                  <li>
-                    <p>{customerInfo?.email}</p>
-                  </li>
-                  <li>
-                    <Link to={"/dashboard/welcome-page"}>Dashboard</Link>
-                  </li>
-                  <li>
-                    <button
-                      onClick={() => {
-                        window.location.reload();
-                        localStorage.removeItem("isCustomer");
-                      }}
-                    >
-                      logOut
-                    </button>
-                  </li>
-                </ul>
+                  <div className="hover:cursor-pointer w-16  p-2">
+                    {customerInfo?.photoURL && (
+                      <img
+                        className="h-full rounded-full bg-gray-700 ring-black ring-1"
+                        src={customerInfo?.photoURL}
+                        alt="User Avatar"
+                      />
+                    )}
+                  </div>
+                  {/* <label
+                
+                className="btn btn-primary "
+              >
+                Open drawer
+              </label> */}
+                </label>
               </div>
             </div>
           ) : (

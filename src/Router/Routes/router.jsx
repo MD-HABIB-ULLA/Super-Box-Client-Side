@@ -41,6 +41,7 @@ import Support from "../../Pages/Dashboard/Seller/Support";
 import Process from "../../Pages/Dashboard/Seller/Process";
 import Provide from "../../Pages/Dashboard/Seller/Provide";
 import PendingOrder from "../../Pages/Dashboard/Seller/PendingOrder";
+import Profile from "../../Components/SellerWebPage/Profile";
 const RoleBasedComponent = () => {
   const { isAdmin, isSeller } = useRole();
 
@@ -252,6 +253,10 @@ const router = createBrowserRouter([
       {
         path: "blogs", // List of products
         element: <Blogs />,
+      },
+      {
+        path: "profile", // List of products
+        element: <Profile />,
       },
       {
         path: "products/:id",
