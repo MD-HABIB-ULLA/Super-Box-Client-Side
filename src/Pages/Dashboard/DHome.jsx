@@ -28,6 +28,7 @@ import {
 import { TbLogs } from "react-icons/tb";
 import { NavLink, Outlet } from "react-router-dom";
 import useRole from "../../hooks/useRole";
+import { CiTimer } from "react-icons/ci";
 
 const DHome = () => {
   const { isAdmin, isSeller } = useRole();
@@ -86,6 +87,17 @@ const DHome = () => {
           </li>
           <li>
             <NavLink
+              to="/dashboard/pendingOrder"
+              className={({ isActive }) =>
+                `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
+              }
+            >
+              <CiTimer className="text-3xl text-[#ED7725]" />
+              Pending orders
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
               to="/dashboard/blogs"
               className={({ isActive }) =>
                 `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
@@ -124,7 +136,7 @@ const DHome = () => {
                 `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
               }
             >
-           <HiChatBubbleLeftRight className="text-3xl text-[#ED7725]" />
+              <HiChatBubbleLeftRight className="text-3xl text-[#ED7725]" />
               Messaging
             </NavLink>
           </li>
@@ -135,7 +147,6 @@ const DHome = () => {
                 `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
               }
             >
-              
               <FaReceipt className="text-3xl text-[#ED7725]" />
               Point Of Sell (pos)
             </NavLink>

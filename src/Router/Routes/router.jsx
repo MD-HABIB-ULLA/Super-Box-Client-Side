@@ -40,6 +40,7 @@ import Settings from "../../Pages/Dashboard/Seller/Settings";
 import Support from "../../Pages/Dashboard/Seller/Support";
 import Process from "../../Pages/Dashboard/Seller/Process";
 import Provide from "../../Pages/Dashboard/Seller/Provide";
+import PendingOrder from "../../Pages/Dashboard/Seller/PendingOrder";
 const RoleBasedComponent = () => {
   const { isAdmin, isSeller } = useRole();
 
@@ -131,6 +132,10 @@ const router = createBrowserRouter([
           {
             path: "/dashboard/logisticsReport",
             element: <ShippingDashboard />,
+          },
+          {
+            path: "/dashboard/pendingOrder",
+            element: <PendingOrder />,
           },
           {
             path: "/dashboard/accountManagement",
