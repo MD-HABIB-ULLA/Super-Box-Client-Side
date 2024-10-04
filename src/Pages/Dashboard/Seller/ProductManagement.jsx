@@ -162,7 +162,7 @@ const ProductManagement = () => {
                       className="w-16 h-16 object-cover rounded"
                     />
                   </td>
-                  <td className="font-medium">{product.productName}</td>
+                  <td className="font-medium">{product.name}</td>
                   <td className="max-w-xs truncate">{product.description}</td>
                   <td className="font-bold">${product.price}</td>
                   <td>

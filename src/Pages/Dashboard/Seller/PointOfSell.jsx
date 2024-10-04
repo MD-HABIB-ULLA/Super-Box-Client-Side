@@ -13,11 +13,9 @@ const PointOfSell = () => {
   // for product api call
   const axiosPublic = useAxiosPublic();
   const { user } = useContext(AuthContext);
-  console.log(user);
   const {
     data: products,
-    isPending: isRoleLoading,
-    refetch,
+     refetch,
   } = useQuery({
     queryKey: [user.email, "posProducts"],
     enabled: !!user.email,
@@ -79,20 +77,22 @@ const PointOfSell = () => {
       <div className={`${isProductShow ? "block" : "hidden"} h-full w-full `}>
         <div className="grid grid-cols-3 gap-3 px-2">
           {products?.map((product) => (
-            <div key={product._id} className="card bg-base-100 shadow-xl">
+            <div key={product?._id} className="card bg-base-100 shadow-xl">
               <figure className="h-[300px]">
                 <img
                   className="h-full"
-                  src={product.image}
-                  alt={product.name}
+                  src={product?.image}
+                  alt={product?.name}
                 />
               </figure>
               <div className="card-body">
-                <h2 className="card-title">{product.name}</h2>
-                <p>{product.description}</p>
+                <h2 className="card-title">{product?.name}</h2>
+                <p>{product?.description}</p>
                 <div className="card-actions justify-between items-center">
-                  <span className="text-lg font-bold">${product.price}</span>
-                  <Link to={`${product._id}`}>
+                  <span className="text-lg font-bold">${product?.price}</span>
+                  <Link
+                    to={`/dashboard/pos/provide/${product?._id}?type=product`}
+                  >
                     <button className="btn btn-primary">sell</button>
                   </Link>
                 </div>
@@ -107,34 +107,42 @@ const PointOfSell = () => {
           {services &&
             services.map((service) => (
               <div
-                key={service._id}
+                key={service?._id}
                 className="bg-white relative group rounded-lg shadow-md overflow-hidden w-full mx-auto px-6 py-4"
               >
-                <FaTrash
-                  onClick={() => handleDelete(service._id)}
-                  className="bg-red-500 absolute right-0  cursor-pointer  box-content text-white p-2 rounded-full group-hover:block hidden"
-                />
                 <img
                   className="w-full h-48 object-cover rounded-t-lg"
-                  src={service.image}
-                  alt={service.serviceTitle}
+                  src={service?.image}
+                  alt={service?.serviceTitle}
                 />
-                <div className="p-4">
-                  <p className="text-gray-700 mb-2">{service.serviceTitle}</p>
+                <div className="">
+                  <p className="text-gray-700 mb-2">{service?.serviceTitle}</p>
                   <div className="flex items-center mb-2">
                     <AiOutlineCalendar className="mr-2 text-blue-500" />
-                    <span>{service.requiredTime} hours</span>
+                    <span>{service?.requiredTime} hours</span>
                   </div>
                   <div className="flex items-center mb-2">
                     <AiFillClockCircle className="mr-2 text-blue-500" />
-                    <span>{service.availableSlots} slots available</span>
+                    <span>{service?.availableSlots} slots available</span>
                   </div>
-                  <p className="text-gray-700">{service.serviceDescription}</p>
-                  <div className=" justify-between items-center mt-4">
-                    <span className="text-gray-700">Starting from:</span>
-                    <span className="text-blue-500 font-bold">
-                      ${service.serviceCost}
-                    </span>
+                  <p className="text-gray-700">{service?.serviceDescription}</p>
+                  <div className=" flex justify-between items-center mt-4">
+                    <div>
+                      <span className="text-gray-700">Starting from:</span>
+                      <span className="text-blue-500 font-bold">
+                        ${service?.serviceCost}
+                      </span>
+                    </div>
+                    <div>
+                      <Link
+                        to={`/dashboard/pos/provide/${service?._id}?type=service`}
+                      >
+                        {" "}
+                        <button className="bg-blue-600 btn  text-white">
+                          Give
+                        </button>
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </div>
