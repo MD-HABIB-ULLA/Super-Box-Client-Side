@@ -16,7 +16,7 @@ const WebDataDisProvider = ({ children }) => {
   const [webData, setWebData] = useState(null);
   const [blogs, setBlogs] = useState(null);
   const axiosPublic = useAxiosPublic();
-  console.log(name);
+ 
 
   // website data related api call
 
@@ -90,7 +90,7 @@ const WebDataDisProvider = ({ children }) => {
 
   const { _id, email, sellerInfo, webInfo } = webData || {};
 
-  console.log(blogs);
+
   useEffect(() => {
     axiosPublic
       .get(`/blogs/${email}`)

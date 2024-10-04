@@ -109,7 +109,11 @@ const router = createBrowserRouter([
           },
           {
             path: "/dashboard/pos",
-            element: <PointOfSell />,
+            element: (
+          
+                <PointOfSell />
+       
+            ),
           },
           {
             path: "/dashboard/messaging",
