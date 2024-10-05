@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { AuthContext } from "../../Provider/AuthProvider";
+import { AuthContext } from "../../../Provider/AuthProvider";
 
 const Profile = () => {
   const { customerInfo } = useContext(AuthContext);

@@ -41,7 +41,11 @@ import Support from "../../Pages/Dashboard/Seller/Support";
 import Process from "../../Pages/Dashboard/Seller/Process";
 import Provide from "../../Pages/Dashboard/Seller/Provide";
 import PendingOrder from "../../Pages/Dashboard/Seller/PendingOrder";
-import Profile from "../../Components/SellerWebPage/Profile";
+import Profile from "../../Pages/SellerWebsite/Profile/Profile";
+import Cart from "../../Pages/SellerWebsite/Cart/Cart";
+import PendingProducts from "../../Pages/SellerWebsite/PendingProducts/PendingProducts";
+import Purchased from "../../Pages/SellerWebsite/Purchased/Purchased";
+
 const RoleBasedComponent = () => {
   const { isAdmin, isSeller } = useRole();
 
@@ -257,6 +261,18 @@ const router = createBrowserRouter([
       {
         path: "profile", // List of products
         element: <Profile />,
+      },
+      {
+        path: "cart", // List of products
+        element: <Cart />,
+      },
+      {
+        path: "pending", // List of products
+        element: <PendingProducts />,
+      },
+      {
+        path: "purchased", // List of products
+        element: <Purchased />,
       },
       {
         path: "products/:id",
