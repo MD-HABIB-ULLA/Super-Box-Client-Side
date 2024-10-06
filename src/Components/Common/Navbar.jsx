@@ -1,10 +1,47 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
 import useRole from "../../hooks/useRole";
+import { BsFullscreen } from "react-icons/bs";
 
 const Navbar = () => {
-  const {isSeller, role} = useRole();
+  const [isfullScreen, setIsfullScreen] = useState(false);
+  const [documentElement, setDocumentElement] = useState();
+  const { isSeller, role } = useRole();
+  const handleFullScreenToggle = () => {
+    setIsfullScreen((pre) => !pre);
+    if (!isfullScreen) {
+      openFullscreen();
+    } else {
+      closeFullscreen();
+    }
+  };
+
+  useEffect(() => {
+    setDocumentElement(document.documentElement);
+  }, []);
+  const openFullscreen = () => {
+    if (documentElement?.requestFullscreen) {
+      documentElement?.requestFullscreen();
+    } else if (documentElement?.webkitRequestFullscreen) {
+      /* Safari */
+      documentElement?.webkitRequestFullscreen();
+    } else if (documentElement?.msRequestFullscreen) {
+      /* IE11 */
+      documentElement?.msRequestFullscreen();
+    }
+  };
+  const closeFullscreen = () => {
+    if (document?.exitFullscreen) {
+      document?.exitFullscreen();
+    } else if (document?.webkitExitFullscreen) {
+      /* Safari */
+      document?.webkitExitFullscreen();
+    } else if (document?.msExitFullscreen) {
+      /* IE11 */
+      document?.msExitFullscreen();
+    }
+  };
   console.log(isSeller);
   const { user, logOut } = useContext(AuthContext);
   return (
@@ -16,7 +53,12 @@ const Navbar = () => {
               Super Box
             </Link>
           </div>
-          <div className="navbar-end">
+          <div className="navbar-end space-x-4">
+            <div className="relative">
+              <button onClick={() => handleFullScreenToggle()} className="">
+                <BsFullscreen className="text-2xl " />
+              </button>
+            </div>
             {user?.email ? (
               <div className=" flex flex-row justify-center items-center gap-5">
                 <Link

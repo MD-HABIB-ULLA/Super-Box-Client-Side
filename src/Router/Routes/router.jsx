@@ -123,7 +123,7 @@ const router = createBrowserRouter([
             ),
           },
           {
-            path: "/dashboard/pos/provide/:id",
+            path: "/dashboard/pos/provide",
             element: (
           
                 <Provide />
