@@ -2,6 +2,7 @@ import { useContext, useEffect } from "react";
 import { Link, NavLink, useParams } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { WebDataDisContext } from "../../Context/WebDataDisContext";
+import { BiCart } from "react-icons/bi";
 
 const Navbar = ({ linksPosition, backgroundColor, logo, shopName }) => {
   const { products, blogs, services } = useContext(WebDataDisContext);
@@ -86,9 +87,15 @@ const Navbar = ({ linksPosition, backgroundColor, logo, shopName }) => {
           <ul className="flex gap-2 h-full items-center "> {list}</ul>
         </div>
         <div
-          className=" h-full flex items-center
+          className=" h-full flex items-center gap-2 
          "
         >
+          <div className="text-4xl">
+            <Link to={`/w/${name}/cart`}>
+              {" "}
+              <BiCart />
+            </Link>
+          </div>
           {customerInfo?.email ? (
             <div className=" flex flex-row justify-center items-center gap-5">
               <div className="dropdown dropdown-bottom dropdown-end">

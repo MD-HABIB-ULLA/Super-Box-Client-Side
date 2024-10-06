@@ -1,5 +1,8 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import { WebDataDisContext } from "../../../Context/WebDataDisContext";
+import { Link } from "react-router-dom";
+import { FaLeftLong } from "react-icons/fa6";
 
 const Provide = () => {
   const [paymentConfirmed, setPaymentConfirmed] = useState(false);
@@ -8,34 +11,8 @@ const Provide = () => {
   const [serviceDetails, setServiceDetails] = useState(null);
   const axiosPublic = useAxiosPublic();
 
-  const path = window.location.pathname;
-  const segments = path.split("/");
-  const id = segments[segments.length - 1]; // Get the last segment as ID
-  const queryParams = new URLSearchParams(window.location.search);
-  const type = queryParams.get("type"); // Extract 'type' from URL
-
-  useEffect(() => {
-    setLoading(true); // Set loading to true when starting the fetch
-
-    if (type === "product") {
-      axiosPublic
-        .get(`/product/${id}`)
-        .then((res) => setProductDetails(res.data))
-        .catch((err) => console.log(err))
-        .finally(() => setLoading(false)); // Set loading to false after fetching
-    }
-    if (type === "service") {
-      axiosPublic
-        .get(`/serviceDetails/${id}`)
-        .then((res) => setServiceDetails(res.data))
-        .catch((err) => console.log(err))
-        .finally(() => setLoading(false)); // Set loading to false after fetching
-    }
-  }, [type, id]); // Add 'id' as a dependency to re-fetch data when it changes
-
-  if (loading) {
-    return <div>Loading...</div>; // Display a loading message while data is being fetched
-  }
+  const { cartItems, addToCart } = useContext(WebDataDisContext);
+  console.log(cartItems);
 
   const handlePaymentConfirmation = () => {
     setPaymentConfirmed(true); // Trigger payment confirmation
@@ -48,7 +25,63 @@ const Provide = () => {
 
   return (
     <div>
-      {type === "product" && productDetails && (
+      <div className="">
+        <Link to={-1}>
+          <button className="btn text-blue-600"><FaLeftLong/> Go back</button>
+        </Link>
+      </div>
+      {cartItems?.map((item) => (
+        <div
+          key={item._id}
+          className="justify-between mb-6 rounded-lg  p-6 shadow-md sm:flex sm:justify-start"
+        >
+          <img
+            src={item.image}
+            alt="product-image"
+            className="w-full rounded-lg sm:w-40"
+          />
+          <div className="sm:ml-4 sm:flex sm:w-full sm:justify-between">
+            <div className="mt-5 sm:mt-0">
+              <h2 className="text-lg font-bold text-gray-900">{item.name}</h2>
+              <p className="mt-1 text-xs text-gray-700">{item.description}</p>
+            </div>
+            <div className="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
+              <div className="flex items-center space-x-4">
+                <p className="text-sm">{item.price} $</p>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  className="h-5 w-5 cursor-pointer duration-150 hover:text-red-500"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+      <div className="border-t border-dashed ">
+        <div>
+          Total :{" "}
+          {cartItems.reduce((accumulator, item) => {
+            return accumulator + item.price;
+          }, 0)}
+        </div>
+      </div>
+      <button
+        onClick={handlePaymentConfirmation}
+        className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+      >
+        Sell
+      </button>
+      {/* {type === "product" && productDetails && (
         <div className="container mx-auto px-4 py-8">
           <div className="flex flex-wrap md:flex-nowrap">
             <img
@@ -78,9 +111,9 @@ const Provide = () => {
             </div>
           </div>
         </div>
-      )}
+      )} */}
 
-      {type === "service" && serviceDetails && (
+      {/* {type === "service" && serviceDetails && (
         <div className="container mx-auto px-4 py-8">
           <div className="flex flex-wrap md:flex-nowrap">
             <img
@@ -127,9 +160,9 @@ const Provide = () => {
             </div>
           </div>
         </div>
-      )}
+      )} */}
 
-      <dialog id="provide" className="modal">
+      {/* <dialog id="provide" className="modal">
         <div className="modal-box">
           <h3 className="font-bold text-lg">
             {type === "product"
@@ -160,7 +193,6 @@ const Provide = () => {
             )}
           </p>
 
-          {/* Payment Method Section */}
           <div className="mt-4">
             <h4 className="font-bold text-md mb-2">Choose Payment Method:</h4>
             <div>
@@ -200,15 +232,15 @@ const Provide = () => {
         <form method="dialog" className="modal-backdrop">
           <button className="btn">Close</button>
         </form>
-      </dialog>
-      <dialog id="receipt" className="modal">
+      </dialog> */}
+      {/* <dialog id="receipt" className="modal">
         <div className="modal-box">
           <h3 className="font-bold text-lg">Payment Receipt</h3>
           <p className="py-4">
             <strong>Transaction ID:</strong> {id}
             <br />
             <strong>Payment Method:</strong>{" "}
-            {/* You can add logic to show the selected payment method */}
+           
             <br />
             {type === "product" ? (
               <>
@@ -233,7 +265,7 @@ const Provide = () => {
         <form method="dialog" className="modal-backdrop">
           <button className="">Close</button>
         </form>
-      </dialog>
+      </dialog> */}
     </div>
   );
 };
