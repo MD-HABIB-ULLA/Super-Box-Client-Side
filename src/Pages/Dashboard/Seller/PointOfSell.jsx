@@ -39,6 +39,8 @@ const PointOfSell = () => {
       }
     },
   });
+
+  console.log(services);
   // const addToCart = (product) => {
   //   setCartItems([...cartItems, product]);
   // };
@@ -147,9 +149,11 @@ const PointOfSell = () => {
                       </span>
                     </div>
                     <div>
-                      {" "}
-                      <button className="bg-blue-600 btn  text-white">
-                        Give
+                      <button
+                        onClick={() => addToCart(service)}
+                        className="btn btn-primary"
+                      >
+                        Add
                       </button>
                     </div>
                   </div>

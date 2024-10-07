@@ -3,6 +3,7 @@ import Navbar from "../../../Components/SellerWebPage/Navbar";
 import { useContext } from "react";
 import { WebDataDisContext } from "../../../Context/WebDataDisContext";
 import { Clock, LogOut, Package, ShoppingCart, User } from "lucide-react";
+import { HiChatBubbleLeftRight } from "react-icons/hi2";
 
 const Layout = () => {
   const { name } = useParams();
@@ -32,9 +33,8 @@ const Layout = () => {
                 aria-label="close sidebar"
                 className="drawer-overlay"
               ></label>
-        
+
               <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
-               
                 <li>
                   <Link
                     to={`/w/${name}/profile`}
@@ -69,6 +69,16 @@ const Layout = () => {
                   >
                     <Package className="mr-3" size={20} />
                     Purchased Products
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to={`/w/${name}/messaging`}
+                    className="flex items-center py-2 px-4 hover:bg-gray-700 hover:text-white rounded transition duration-150 ease-in-out"
+                 
+                  >
+                    <HiChatBubbleLeftRight className="mr-3" size={20} />
+                    Messaging
                   </Link>
                 </li>
                 <div className="mt-auto">
