@@ -259,6 +259,10 @@ const router = createBrowserRouter([
         element: <Blogs />,
       },
       {
+        path: "messaging", // List of products
+        element: <ChatUs />,
+      },
+      {
         path: "profile", // List of products
         element: <Profile />,
       },
