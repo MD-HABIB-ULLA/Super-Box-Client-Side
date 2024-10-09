@@ -3,6 +3,7 @@ import { AuthContext } from "../../Provider/AuthProvider";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
+import { FcGoogle } from "react-icons/fc";
 
 const GoogleLoginBtn = () => {
   const { name } = useParams();
@@ -65,11 +66,7 @@ const GoogleLoginBtn = () => {
   return (
     <div>
       <div onClick={handleGoogleLogin} className="cursor-pointer">
-        <img
-          className=" w-8"
-          src="https://i.ibb.co/74JTkrp/google-13170545.png"
-          alt=""
-        />
+       <FcGoogle/>
       </div>
     </div>
   );

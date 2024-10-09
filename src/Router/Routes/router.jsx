@@ -45,6 +45,7 @@ import Profile from "../../Pages/SellerWebsite/Profile/Profile";
 import Cart from "../../Pages/SellerWebsite/Cart/Cart";
 import PendingProducts from "../../Pages/SellerWebsite/PendingProducts/PendingProducts";
 import Purchased from "../../Pages/SellerWebsite/Purchased/Purchased";
+import Video from "../../Pages/video/video";
 
 const RoleBasedComponent = () => {
   const { isAdmin, isSeller } = useRole();
@@ -237,9 +238,9 @@ const router = createBrowserRouter([
   {
     path: "/w/:name",
     element: (
-      <WebDataDisProvider>
+
         <Layout />
-      </WebDataDisProvider>
+
     ),
     children: [
       {
@@ -261,6 +262,10 @@ const router = createBrowserRouter([
       {
         path: "messaging", // List of products
         element: <ChatUs />,
+      },
+      {
+        path: "support", // List of products
+        element: <Support />,
       },
       {
         path: "profile", // List of products
@@ -293,5 +298,9 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path:"video",
+    element: <Video/>
+  }
 ]);
 export default router;

@@ -1,14 +1,14 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import useAxiosPublic from "../hooks/useAxiosPublic";
 import { AuthContext } from "../Provider/AuthProvider";
-import useRole from "../hooks/useRole";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+
 
 // Create a context for the form
 export const FormContext = createContext(null);
 
 const CreateWebFormContext = ({ children }) => {
+
   const [sellerExist, setSellerExist] = useState(false);
   const [sellerInfo, setSellerInfo] = useState(null); // State for seller information
   const [webInfo, setWebInfo] = useState(null); // State for website information
@@ -22,6 +22,8 @@ const CreateWebFormContext = ({ children }) => {
     sellerInfo,
     webInfo,
   };
+
+
   console.log(sellerExist);
   const findRequest = async () => {
     // Set loading state to true before request
@@ -71,6 +73,7 @@ const CreateWebFormContext = ({ children }) => {
     setWebInfo,
     loading,
     sellerExist,
+
   };
 
   return (

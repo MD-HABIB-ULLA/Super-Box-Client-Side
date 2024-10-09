@@ -59,7 +59,7 @@ const Navbar = () => {
                 <BsFullscreen className="text-2xl " />
               </button>
             </div>
-            {user?.email ? (
+            {user ? (
               <div className=" flex flex-row justify-center items-center gap-5">
                 <Link
                   to={"/dashboard"}

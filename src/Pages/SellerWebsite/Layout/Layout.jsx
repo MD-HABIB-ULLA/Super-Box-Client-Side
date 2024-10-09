@@ -1,14 +1,16 @@
 import { Link, Outlet, useParams } from "react-router-dom";
 import Navbar from "../../../Components/SellerWebPage/Navbar";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { WebDataDisContext } from "../../../Context/WebDataDisContext";
 import { Clock, LogOut, Package, ShoppingCart, User } from "lucide-react";
 import { HiChatBubbleLeftRight } from "react-icons/hi2";
 
 const Layout = () => {
   const { name } = useParams();
-  const { webInfo } = useContext(WebDataDisContext);
-
+  const { setName, webInfo } = useContext(WebDataDisContext);
+  useEffect(() => {
+    setName(name);
+  }, [name]);
   return (
     <>
       {webInfo ? (
@@ -75,13 +77,21 @@ const Layout = () => {
                   <Link
                     to={`/w/${name}/messaging`}
                     className="flex items-center py-2 px-4 hover:bg-gray-700 hover:text-white rounded transition duration-150 ease-in-out"
-                 
                   >
                     <HiChatBubbleLeftRight className="mr-3" size={20} />
                     Messaging
                   </Link>
                 </li>
                 <div className="mt-auto">
+                  <li>
+                    <Link
+                      to={`/w/${name}/support`}
+                      className="flex items-center mb-3 py-2 px-4 hover:bg-gray-700 hover:text-white rounded transition duration-150 ease-in-out"
+                    >
+                      <HiChatBubbleLeftRight className="mr-3 " size={20} />
+                      Support & Report
+                    </Link>
+                  </li>
                   <button className="w-full flex items-center justify-center py-2 px-4 bg-red-600 hover:bg-red-700 rounded transition duration-150 ease-in-out">
                     <LogOut className="mr-3" size={20} />
                     Log Out

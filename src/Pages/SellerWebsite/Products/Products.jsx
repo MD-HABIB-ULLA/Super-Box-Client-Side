@@ -4,7 +4,7 @@ import Title from "../../../Components/Common/Title";
 import { Link } from "react-router-dom";
 
 const Products = () => {
-  const { products } = useContext(WebDataDisContext);
+  const { products, addWebCartItem } = useContext(WebDataDisContext);
 
   return (
     <div className="px-10">
@@ -28,9 +28,12 @@ const Products = () => {
                   <p>{product.description}</p>
                   <div className="card-actions justify-between items-center">
                     <span className="text-lg font-bold">${product.price}</span>
-                    <Link to={`${product._id}`}>
-                      <button className="btn btn-primary">Buy Now</button>
-                    </Link>
+                    <div>
+                      <button onClick={()=>addWebCartItem(product)} className="btn-primary">Add to cart </button>
+                      <Link to={`${product._id}`}>
+                        <button className="btn btn-primary">Buy Now</button>
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </div>
