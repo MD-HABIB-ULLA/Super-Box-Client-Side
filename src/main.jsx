@@ -17,7 +17,9 @@ createRoot(document.getElementById("root")).render(
       <AuthProvider>
         <CreateWebFormContext>
           <Toaster />
-          <RouterProvider router={router} />
+          <WebDataDisProvider>
+            <RouterProvider router={router} />
+          </WebDataDisProvider>
         </CreateWebFormContext>
       </AuthProvider>
     </QueryClientProvider>

@@ -1,22 +1,14 @@
-import { useParams, useSearchParams } from "react-router-dom";
 import Banner from "../../../Components/SellerWebPage/Banner";
 import ContactInfo from "../../../Components/SellerWebPage/ContactInfo";
 import FollowUs from "../../../Components/SellerWebPage/FollowUs";
-import Navbar from "../../../Components/SellerWebPage/Navbar";
 import { useContext } from "react";
 import { WebDataDisContext } from "../../../Context/WebDataDisContext";
 import Title from "../../../Components/Common/Title";
 import Services from "../../../Components/SellerWebPage/Services";
 
 const SellerWebsite = () => {
-  const { name } = useParams();
-
-  const [searchParams] = useSearchParams();
-  const id = searchParams.get("id");
-
-  console.log(name, id);
-  const { webInfo, products, blogs, services } = useContext(WebDataDisContext);
-  console.log(products);
+  const { webInfo, products, blogs, services, setName } =
+    useContext(WebDataDisContext);
 
   return (
     <div className="min-h-screen">
@@ -97,10 +89,7 @@ const SellerWebsite = () => {
           </div>
         </div>
       )}
-      {services?.length !== 0 && (
-       <Services services={services}/>
-      )}
-
+      {services?.length !== 0 && <Services services={services} />}
 
       {/* Contact Information */}
       <ContactInfo

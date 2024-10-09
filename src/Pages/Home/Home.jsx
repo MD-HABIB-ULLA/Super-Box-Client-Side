@@ -5,6 +5,8 @@ import Feature from "../../Components/Other/Feature";
 import FollowUs from "../../Components/Other/FollowUs";
 
 const Home = () => {
+
+
   return (
     <div>
       <Banner />

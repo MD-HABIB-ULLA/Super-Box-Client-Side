@@ -77,6 +77,7 @@ const AuthProvider = ({ children }) => {
       const isCustomer = JSON.parse(storedIsCustomer);
       console.log(isCustomer)
       if (isCustomer) {
+        
         setCustomerInfo(currentUser);
       }
     });

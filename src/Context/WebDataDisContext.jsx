@@ -10,10 +10,15 @@ export const WebDataDisContext = createContext(null);
 
 // Create the provider component
 const WebDataDisProvider = ({ children }) => {
+  const [customerEmail, setCustomerEmail] = useState("");
+  const [name, setName] = useState("");
   const [cartItems, setCartItems] = useState([]);
+  const [webCartItem, setWebCartItem] = useState([]);
+
+  console.log(customerEmail);
   const { user } = useContext(AuthContext);
   console.log(user?.email);
-  const { name } = useParams();
+
   const [webData, setWebData] = useState(null);
   const [blogs, setBlogs] = useState(null);
   const axiosPublic = useAxiosPublic();
@@ -100,7 +105,7 @@ const WebDataDisProvider = ({ children }) => {
   }, [email]);
 
   useEffect(() => {
-    const storedCart = JSON.parse(localStorage.getItem('cartItems'));
+    const storedCart = JSON.parse(localStorage.getItem("cartItems"));
     if (storedCart) {
       setCartItems(storedCart);
     }
@@ -108,18 +113,22 @@ const WebDataDisProvider = ({ children }) => {
 
   // Save cart items to local storage whenever the cart changes
   useEffect(() => {
-    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
 
   const addToCart = (product) => {
     setCartItems([...cartItems, product]);
+  };
+
+  const addWebCartItem = (product) => {
+    setWebCartItem([...webCartItem, product]);
   };
   return (
     <WebDataDisContext.Provider
       value={{
         email,
         blogs,
-        webInfo,
+        addWebCartItem,
         refetch,
         isWebsiteLoading,
         products,
@@ -128,7 +137,12 @@ const WebDataDisProvider = ({ children }) => {
         setCartItems,
         cartItems,
         services,
-        addToCart
+        addToCart,
+        setName,
+        webInfo,
+        setCustomerEmail,
+        addWebCartItem,
+        webCartItem,
       }}
     >
       {children}

@@ -8,7 +8,7 @@ const Navbar = ({ linksPosition, backgroundColor, logo, shopName }) => {
   const { products, blogs, services } = useContext(WebDataDisContext);
   console.log(services);
 
-  const { customerInfo, logOut } = useContext(AuthContext);
+  const { customerInfo} = useContext(AuthContext);
   const { name } = useParams();
 
   const list = (
@@ -96,7 +96,7 @@ const Navbar = ({ linksPosition, backgroundColor, logo, shopName }) => {
               <BiCart />
             </Link>
           </div>
-          {customerInfo?.email ? (
+          {customerInfo ? (
             <div className=" flex flex-row justify-center items-center gap-5">
               <div className="dropdown dropdown-bottom dropdown-end">
                 <label
