@@ -298,9 +298,6 @@ const router = createBrowserRouter([
       },
     ],
   },
-  {
-    path:"video",
-    element: <Video/>
-  }
+  
 ]);
 export default router;
