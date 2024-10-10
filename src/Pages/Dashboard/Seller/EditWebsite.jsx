@@ -23,17 +23,22 @@ const EditWebsite = () => {
         </>
       ) : (
         <>
-          <div className="px-4">
-            <div style={{backgroundColor : `${data.webInfo.body.backgroundColor}`}}
-              className={` rounded-lg overflow-hidden mt-10 border-[1px] border-black  `}
-            >
-              {/* banner */}
-              <Navbar />
-              <Banner />
-              <Contact />
-              <FollowUs />
+          {data !== null && (
+            <div className="px-4">
+              <div
+                style={{
+                  backgroundColor: `${data.webInfo?.body.backgroundColor}`,
+                }}
+                className={` rounded-lg overflow-hidden mt-10 border-[1px] border-black  `}
+              >
+                {/* banner */}
+                <Navbar />
+                <Banner />
+                <Contact />
+                <FollowUs />
+              </div>
             </div>
-          </div>
+          )}
         </>
       )}
     </div>

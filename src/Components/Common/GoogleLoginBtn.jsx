@@ -28,7 +28,20 @@ const GoogleLoginBtn = () => {
             email: res.user.email,
             role: "user",
           };
-
+          const customerData = {
+            email: res.user.email,
+            authData: res.user,
+            shopName: name,
+            phone: "",
+            address: {
+              street: "",
+              city: "",
+              state: "",
+              postalCode: "",
+              country: "",
+            },
+            cart: [],
+          };
           // Store user info in the backend
           axiosPublic
             .post("/users", userInfo)
@@ -40,8 +53,6 @@ const GoogleLoginBtn = () => {
               console.log();
               // Conditional navigation based on customer status
               if (isCustomer) {
-                const { role, ...rest } = userInfo;
-                const customerData = { ...rest, shopName: name };
                 axiosPublic.post("/customer", customerData).then(() => {
                   navigate(`/w/${name}`);
                   window.location.reload();
@@ -66,7 +77,7 @@ const GoogleLoginBtn = () => {
   return (
     <div>
       <div onClick={handleGoogleLogin} className="cursor-pointer">
-       <FcGoogle/>
+        <FcGoogle />
       </div>
     </div>
   );

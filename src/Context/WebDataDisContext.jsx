@@ -1,35 +1,40 @@
-// WebDataDisContext.js
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import useAxiosPublic from "../hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
+import useAxiosPublic from "../hooks/useAxiosPublic";
 import { AuthContext } from "../Provider/AuthProvider";
+import toast from "react-hot-toast";
 
 // Create the context
 export const WebDataDisContext = createContext(null);
 
-// Create the provider component
 const WebDataDisProvider = ({ children }) => {
   const [customerEmail, setCustomerEmail] = useState("");
   const [name, setName] = useState("");
   const [cartItems, setCartItems] = useState([]);
   const [webCartItem, setWebCartItem] = useState([]);
-
-  console.log(customerEmail);
-  const { user } = useContext(AuthContext);
-  console.log(user?.email);
-
   const [webData, setWebData] = useState(null);
   const [blogs, setBlogs] = useState(null);
+
+
   const axiosPublic = useAxiosPublic();
+  const { user } = useContext(AuthContext);
+ 
+  const { data: customerData } = useQuery({
+    queryKey: [user?.email, "customer info"],
+    queryFn: async () => {
+      if (user?.email) {
+        const res = await axiosPublic.get(`/customerInfo/${user.email}`);
+        return res.data;
+      }
+      return null;
+    },
+    enabled: !!user?.email,
+  
+  });
 
-  // website data related api call
 
-  const {
-    data: websiteData,
-    isLoading: isWebsiteLoading,
-    refetch: refetchWebsite,
-  } = useQuery({
+
+  const { data: websiteData, isLoading: isWebsiteLoading } = useQuery({
     queryKey: [name, "Website data with name"],
     queryFn: async () => {
       if (name) {
@@ -41,13 +46,7 @@ const WebDataDisProvider = ({ children }) => {
     enabled: !!name,
   });
 
-  // product related api call
-
-  const {
-    data: products,
-    isLoading: isProductsLoading,
-    refetch: refetchProducts,
-  } = useQuery({
+  const { data: products, isLoading: isProductsLoading } = useQuery({
     queryKey: [name, "products"],
     queryFn: async () => {
       if (name) {
@@ -56,28 +55,24 @@ const WebDataDisProvider = ({ children }) => {
       }
       return null;
     },
-    enabled: !!name, // Only run the query if the name exists
+    enabled: !!name,
   });
-
-  //  web data with email api call
 
   const { data, isPending, refetch } = useQuery({
     queryKey: [user?.email, "websiteData"],
-    enabled: !!user?.email, // This ensures the query runs only when user.email is defined
+    enabled: !!user?.email,
     queryFn: async () => {
       if (user?.email) {
         const res = await axiosPublic.get(`/webData/${user?.email}`);
-        // Make sure you return the correct data
-        return res.data ? res.data : {}; // Return res.data or an empty object if it's undefined
+        return res.data || {};
       }
-      return {}; // Return an empty object if user.email doesn't exist
+      return {};
     },
   });
 
-  // services related api call
   const { data: services } = useQuery({
     queryKey: [name, "services"],
-    enabled: !!name, // Add more conditions here
+    enabled: !!name,
     queryFn: async () => {
       if (name) {
         const res = await axiosPublic.get(`/service/${name}`);
@@ -86,22 +81,21 @@ const WebDataDisProvider = ({ children }) => {
     },
   });
 
-  // Using useEffect to set webData when data changes
   useEffect(() => {
     if (!isWebsiteLoading && websiteData) {
-      setWebData(websiteData); // Update the webData state with the fetched data
+      setWebData(websiteData);
     }
-  }, [isWebsiteLoading, websiteData]); // Only re-run effect when isLoading or data changes
+  }, [isWebsiteLoading, websiteData]);
 
-  const { _id, email, sellerInfo, webInfo } = webData || {};
+  const { email, webInfo } = webData || {};
 
   useEffect(() => {
-    axiosPublic
-      .get(`/blogs/${email}`)
-      .then((res) => {
-        setBlogs(res.data);
-      })
-      .catch((err) => console.log(err));
+    if (email) {
+      axiosPublic
+        .get(`/blogs/${email}`)
+        .then((res) => setBlogs(res.data))
+        .catch((err) => console.log(err));
+    }
   }, [email]);
 
   useEffect(() => {
@@ -111,24 +105,78 @@ const WebDataDisProvider = ({ children }) => {
     }
   }, []);
 
-  // Save cart items to local storage whenever the cart changes
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
 
   const addToCart = (product) => {
-    setCartItems([...cartItems, product]);
+    setCartItems((prevItems) => [...prevItems, product]);
   };
 
-  const addWebCartItem = (product) => {
-    setWebCartItem([...webCartItem, product]);
+  const getCartItems = async (email, shopName) => {
+    try {
+      const response = await axiosPublic.get(`/cart/${email}/${shopName}`);
+      return response.data.products;
+    } catch (error) {
+      console.error(
+        "Error fetching cart items:",
+        error.response?.data?.message || error.message
+      );
+      return [];
+    }
   };
+
+  useEffect(() => {
+    const fetchInitialCartItems = async () => {
+      const email = user?.email;
+      const shopName = name;
+      if (email && shopName) {
+        const initialCartItems = await getCartItems(email, shopName);
+        setWebCartItem(initialCartItems);
+      }
+    };
+    fetchInitialCartItems();
+  }, [user?.email, name]);
+
+  const addWebCartItem = async (id) => {
+    const email = user.email;
+    const shopName = name;
+
+    try {
+      const response = await axiosPublic.post(`/cart/${id}/${email}`);
+      toast.success(response.data.message);
+
+      const updatedCartItems = await getCartItems(email, shopName);
+      setWebCartItem(updatedCartItems);
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Error adding item to cart");
+    }
+  };
+
+  const deleteWebCartItem = async (id) => {
+    const email = user.email;
+    const shopName = name;
+
+    try {
+      const response = await axiosPublic.delete(`/cart/${id}/${email}`);
+      toast.success(response.data.message);
+
+      const updatedCartItems = await getCartItems(email, shopName);
+      setWebCartItem(updatedCartItems);
+    } catch (error) {
+      toast.error(
+        error.response?.data?.message || "Error removing item from cart"
+      );
+    }
+  };
+
   return (
     <WebDataDisContext.Provider
       value={{
         email,
         blogs,
         addWebCartItem,
+        deleteWebCartItem,
         refetch,
         isWebsiteLoading,
         products,
@@ -139,10 +187,11 @@ const WebDataDisProvider = ({ children }) => {
         services,
         addToCart,
         setName,
+        name,
         webInfo,
         setCustomerEmail,
-        addWebCartItem,
         webCartItem,
+        customerData
       }}
     >
       {children}
