@@ -1,10 +1,19 @@
 import { useContext } from "react";
 import { WebDataDisContext } from "../../../Context/WebDataDisContext";
 import Title from "../../../Components/Common/Title";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../../Provider/AuthProvider";
 
 const Products = () => {
-  const { products, addWebCartItem } = useContext(WebDataDisContext);
+  const { products, addWebCartItem, name } = useContext(WebDataDisContext);
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const handleAddToCart = (id) => {
+    if (!user) {
+      navigate(`/w/${name}/login`);
+    }
+    addWebCartItem(id);
+  };
 
   return (
     <div className="px-10">
@@ -29,7 +38,12 @@ const Products = () => {
                   <div className="card-actions justify-between items-center">
                     <span className="text-lg font-bold">${product.price}</span>
                     <div>
-                      <button onClick={()=>addWebCartItem(product)} className="btn-primary">Add to cart </button>
+                      <button
+                        onClick={() => handleAddToCart(product._id)}
+                        className="btn- btn"
+                      >
+                        Add to cart{" "}
+                      </button>
                       <Link to={`${product._id}`}>
                         <button className="btn btn-primary">Buy Now</button>
                       </Link>

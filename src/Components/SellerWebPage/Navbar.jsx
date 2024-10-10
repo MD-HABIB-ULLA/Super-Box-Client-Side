@@ -5,12 +5,13 @@ import { WebDataDisContext } from "../../Context/WebDataDisContext";
 import { BiCart } from "react-icons/bi";
 
 const Navbar = ({ linksPosition, backgroundColor, logo, shopName }) => {
-  const { products, blogs, services } = useContext(WebDataDisContext);
+
+  const { products, blogs, services,webCartItem } = useContext(WebDataDisContext);
   console.log(services);
 
   const { customerInfo} = useContext(AuthContext);
   const { name } = useParams();
-
+ console.log(customerInfo)
   const list = (
     <>
       <NavLink
@@ -90,10 +91,13 @@ const Navbar = ({ linksPosition, backgroundColor, logo, shopName }) => {
           className=" h-full flex items-center gap-2 
          "
         >
-          <div className="text-4xl">
+          <div className="text-4xl relative">
             <Link to={`/w/${name}/cart`}>
               {" "}
               <BiCart />
+              <div className="absolute bg-red-500 -top-2 text-sm px-2 text-white font-bold -right-3 py-1 rounded-full">
+                <p>{webCartItem?.length}</p>
+              </div>
             </Link>
           </div>
           {customerInfo ? (

@@ -45,7 +45,6 @@ import Profile from "../../Pages/SellerWebsite/Profile/Profile";
 import Cart from "../../Pages/SellerWebsite/Cart/Cart";
 import PendingProducts from "../../Pages/SellerWebsite/PendingProducts/PendingProducts";
 import Purchased from "../../Pages/SellerWebsite/Purchased/Purchased";
-import Video from "../../Pages/video/video";
 
 const RoleBasedComponent = () => {
   const { isAdmin, isSeller } = useRole();
@@ -298,9 +297,6 @@ const router = createBrowserRouter([
       },
     ],
   },
-  {
-    path:"video",
-    element: <Video/>
-  }
+  
 ]);
 export default router;
