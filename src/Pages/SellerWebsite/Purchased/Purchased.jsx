@@ -1,32 +1,23 @@
-import React from "react";
+import React, { useContext } from "react";
+import { WebDataDisContext } from "../../../Context/WebDataDisContext";
 
 // Placeholder image URL for products (fake image)
-const placeholderProductImage =
-  "https://images.unsplash.com/photo-1515955656352-a1fa3ffcd111?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80D";
 
 // Component for each product item
 const ProductItem = ({ product }) => {
   const handleCancel = () => {
     alert(`Cancelling product: ${product.productId}`);
   };
+  console.log(product);
 
   return (
-    <div className="border rounded-lg p-4 shadow-lg  flex flex-col justify-between bg-white items-center mb-4">
-      <img
-        src={placeholderProductImage}
-        alt={product.productId}
-        className="w-44  object-cover rounded-md"
-      />
+    <div className="border rounded-lg p-4 shadow-lg flex flex-col justify-between bg-white items-center mb-4 ">
+      
       <div className="ml-4 flex-1">
-        <h3 className="text-lg font-semibold">
-          Product ID: {product.productId}
-        </h3>
+        <h3 className="text-lg font-semibold">Product ID: {product.productId}</h3>
         <p>Shop Name: {product.shopName}</p>
-        <p>Price: ${product.productPrice.toFixed(2)}</p>
-        <p>
-          Transaction Time: {new Date(product.transactionTime).toLocaleString()}
-        </p>
-        <p>Status: {product.isReceived ? "Received" : "Pending"}</p>
+        <p>Price: ${product.price}</p>
+        <p>Transaction id: {product.transactionId}</p>
       </div>
     </div>
   );
@@ -34,6 +25,8 @@ const ProductItem = ({ product }) => {
 
 // Main component for product purchase history
 const Purchased = () => {
+  const {purchaseProducts} = useContext(WebDataDisContext)
+  console.log(purchaseProducts)
   const productPurchases = [
     {
       productId: "PROD123456",
@@ -83,13 +76,13 @@ const Purchased = () => {
   ];
 
   return (
-    <div className="max-w-7xl mx-auto p-6 ">
+    <div className="max-w-7xl mx-auto p-6  min-h-screen">
       <div className="text-center">
         <h1 className="text-2xl font-bold mb-6">Product Purchase History</h1>
       </div>
       <div className="grid grid-cols-3 gap-3">
-        {productPurchases.map((product) => (
-          <ProductItem key={product.productId} product={product} />
+        {purchaseProducts?.map((product) => (
+          <ProductItem key={product._id} product={product} />
         ))}
       </div>
     </div>

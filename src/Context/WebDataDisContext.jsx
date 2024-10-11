@@ -31,6 +31,18 @@ const WebDataDisProvider = ({ children }) => {
     enabled: !!user?.email,
   
   });
+  const { data: purchaseProducts } = useQuery({
+    queryKey: [user?.email, "purchaseProducts"],
+    queryFn: async () => {
+      if (user?.email) {
+        const res = await axiosPublic.get(`/purchaseProducts/${user.email}`);
+        return res.data;
+      }
+      return null;
+    },
+    enabled: !!user?.email,
+  
+  });
 
 
 
@@ -170,6 +182,23 @@ const WebDataDisProvider = ({ children }) => {
     }
   };
 
+
+  const singleProductData = (id) => {
+    const { data, isLoading, refetch, error } = useQuery({
+      queryKey: [id, "product data with id"],
+      queryFn: async () => {
+        if (id) {
+          const res = await axiosPublic.get(`/product/${id}`);
+          return res.data;
+        }
+        return null;
+      },
+      enabled: !!id, // Only run the query if id exists
+    });
+  
+    return { data, isLoading, refetch, error };
+  };
+
   return (
     <WebDataDisContext.Provider
       value={{
@@ -191,7 +220,9 @@ const WebDataDisProvider = ({ children }) => {
         webInfo,
         setCustomerEmail,
         webCartItem,
-        customerData
+        customerData,
+        purchaseProducts,
+        singleProductData
       }}
     >
       {children}
