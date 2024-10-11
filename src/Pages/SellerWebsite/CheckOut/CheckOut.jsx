@@ -1,7 +1,18 @@
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { WebDataDisContext } from "../../../Context/WebDataDisContext";
+import { AuthContext } from "../../../Provider/AuthProvider";
+import axios from "axios";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import toast from "react-hot-toast";
 
 const Checkout = () => {
+  const { confirmProduct, webData , name} = useContext(WebDataDisContext);
+  const { user } = useContext(AuthContext);
+  const email = user?.email;
+  const sellerEmail = webData?.email;
+  const navigate = useNavigate();
+  const axiosPublic = useAxiosPublic();
   const [paymentMethod, setPaymentMethod] = useState("cashOnDelivery");
   const [mobileBankingOption, setMobileBankingOption] = useState("");
   const [cardDetails, setCardDetails] = useState({
@@ -9,10 +20,16 @@ const Checkout = () => {
     expiry: "",
     cvv: "",
   });
+  useEffect(() => {
+    if (!confirmProduct) {
+      navigate(-1);
+    }
+  }, [confirmProduct, navigate, name]); // Add dependencies
+
   const [totalPrice, setTotalPrice] = useState(0); // Assume initial total without any extra fees
 
   const location = useLocation();
-  
+
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
     const amount = searchParams.get("totalAmount");
@@ -32,6 +49,39 @@ const Checkout = () => {
       extraCharge = 10; // Cash on Delivery charge is $10
     }
     return totalPrice + extraCharge;
+  };
+
+  const handlePayment = async () => {
+    // Ensure confirmProduct is an array, even if it's a single object
+    const productData = Array.isArray(confirmProduct)
+      ? confirmProduct
+      : [confirmProduct];
+
+    // Map over the productData to append additional payment information
+    const updatedProductData = productData.map((product) => ({
+      ...product,
+      paymentStatus:
+        paymentMethod === "cashOnDelivery" ? "pending" : "completed",
+      buyerEmail: email,
+      sellerEmail: sellerEmail,
+    }));
+
+    // Iterate over each product and send a separate API call for each
+    try {
+      for (const product of updatedProductData) {
+        const response = await axiosPublic.post("/payment", {
+          ...product, // Sending individual product object
+          paymentMethod,
+          
+        });
+        toast.success(`Payment for product ${product.name} succeeded`);
+        navigate(`/w/${name}`)
+      }
+      // Handle successful payments here (e.g., navigate to a success page)
+    } catch (error) {
+      console.error("Payment failed for one or more products", error);
+      // Handle payment failure (e.g., show error message)
+    }
   };
 
   return (
@@ -175,7 +225,10 @@ const Checkout = () => {
           </div>
 
           {/* Proceed to Pay */}
-          <button className="w-full bg-orange-500 text-white font-bold py-3 mt-6 rounded hover:bg-orange-600">
+          <button
+            onClick={handlePayment}
+            className="w-full bg-orange-500 text-white font-bold py-3 mt-6 rounded hover:bg-orange-600"
+          >
             Proceed to Pay
           </button>
         </div>

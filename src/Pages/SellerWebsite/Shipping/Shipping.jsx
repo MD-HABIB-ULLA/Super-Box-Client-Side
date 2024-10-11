@@ -4,17 +4,19 @@ import { useLocation, useNavigate } from "react-router-dom";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 
 const Shipping = () => {
-  const { customerData, singleProductData, webCartItem, name } =
-    useContext(WebDataDisContext);
-  const [productData, setProductData] = useState(
-    webCartItem.length !== 0 ? webCartItem : null
-  );
+  const {
+    customerData,
+    singleProductData,
+    webCartItem,
+    name,
+    setConfirmProduct,
+  } = useContext(WebDataDisContext);
+  const [productData, setProductData] = useState(null);
   const navigate = useNavigate();
   const axiosPublic = useAxiosPublic();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const typeParam = searchParams.get("type");
-
   const productIdParam = searchParams.get("productId");
 
   useEffect(() => {
@@ -23,14 +25,19 @@ const Shipping = () => {
         try {
           const res = await axiosPublic.get(`/product/${productIdParam}`);
           setProductData([res.data]);
+          setConfirmProduct([res.data]);
         } catch (error) {
           console.log("Error fetching product data:", error);
         }
       };
-
-      fetchProductData(); // Call the function
+      fetchProductData();
+    } else {
+      if (webCartItem.length !== 0) {
+        setProductData(webCartItem);
+        setConfirmProduct(webCartItem);
+      }
     }
-  }, [typeParam, productIdParam, axiosPublic]);
+  }, [typeParam, productIdParam, axiosPublic, webCartItem, setConfirmProduct]);
 
   // Function to calculate the total price including shipping
   const calculateTotal = () => {
@@ -43,7 +50,7 @@ const Shipping = () => {
     return productTotal + shippingTotal;
   };
 
-  const totalPrice = calculateTotal(); // Calculate the total price
+  const totalPrice = calculateTotal();
 
   return (
     <div>
@@ -66,31 +73,32 @@ const Shipping = () => {
                   Location
                 </span>
                 <p>
-                  {customerData?.address.state} /{customerData?.address.street},{" "}
-                  {customerData?.address.city},{customerData?.address.country}
+                  {customerData?.address.state} / {customerData?.address.street},{" "}
+                  {customerData?.address.city}, {customerData?.address.country}
                 </p>
               </div>
             </div>
 
             {/* Product Details */}
-            {productData?.map((item) => (
-              <div key={item.id}>
-                <div className="flex items-center mt-4">
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="w-20 h-20 object-cover rounded-md"
-                  />
-                  <div className="ml-4">
-                    <p className="font-semibold">{item?.name}</p>
-                    <p className="text-gray-500">{item.description}</p>
-                    <p className="font-bold text-orange-600 mt-2">
-                      $ {item.price}
-                    </p>
+            {productData &&
+              productData?.map((item) => (
+                <div key={item.id}>
+                  <div className="flex items-center mt-4">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-20 h-20 object-cover rounded-md"
+                    />
+                    <div className="ml-4">
+                      <p className="font-semibold">{item?.name}</p>
+                      <p className="text-gray-500">{item.description}</p>
+                      <p className="font-bold text-orange-600 mt-2">
+                        $ {item.price}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
           </div>
 
           {/* Right Side */}
