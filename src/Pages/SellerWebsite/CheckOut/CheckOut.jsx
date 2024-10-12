@@ -5,9 +5,10 @@ import { AuthContext } from "../../../Provider/AuthProvider";
 import axios from "axios";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import toast from "react-hot-toast";
+import { Currency } from "lucide-react";
 
 const Checkout = () => {
-  const { confirmProduct, webData , name} = useContext(WebDataDisContext);
+  const { confirmProduct, webData, name } = useContext(WebDataDisContext);
   const { user } = useContext(AuthContext);
   const email = user?.email;
   const sellerEmail = webData?.email;
@@ -25,7 +26,7 @@ const Checkout = () => {
       navigate(-1);
     }
   }, [confirmProduct, navigate, name]); // Add dependencies
-
+  console.log(confirmProduct);
   const [totalPrice, setTotalPrice] = useState(0); // Assume initial total without any extra fees
 
   const location = useLocation();
@@ -72,15 +73,30 @@ const Checkout = () => {
         const response = await axiosPublic.post("/payment", {
           ...product, // Sending individual product object
           paymentMethod,
-          
         });
         toast.success(`Payment for product ${product.name} succeeded`);
-        navigate(`/w/${name}`)
+        navigate(`/w/${name}`);
       }
       // Handle successful payments here (e.g., navigate to a success page)
     } catch (error) {
       console.error("Payment failed for one or more products", error);
       // Handle payment failure (e.g., show error message)
+    }
+  };
+  const handleSSLPayment = async () => {
+    const data = {
+      Amount: calculateTotal().toFixed(2),
+      Currency: "BDT",
+      productId: confirmProduct.map((product) => product._id),
+    };
+    console.log(data);
+    const res = await axiosPublic.post("/paymentSSL", data);
+
+    console.log(res.data.sslCommerzResponse.GatewayPageURL);
+    const redirectURL = res.data.sslCommerzResponse.GatewayPageURL
+    console.log(redirectURL)
+    if(redirectURL !== ""){
+      window.location.replace(redirectURL)
     }
   };
 
@@ -226,7 +242,7 @@ const Checkout = () => {
 
           {/* Proceed to Pay */}
           <button
-            onClick={handlePayment}
+            onClick={handleSSLPayment}
             className="w-full bg-orange-500 text-white font-bold py-3 mt-6 rounded hover:bg-orange-600"
           >
             Proceed to Pay
