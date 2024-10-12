@@ -26,7 +26,7 @@ const Checkout = () => {
       navigate(-1);
     }
   }, [confirmProduct, navigate, name]); // Add dependencies
-
+  console.log(confirmProduct);
   const [totalPrice, setTotalPrice] = useState(0); // Assume initial total without any extra fees
 
   const location = useLocation();
@@ -83,17 +83,17 @@ const Checkout = () => {
       // Handle payment failure (e.g., show error message)
     }
   };
-  const handleSSLPayment = async() => {
+  const handleSSLPayment = async () => {
     const data = {
-      Amount : 2000,
-      Currency : "usd",
-      webName : name
-    } 
-    console.log(data)
-    const res =await axiosPublic.post("/paymentSSL",data);
+      Amount: calculateTotal().toFixed(2),
+      Currency: "BDT",
+      productId: confirmProduct.map((product) => product._id),
+    };
+    console.log(data);
+    const res = await axiosPublic.post("/paymentSSL", data);
 
-
-    const redirectURL = res.data.GatewayPageURL
+    console.log(res.data.sslCommerzResponse.GatewayPageURL);
+    const redirectURL = res.data.sslCommerzResponse.GatewayPageURL
     console.log(redirectURL)
     if(redirectURL !== ""){
       window.location.replace(redirectURL)
