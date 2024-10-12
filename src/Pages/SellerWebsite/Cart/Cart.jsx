@@ -5,15 +5,17 @@ import { X } from "lucide-react";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
+  const navigate = useNavigate();
   const axiosPublic = useAxiosPublic();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const { webCartItem, deleteWebCartItem, customerData } =
+  const { webCartItem, deleteWebCartItem, name, customerData } =
     useContext(WebDataDisContext);
 
   const [quantities, setQuantities] = useState({});
@@ -55,7 +57,7 @@ const Cart = () => {
 
   const handlePayment = (total) => {
     if (customerData.phone !== "") {
-      toast.success("This Functionality on working process ");
+      webCartItem.length !== 0 && navigate(`/w/${name}/shipping?type=cart`);
     } else {
       document.getElementById("customerInfo").showModal();
     }
@@ -71,7 +73,7 @@ const Cart = () => {
       console.error("Error submitting customer info:", error);
     }
   };
-  
+
   return (
     <div>
       <div className="bg-gray-100 pt-20 min-h-screen">
@@ -176,8 +178,6 @@ const Cart = () => {
             </button>
           </div>
         </div>
-
-    
       </div>
     </div>
   );

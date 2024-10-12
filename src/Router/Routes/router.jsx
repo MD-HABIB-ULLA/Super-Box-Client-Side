@@ -45,6 +45,8 @@ import Profile from "../../Pages/SellerWebsite/Profile/Profile";
 import Cart from "../../Pages/SellerWebsite/Cart/Cart";
 import PendingProducts from "../../Pages/SellerWebsite/PendingProducts/PendingProducts";
 import Purchased from "../../Pages/SellerWebsite/Purchased/Purchased";
+import Shipping from "../../Pages/SellerWebsite/Shipping/Shipping";
+import Checkout from "../../Pages/SellerWebsite/CheckOut/CheckOut";
 
 const RoleBasedComponent = () => {
   const { isAdmin, isSeller } = useRole();
@@ -116,19 +118,11 @@ const router = createBrowserRouter([
           },
           {
             path: "/dashboard/pos",
-            element: (
-          
-                <PointOfSell />
-       
-            ),
+            element: <PointOfSell />,
           },
           {
             path: "/dashboard/pos/provide",
-            element: (
-          
-                <Provide />
-       
-            ),
+            element: <Provide />,
           },
           {
             path: "/dashboard/messaging",
@@ -236,11 +230,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/w/:name",
-    element: (
-
-        <Layout />
-
-    ),
+    element: <Layout />,
     children: [
       {
         path: "",
@@ -249,6 +239,10 @@ const router = createBrowserRouter([
       {
         path: "products", // List of products
         element: <Products />,
+      },
+      {
+        path: "shipping", // List of products
+        element: <Shipping />,
       },
       {
         path: "services", // List of products
@@ -275,6 +269,10 @@ const router = createBrowserRouter([
         element: <Cart />,
       },
       {
+        path: "checkout", // List of products
+        element: <Checkout />,
+      },
+      {
         path: "pending", // List of products
         element: <PendingProducts />,
       },
@@ -297,6 +295,5 @@ const router = createBrowserRouter([
       },
     ],
   },
-  
 ]);
 export default router;

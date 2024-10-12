@@ -14,11 +14,11 @@ const WebDataDisProvider = ({ children }) => {
   const [webCartItem, setWebCartItem] = useState([]);
   const [webData, setWebData] = useState(null);
   const [blogs, setBlogs] = useState(null);
-
+  const [confirmProduct, setConfirmProduct] = useState(null);
 
   const axiosPublic = useAxiosPublic();
   const { user } = useContext(AuthContext);
- 
+
   const { data: customerData } = useQuery({
     queryKey: [user?.email, "customer info"],
     queryFn: async () => {
@@ -29,10 +29,18 @@ const WebDataDisProvider = ({ children }) => {
       return null;
     },
     enabled: !!user?.email,
-  
   });
-
-
+  const { data: purchaseProducts } = useQuery({
+    queryKey: [user?.email, "purchaseProducts"],
+    queryFn: async () => {
+      if (user?.email) {
+        const res = await axiosPublic.get(`/purchaseProducts/${user.email}`);
+        return res.data;
+      }
+      return null;
+    },
+    enabled: !!user?.email,
+  });
 
   const { data: websiteData, isLoading: isWebsiteLoading } = useQuery({
     queryKey: [name, "Website data with name"],
@@ -170,6 +178,22 @@ const WebDataDisProvider = ({ children }) => {
     }
   };
 
+  const singleProductData = (id) => {
+    const { data, isLoading, refetch, error } = useQuery({
+      queryKey: [id, "product data with id"],
+      queryFn: async () => {
+        if (id) {
+          const res = await axiosPublic.get(`/product/${id}`);
+          return res.data;
+        }
+        return null;
+      },
+      enabled: !!id, // Only run the query if id exists
+    });
+
+    return { data, isLoading, refetch, error };
+  };
+
   return (
     <WebDataDisContext.Provider
       value={{
@@ -191,7 +215,12 @@ const WebDataDisProvider = ({ children }) => {
         webInfo,
         setCustomerEmail,
         webCartItem,
-        customerData
+        customerData,
+        purchaseProducts,
+        singleProductData,
+        setConfirmProduct,
+        confirmProduct,
+        webData
       }}
     >
       {children}
