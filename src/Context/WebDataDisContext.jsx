@@ -15,6 +15,7 @@ const WebDataDisProvider = ({ children }) => {
   const [webData, setWebData] = useState(null);
   const [blogs, setBlogs] = useState(null);
   const [confirmProduct, setConfirmProduct] = useState(null);
+  const { email, webInfo } = webData || {};
 
   const axiosPublic = useAxiosPublic();
   const { user } = useContext(AuthContext);
@@ -94,8 +95,6 @@ const WebDataDisProvider = ({ children }) => {
       setWebData(websiteData);
     }
   }, [isWebsiteLoading, websiteData]);
-
-  const { email, webInfo } = webData || {};
 
   useEffect(() => {
     if (email) {
@@ -220,7 +219,7 @@ const WebDataDisProvider = ({ children }) => {
         singleProductData,
         setConfirmProduct,
         confirmProduct,
-        webData
+        webData,
       }}
     >
       {children}

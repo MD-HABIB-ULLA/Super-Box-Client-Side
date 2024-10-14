@@ -281,17 +281,17 @@ const SellerRequest = () => {
                   </h3>
                   <div className="flex space-x-4">
                     <SocialLink
-                      href={detailsData.webInfo.socialLinks.facebook}
+                      href={detailsData.webInfo?.socialLinks.facebook}
                       icon={<Facebook size={24} />}
                       label="Facebook"
                     />
                     <SocialLink
-                      href={detailsData.webInfo.socialLinks.instagram}
+                      href={detailsData.webInfo?.socialLinks.instagram}
                       icon={<Instagram size={24} />}
                       label="Instagram"
                     />
                     <SocialLink
-                      href={detailsData.webInfo.socialLinks.linkedin}
+                      href={detailsData.webInfo?.socialLinks.linkedin}
                       icon={<Linkedin size={24} />}
                       label="LinkedIn"
                     />

@@ -14,15 +14,15 @@ const Navbar = () => {
   const axiosPublic = useAxiosPublic();
   const [loading, setLoading] = useState(false);
   const [selectedBackgroundColor, setSelectedBackgroundColor] = useState(
-    data.webInfo.body.backgroundColor
+    data?.webInfo.body.backgroundColor
   );
   const [selectedNavColor, setSelectedNavColor] = useState(
-    data.webInfo.navbar.backgroundColor
+    data?.webInfo.navbar.backgroundColor
   );
   const [selectedNavFontColor, setSelectedNavFontColor] = useState(
-    data.webInfo.navbar.color
+    data?.webInfo.navbar.color
   );
-  const [logoPreview, setLogoPreview] = useState(data.webInfo.logo);
+  const [logoPreview, setLogoPreview] = useState(data?.webInfo.logo);
 
   const handleBackgroundColorChange = (e) => {
     setSelectedBackgroundColor(e.target.value);
