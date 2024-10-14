@@ -9,6 +9,7 @@ const CreateWebsite = () => {
   const axiosPublic = useAxiosPublic();
   const { register, handleSubmit } = useForm();
   const [loading, setLoading] = useState(false);
+  const [isAvailableStore, setIsAvailableStore] = useState(false);
 
   const onSubmit = async (data) => {
     setLoading(true);
@@ -67,6 +68,7 @@ const CreateWebsite = () => {
       sellerAddress: data.sellerAddress,
       whatsappNumber: data.bkashNumber,
       pickedUpAddress: [data.PA1, data.PA2, data.PA3],
+      isAvailableStore,
       tradeLicense,
       nidPicture,
     };
@@ -223,6 +225,36 @@ const CreateWebsite = () => {
               </div>
             </div>
 
+            <div>
+              <div className="form-control mt-3 ">
+                <label className="cursor-pointer  label justify-start items-center  gap-2">
+                  <input
+                    type="checkbox"
+                    onChange={() => setIsAvailableStore(!isAvailableStore)}
+                    className="checkbox checkbox-info"
+                  />
+                  <span className="label-text">
+                    Do you have a physical store?
+                  </span>
+                </label>
+              </div>
+            </div>
+            {isAvailableStore && (
+              <div>
+                <div className="form-control flex-1 ">
+                  <label className="label">
+                    <span className="label-text text-lg">Shop location</span>
+                  </label>
+
+                  <input
+                    type="text"
+                    placeholder="your Shop location"
+                    {...register("storeLocation", { required: true })}
+                    className="input input-bordered"
+                  />
+                </div>
+              </div>
+            )}
             <div className="text-center mt-3">
               <button className="btn bg-sky-500 text-white font-bold ">
                 {loading ? "loading..." : "Submit"}

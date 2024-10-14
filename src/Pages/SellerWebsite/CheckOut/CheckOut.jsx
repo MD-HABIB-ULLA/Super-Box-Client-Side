@@ -87,16 +87,17 @@ const Checkout = () => {
     const data = {
       Amount: calculateTotal().toFixed(2),
       Currency: "BDT",
+      buyerEmail: user.email,
       productId: confirmProduct.map((product) => product._id),
     };
     console.log(data);
-    const res = await axiosPublic.post("/paymentSSL", data);
+    const res = await axiosPublic.post("/paymentSSLk", data);
 
     console.log(res.data.sslCommerzResponse.GatewayPageURL);
-    const redirectURL = res.data.sslCommerzResponse.GatewayPageURL
-    console.log(redirectURL)
-    if(redirectURL !== ""){
-      window.location.replace(redirectURL)
+    const redirectURL = res.data.sslCommerzResponse.GatewayPageURL;
+    console.log(redirectURL);
+    if (redirectURL !== "") {
+      window.location.replace(redirectURL);
     }
   };
 
