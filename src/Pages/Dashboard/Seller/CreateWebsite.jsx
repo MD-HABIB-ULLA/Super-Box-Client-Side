@@ -66,7 +66,8 @@ const CreateWebsite = () => {
     const sellerData = {
       sellerCountry: data.sellerCountry,
       sellerAddress: data.sellerAddress,
-      whatsappNumber: data.bkashNumber,
+      bkashNumber: data.bkashNumber,
+      shopLocation : data.storeLocation,
       pickedUpAddress: [data.PA1, data.PA2, data.PA3],
       isAvailableStore,
       tradeLicense,
