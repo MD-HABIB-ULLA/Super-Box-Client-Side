@@ -104,6 +104,7 @@ const Checkout = () => {
       Amount: calculateTotal().toFixed(2),
       Currency: "BDT",
       buyerEmail: user.email,
+      paymentMethod: paymentMethod,
       productId: confirmProduct.map((product) => product._id),
     };
     console.log(data);
