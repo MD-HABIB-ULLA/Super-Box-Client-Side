@@ -96,7 +96,7 @@ const PendingProducts = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
+    <div className="max-w-4xl mx-auto p-6 min-h-screen">
       <h1 className="text-2xl font-bold mb-6">Your Transactions</h1>
       {pendingProducts?.map((product) => (
         <TransactionItem
