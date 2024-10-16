@@ -81,42 +81,40 @@ const SellerWebsite = () => {
           </div>
         </section>
       )}
-      {blogs?.length !== 0 && (
-        <div className="mt-10 max-w-7xl px-10 m-auto">
-          <div className="py-10">
-            <Title title2={"BLOGS"}></Title>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {blogs?.slice(0, 3).map((blog, index) => (
-              <div
-                key={index}
-                className="bg-white shadow-md rounded-lg overflow-hidden mb-6 group relative "
-              >
-                <div className="p-4">
-                  <h2 className="text-xl font-bold mb-2">{blog.title}</h2>
-                  <p className="text-sm text-gray-500 mb-4">
-                    {blog.upload_date}
-                  </p>
-                  <div className="h-56">
-                    <img
-                      src={blog.image}
-                      alt={blog.title}
-                      className=" h-full  mb-4 rounded"
-                    />
-                  </div>
-                  <p className="text-sm text-gray-600 mb-4">
-                    {blog.description}
-                  </p>
-                  <p className="text-xs text-gray-500">
-                    Posted by: {blog.email}
-                  </p>
-                </div>
-              </div>
-            ))}
+{blogs?.length !== 0 && (
+  <div className="mt-10 max-w-7xl px-4 sm:px-6 lg:px-8 mx-auto">
+    <div className="py-10">
+      <Title title2={"BLOGS"}></Title>
+    </div>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {blogs?.slice(0, 3).map((blog, index) => (
+        <div
+          key={index}
+          className="bg-white shadow-md rounded-lg overflow-hidden group relative transform transition-transform duration-300 hover:scale-105"
+        >
+          <div className="p-4">
+            <h2 className="text-lg md:text-xl font-bold mb-2">{blog.title}</h2>
+            <p className="text-xs md:text-sm text-gray-500 mb-4">
+              {blog.upload_date}
+            </p>
+            <div className="h-48 md:h-56">
+              <img
+                src={blog.image}
+                alt={blog.title}
+                className="h-full w-full object-cover mb-4 rounded"
+              />
+            </div>
+            <p className="text-xs md:text-sm text-gray-600 mb-4">
+              {blog.description}
+            </p>
+            <p className="text-xs text-gray-500">Posted by: {blog.email}</p>
           </div>
         </div>
-      )}
-      {services?.length !== 0 && <Services services={services} />}
+      ))}
+    </div>
+  </div>
+)}
+{services?.length !== 0 && <Services services={services} />}
 
       {/* Contact Information */}
       <ContactInfo
