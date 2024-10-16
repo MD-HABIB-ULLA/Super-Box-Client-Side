@@ -11,6 +11,7 @@ import { TbCurrencyTaka } from "react-icons/tb";
 const Checkout = () => {
   const { confirmProduct, webData, name, sellerInfo } =
     useContext(WebDataDisContext);
+
   console.log(sellerInfo);
   const { user } = useContext(AuthContext);
   const email = user?.email;
@@ -116,6 +117,15 @@ const Checkout = () => {
     if (redirectURL !== "") {
       window.location.replace(redirectURL);
     }
+  };
+
+  const handlePrint = () => {
+    window.print();
+    handlePayment();
+  };
+
+  const openDialog = () => {
+    document.getElementById("recite").showModal();
   };
 
   return (
@@ -359,7 +369,7 @@ const Checkout = () => {
               } else if (paymentMethod === "mobileBanking") {
                 handlePayment();
               } else if (paymentMethod === "collectFromStore") {
-                handlePayment();
+                openDialog(confirmProduct);
               } else {
                 toast.error("This feature under working process");
               }
@@ -370,6 +380,30 @@ const Checkout = () => {
           </button>
         </div>
       </div>
+      <dialog id="recite" className="modal">
+        <div className="modal-box">
+          <h3 className="font-bold text-lg">Order Receipt</h3>
+          {confirmProduct &&
+            confirmProduct?.map((data) => (
+              <div key={data._id}>
+                <p>Product Name: {data.name}</p>
+                <p>Price: {data.price}</p>
+                <p>Quantity: {data.quantity}</p>
+              </div>
+            ))}
+          <div className="modal-action">
+            <button
+              onClick={() => document.getElementById("recite").close()}
+              className="btn"
+            >
+              Close
+            </button>
+            <button onClick={handlePrint} className="btn">
+              Print and Confirm
+            </button>
+          </div>
+        </div>
+      </dialog>
     </div>
   );
 };
