@@ -4,10 +4,12 @@ import { useContext, useEffect } from "react";
 import { WebDataDisContext } from "../../../Context/WebDataDisContext";
 import { Clock, LogOut, Package, ShoppingCart, User } from "lucide-react";
 import { HiChatBubbleLeftRight } from "react-icons/hi2";
+import { AuthContext } from "../../../Provider/AuthProvider";
 
 const Layout = () => {
   const { name } = useParams();
   const { setName, webInfo } = useContext(WebDataDisContext);
+  const { logOut } = useContext(AuthContext);
   useEffect(() => {
     setName(name);
   }, [name]);
@@ -92,7 +94,13 @@ const Layout = () => {
                       Support & Report
                     </Link>
                   </li>
-                  <button className="w-full flex items-center justify-center py-2 px-4 bg-red-600 hover:bg-red-700 rounded transition duration-150 ease-in-out">
+                  <button
+                    onClick={() => {
+                      logOut();
+                      window.location.reload();
+                    }}
+                    className="w-full flex items-center justify-center py-2 px-4 bg-red-600 hover:bg-red-700 rounded transition duration-150 ease-in-out"
+                  >
                     <LogOut className="mr-3" size={20} />
                     Log Out
                   </button>
@@ -109,7 +117,9 @@ const Layout = () => {
           </footer>
         </div>
       ) : (
-        "no data"
+        <div className="h-screen w-full flex items-center justify-center">
+          <span className="loading loading-bars loading-lg"></span>
+        </div>
       )}
     </>
   );

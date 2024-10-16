@@ -1,30 +1,38 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom"
 
-const Banner = ({ image, title, description, textPosition }) => {
-    const { name } = useParams();
-  console.log(image);
+export default function Banner({ image, title, description, textPosition = "center" }) {
+  const { name } = useParams()
+
   return (
-    <div>
+    <div className="relative w-full h-screen overflow-hidden">
       <div
-        className="hero min-h-screen"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
           backgroundImage: `url(${image})`,
         }}
-      >
-        <div className="hero-overlay bg-black bg-opacity-60"></div>
-        <div className={`w-full text-neutral-content text-${textPosition} px-10`}>
-          <div className="w-full">
-            <h1 className="mb-5 text-5xl font-bold">{title}</h1>
-            <p className="mb-5">{description}</p>
-            <Link to={`/w/${name}/products`}>
-              <button className="btn bg-sky-400 text-white font-bold rounded-full  border-none">Get Started</button>
-            </Link>
-          </div>
+      />
+      <div className="absolute inset-0 bg-black bg-opacity-60" />
+      <div className={`relative h-full flex items-center ${
+        textPosition === "left" ? "justify-start" : 
+        textPosition === "right" ? "justify-end" : "justify-center"
+      }`}>
+        <div className={`max-w-3xl mx-4 md:mx-8 lg:mx-16 text-white ${
+          textPosition === "left" ? "text-left" : 
+          textPosition === "right" ? "text-right" : "text-center"
+        }`}>
+          <h1 className="mb-6 uppercase text-3xl md:text-5xl lg:text-5xl font-bold leading-tight">
+            {title}
+          </h1>
+          <p className="mb-8 text-lg md:text-xl ">
+            {description}
+          </p>
+          <Link to={`/w/${name}/products`}>
+            <button className="px-8 py-3 bg-sky-400 hover:bg-sky-500 text-white font-bold rounded-full transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-sky-400 focus:ring-opacity-50">
+              Get Started
+            </button>
+          </Link>
         </div>
-     
       </div>
     </div>
-  );
-};
-
-export default Banner;
+  )
+}
