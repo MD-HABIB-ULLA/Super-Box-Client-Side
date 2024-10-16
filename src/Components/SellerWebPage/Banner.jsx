@@ -27,7 +27,7 @@ export default function Banner({ image, title, description, textPosition = "cent
             {description}
           </p>
           <Link to={`/w/${name}/products`}>
-            <button className="px-8 py-3 bg-sky-400 hover:bg-sky-500 text-white font-bold rounded-full transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-sky-400 focus:ring-opacity-50">
+            <button className="px-8 py-3 bg-indigo-700 hover:bg-sky-500 text-white font-bold rounded-full transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-sky-400 focus:ring-opacity-50">
               Get Started
             </button>
           </Link>
