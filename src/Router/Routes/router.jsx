@@ -47,6 +47,8 @@ import PendingProducts from "../../Pages/SellerWebsite/PendingProducts/PendingPr
 import Purchased from "../../Pages/SellerWebsite/Purchased/Purchased";
 import Shipping from "../../Pages/SellerWebsite/Shipping/Shipping";
 import Checkout from "../../Pages/SellerWebsite/CheckOut/CheckOut";
+import SignUpCus from "../../Pages/SellerWebsite/Auth/SignUp";
+import FeedbackForm from "../../Pages/Feedback/Feedback";
 
 const RoleBasedComponent = () => {
   const { isAdmin, isSeller } = useRole();
@@ -157,6 +159,10 @@ const router = createBrowserRouter([
             path: "/dashboard/bm-resources",
             element: <Process />,
           },
+          {
+            path: "/dashboard/feedback",
+            element: <FeedbackForm/>
+          },
 
           {
             path: "/dashboard/marketingBranding",
@@ -257,6 +263,10 @@ const router = createBrowserRouter([
         element: <ChatUs />,
       },
       {
+        path: "feedback",
+        element: <FeedbackForm/>
+      },
+      {
         path: "support", // List of products
         element: <Support />,
       },
@@ -292,6 +302,10 @@ const router = createBrowserRouter([
       {
         path: "login",
         element: <LoginCus />,
+      },
+      {
+        path: "signup",
+        element: <SignUpCus />,
       },
     ],
   },

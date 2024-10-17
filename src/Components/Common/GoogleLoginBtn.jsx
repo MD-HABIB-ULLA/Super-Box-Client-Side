@@ -76,8 +76,10 @@ const GoogleLoginBtn = () => {
 
   return (
     <div>
-      <div onClick={handleGoogleLogin} className="cursor-pointer">
-        <FcGoogle />
+      <div onClick={handleGoogleLogin} className="cursor-pointer ">
+        <div className="flex items-center justify-center gap-3 rounded-3xl  bg-opacity-50 px-6 py-2 bg-transparent text-center w-full  shadow-lg backdrop-blur-md text-sm">
+          <FcGoogle className="text-3xl" /> Continue with Google
+        </div>
       </div>
     </div>
   );
