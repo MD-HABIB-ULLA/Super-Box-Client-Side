@@ -8,7 +8,7 @@ import { AuthContext } from "../../../Provider/AuthProvider";
 import toast from "react-hot-toast";
 
 const SignUpCus = () => {
-    const { updateUserProfile, signUpWithEmailAndPassword } =
+  const { updateUserProfile, signUpWithEmailAndPassword } =
     useContext(AuthContext);
   const { name } = useParams();
   const { register, handleSubmit } = useForm();
@@ -38,22 +38,26 @@ const SignUpCus = () => {
             .then((res) => {
               if (res.user) {
                 updateUserProfile(data.name, image).then(() => {
-                  const userInfo = {
-                    name: data.name,
-                    email: data.email,
+                  const customerData = {
+                    email: res.user.email,
+                    authData: res.user,
+                    shopName: name,
+                    phone: "",
+                    address: {
+                      street: "",
+                      city: "",
+                      state: "",
+                      postalCode: "",
+                      country: "",
+                    },
+                    cart: [],
                   };
-                  axiosPublic
-                    .post("/users", userInfo)
-                    .then((res) => {
-                      if (res.data.insertedId) {
-                        navigate("/dashboard");
-                        toast.success("Sing Up successful");
-                      } else {
-                        navigate(`/w/${name}`);
-                        toast.success("Sing Up successful");
-                      }
-                    })
-                    .catch((err) => console.log(err));
+
+                  axiosPublic.post("/customer", customerData).then(() => {
+                    toast.success("sign up sucsessful");
+                    navigate(`/w/${name}`);
+                    window.location.reload();
+                  });
                 });
                 toast.success("Successfully sign in ");
                 navigate(location?.state ? location.state : "/");

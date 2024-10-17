@@ -7,31 +7,60 @@ import GoogleLoginBtn from "../../../Components/Common/GoogleLoginBtn";
 import facebookIcon from "/facebook.png";
 import instagramIcon from "/instagram.png";
 import linkedinIcon from "/linkedin.png";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
 const LoginCus = () => {
+  const axiosPublic = useAxiosPublic()
   const { register, handleSubmit } = useForm();
   const { name } = useParams();
   const { logOut, loginWithEmailAndPassword } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
   const onSubmit = (data, e) => {
-    console.log(name)
-    if (name) {
-      
+    console.log(name);
+    
+    // Ensure name is valid
+    if (name.trim()) {
       localStorage.setItem("isCustomer", JSON.stringify(true)); // Set "isCustomer" if name is present
     }
-    logOut();
+
+  
     loginWithEmailAndPassword(data.email, data.password)
-      .then((result) => {
-        toast.success("Login sucsessful");
-        e.target.reset();
-        navigate(`/w/${name}`);
+      .then((res) => {
+        const customerData = {
+          email: res.user.email,
+          authData: res.user,
+          shopName: name,
+          phone: "",
+          address: {
+            street: "",
+            city: "",
+            state: "",
+            postalCode: "",
+            country: "",
+          },
+          cart: [],
+        };
+  
+        axiosPublic.post("/customer", customerData)
+          .then(() => {
+            toast.success("Login successful");
+            navigate(`/w/${name}`);
+            // Avoid window reload unless absolutely necessary
+          })
+          .catch((error) => {
+            console.error("Error posting customer data:", error);
+            toast.error("Failed to register customer data.");
+          });
       })
       .catch((error) => {
         if (error.code === "auth/invalid-credential") {
           toast.error("Invalid email or password. Please try again.");
+        } else {
+          toast.error("Login failed. Please check your credentials and try again.");
         }
       });
   };
+  
 
   return (
     <div className="h-screen flex items-center justify-center ">
@@ -76,7 +105,10 @@ const LoginCus = () => {
               <GoogleLoginBtn></GoogleLoginBtn>
               <div className=" text-white">
                 <div className="text-center">
-                  <Link to={`/w/${name}/signup`} className="text-sm font-medium underline">
+                  <Link
+                    to={`/w/${name}/signup`}
+                    className="text-sm font-medium underline"
+                  >
                     Don't have an account ?
                   </Link>
                 </div>
