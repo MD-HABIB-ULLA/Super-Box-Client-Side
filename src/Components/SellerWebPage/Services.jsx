@@ -6,7 +6,10 @@ const Services = ({ services }) => {
     <div>
       <div className="px-4 sm:px-6 lg:px-8 max-w-7xl m-auto">
         <div className="py-10 border-b-2 border-dashed">
-          <Title title2={"Service Management"} />
+          <Title
+            title1={"Efficient Solutions for"}
+            title2={"Service Management"}
+          />
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {services &&

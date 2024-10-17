@@ -3,7 +3,7 @@ import { BiMailSend } from "react-icons/bi";
 import { PiPhoneCallDuotone } from "react-icons/pi";
 import { FcHome } from "react-icons/fc";
 
-const Title = ({ title1, title2 }) => (
+ const Title = ({ title1, title2 }) => (
   <div className="text-center mb-8">
     <h2 className="text-3xl font-bold text-gray-800 mb-2">{title1}</h2>
     <h3 className="text-4xl font-extrabold text-indigo-600 capitalize">

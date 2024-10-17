@@ -14,6 +14,7 @@ import {
   MdAddBusiness,
   MdAttachMoney,
   MdBusinessCenter,
+  MdFeedback,
   MdHomeRepairService,
   MdLocalOffer,
   MdManageAccounts,
@@ -29,6 +30,7 @@ import { TbLogs } from "react-icons/tb";
 import { NavLink, Outlet } from "react-router-dom";
 import useRole from "../../hooks/useRole";
 import { CiTimer } from "react-icons/ci";
+import { FcFeedback } from "react-icons/fc";
 
 const DHome = () => {
   const { isAdmin, isSeller } = useRole();
@@ -149,6 +151,17 @@ const DHome = () => {
             >
               <FaReceipt className="text-3xl text-[#ED7725]" />
               Point Of Sell (pos)
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/dashboard/feedback"
+              className={({ isActive }) =>
+                `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
+              }
+            >
+              <MdFeedback className="text-3xl text-[#ED7725]" />
+              Feedback
             </NavLink>
           </li>
         </div>

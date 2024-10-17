@@ -10,7 +10,7 @@ import { Link, useParams } from "react-router-dom";
 const SellerWebsite = () => {
   const { webInfo, products, blogs, services, setName } =
     useContext(WebDataDisContext);
-    const {name} = useParams()
+  const { name } = useParams();
 
   return (
     <div className="min-h-screen">
@@ -25,14 +25,12 @@ const SellerWebsite = () => {
       {products?.length !== 0 && (
         <section className="py-16 px-4 sm:px-6 lg:px-8 ">
           <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4">
-                Choose Your Products
-              </h2>
-              <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                Discover our curated selection of high-quality products
-              </p>
-            </div>
+            <Title
+              title2={"Choose Your Products"}
+              title1={
+                " Discover our  high-quality products"
+              }
+            />
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {products?.slice(0, 3).map((product) => (
                 <div
@@ -81,40 +79,44 @@ const SellerWebsite = () => {
           </div>
         </section>
       )}
-{blogs?.length !== 0 && (
-  <div className="mt-10 max-w-7xl px-4 sm:px-6 lg:px-8 mx-auto">
-    <div className="py-10">
-      <Title title2={"BLOGS"}></Title>
-    </div>
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {blogs?.slice(0, 3).map((blog, index) => (
-        <div
-          key={index}
-          className="bg-white shadow-md rounded-lg overflow-hidden group relative transform transition-transform duration-300 hover:scale-105"
-        >
-          <div className="p-4">
-            <h2 className="text-lg md:text-xl font-bold mb-2">{blog.title}</h2>
-            <p className="text-xs md:text-sm text-gray-500 mb-4">
-              {blog.upload_date}
-            </p>
-            <div className="h-48 md:h-56">
-              <img
-                src={blog.image}
-                alt={blog.title}
-                className="h-full w-full object-cover mb-4 rounded"
-              />
-            </div>
-            <p className="text-xs md:text-sm text-gray-600 mb-4">
-              {blog.description}
-            </p>
-            <p className="text-xs text-gray-500">Posted by: {blog.email}</p>
+      {blogs?.length !== 0 && (
+        <div className="mt-10 max-w-7xl px-4 sm:px-6 lg:px-8 mx-auto">
+          <div className="py-10">
+            <Title title1={"Explore Our Latest"} title2={"BLOG POSTS"} />
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {blogs?.slice(0, 3).map((blog, index) => (
+              <div
+                key={index}
+                className="bg-white shadow-md rounded-lg overflow-hidden group relative transform transition-transform duration-300 hover:scale-105"
+              >
+                <div className="p-4">
+                  <h2 className="text-lg md:text-xl font-bold mb-2">
+                    {blog.title}
+                  </h2>
+                  <p className="text-xs md:text-sm text-gray-500 mb-4">
+                    {blog.upload_date}
+                  </p>
+                  <div className="h-48 md:h-56">
+                    <img
+                      src={blog.image}
+                      alt={blog.title}
+                      className="h-full w-full object-cover mb-4 rounded"
+                    />
+                  </div>
+                  <p className="text-xs md:text-sm text-gray-600 mb-4">
+                    {blog.description}
+                  </p>
+                  <p className="text-xs text-gray-500">
+                    Posted by: {blog.email}
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
-      ))}
-    </div>
-  </div>
-)}
-{services?.length !== 0 && <Services services={services} />}
+      )}
+      {services?.length !== 0 && <Services services={services} />}
 
       {/* Contact Information */}
       <ContactInfo

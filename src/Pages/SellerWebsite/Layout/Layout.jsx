@@ -5,6 +5,7 @@ import { WebDataDisContext } from "../../../Context/WebDataDisContext";
 import { Clock, LogOut, Package, ShoppingCart, User } from "lucide-react";
 import { HiChatBubbleLeftRight } from "react-icons/hi2";
 import { AuthContext } from "../../../Provider/AuthProvider";
+import { MdFeedback } from "react-icons/md";
 
 const Layout = () => {
   const { name } = useParams();
@@ -38,8 +39,15 @@ const Layout = () => {
                 className="drawer-overlay"
               ></label>
 
-              <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
-                <li>
+              <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4 relative">
+                <label
+                  htmlFor="customer"
+                  aria-label="close sidebar"
+                  className="bg-green-200 block lg:hidden  text-black font-bold text-xl px-2 right-10  absolute rounded-full cursor-pointer"
+                >
+                  X
+                </label>
+                <li className=" lg:mt-0 mt-10">
                   <Link
                     to={`/w/${name}/profile`}
                     className="flex items-center py-2 px-4 hover:bg-gray-700 hover:text-white rounded transition duration-150 ease-in-out"
@@ -82,6 +90,15 @@ const Layout = () => {
                   >
                     <HiChatBubbleLeftRight className="mr-3" size={20} />
                     Messaging
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to={`/w/${name}/feedback`}
+                    className="flex items-center py-2 px-4 hover:bg-gray-700 hover:text-white rounded transition duration-150 ease-in-out"
+                  >
+                    <MdFeedback className="mr-3" size={20} />
+                    Feedback
                   </Link>
                 </li>
                 <div className="mt-auto">
