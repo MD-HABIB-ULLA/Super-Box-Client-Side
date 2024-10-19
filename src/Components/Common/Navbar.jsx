@@ -12,9 +12,9 @@ const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
 
   const navigation = [
-    { title: "Partners", path: "/partners" },
-    { title: "Customers", path: "/customers" },
-    { title: "Team", path: "/team" },
+    { title: "Partners", path: "/" },
+    { title: "Customers", path: "/" },
+    { title: "Team", path: "/" },
   ];
 
   useEffect(() => {
@@ -73,36 +73,42 @@ const Navbar = () => {
                 {item.title}
               </NavLink>
             ))}
-            <button
-              onClick={handleFullScreenToggle}
-              className="text-gray-600 hover:text-indigo-600 p-2 rounded-full"
-            >
-              <BsFullscreen className="text-xl" />
-            </button>
+
             {user ? (
-              <div className="relative group">
-                <button className="flex items-center space-x-2">
-                  <img
-                    src={user.photoURL}
-                    alt="User"
-                    className="h-8 w-8 rounded-full"
-                  />
-                  <span className="text-gray-700">{user.displayName}</span>
-                </button>
-                <div className="absolute right-0 w-48 mt-2 py-2 bg-white rounded-md shadow-xl z-20 hidden group-hover:block">
-                  <Link
-                    to="/dashboard"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-500 hover:text-white"
-                  >
-                    Dashboard
-                  </Link>
-                  <button
-                    onClick={logOut}
-                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-indigo-500 hover:text-white"
-                  >
-                    Log out
-                  </button>
-                </div>
+              <div className="dropdown dropdown-end">
+                <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+                  <div className="w-10 rounded-full">
+                    <img src={user.photoURL} alt="User" />
+                  </div>
+                </label>
+                <ul
+                  tabIndex={0}
+                  className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
+                >
+                  <li>
+                    <a className="justify-between">
+                      {user.displayName}
+                      <span className="badge">User</span>
+                    </a>
+                  </li>
+                  
+
+                  <li>
+                    <Link to="/dashboard">Dashboard</Link>
+                  </li>
+                  <li>
+                    <button onClick={logOut}>Logout</button>
+                  </li>
+                  <li>
+                    <a
+                      onClick={handleFullScreenToggle}
+                      className="justify-between"
+                    >
+                   
+                     Full Screen
+                    </a>
+                  </li>
+                </ul>
               </div>
             ) : (
               <Link

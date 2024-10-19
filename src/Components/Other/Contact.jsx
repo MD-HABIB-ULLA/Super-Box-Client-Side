@@ -1,101 +1,116 @@
-import { FcHome } from "react-icons/fc";
-import { PiPhoneCallDuotone } from "react-icons/pi";
-import { BiMailSend } from "react-icons/bi";
-import Title from "../Common/Title";
-const Contact = () => {
-  return (
-    <div className="">
-      {/* information  */}
-      <div>
-        <Title title1="any queries?" title2={"contact with us"}></Title>
-        <p className="text-center max-w-[35%] mx-auto text-xs text-gray-600 font-light">
-          We always want to hear from you! Let us know how we can best help you
-          and we'll do our very best.
-        </p>
+import React from "react";
+import { MapPin, Mail } from "lucide-react";
 
-        <div className="container mx-auto flex flex-row px-10 py-10 divide-x-4 ">
-          <div className=" flex-1 card-body items-center text-center">
-            <FcHome className=" text-5xl" />
-            <h2 className="card-title">Location</h2>
-            <p className=" text-sm text-gray-500 w-52 font-semibold">
-              Anfra Inc, 06 Highley St, Victoria, Germany
+const ContactForm = () => {
+  return (
+    <div className=" bg-indigo-50 py-6 px-5">
+      <div className="max-w-screen-xl m-auto flex flex-col  md:flex-row">
+        {/* Left Section */}
+        <div className="md:w-1/2 p-8 md:p-16">
+          <h2 className="text-sm font-semibold text-indigo-600 mb-2">
+            CONTACT US
+          </h2>
+          <h1 className="md:text-5xl text-3xl font-bold mb-12">
+            Let's talk about your problem.
+          </h1>
+
+          <div className="mb-8">
+            <div className="flex items-center mb-2">
+              <MapPin className="w-6 h-6  text-blue-600 mr-2" />
+              <h3 className="font-semibold text-3xl">Our Location</h3>
+            </div>
+            <p className="text-gray-600 ml-7">
+              401 Broadway, 24th Floor,
+              <br />
+              Orchard Cloud View, London
             </p>
           </div>
 
-          <div className=" flex-1">
-            <div className=" flex-1 card-body items-center text-center">
-              <PiPhoneCallDuotone className=" text-5xl" />
-              <h2 className="card-title">Call Us</h2>
-              <p className=" text-sm text-gray-500 font-semibold">
-                Mobile: (+61) - 1990 - 6886{" "}
-              </p>
-              <p className=" text-sm text-gray-500 font-semibold">
-                Hotline: 1800 - 1102
-              </p>
+          <div>
+            <div className="flex items-center mb-2">
+              <Mail className="w-6 h-6  text-blue-600 mr-2" />
+              <h3 className="font-semibold text-3xl">How Can We Help?</h3>
             </div>
-          </div>
-          <div className=" flex-1">
-            <div className=" flex-1 card-body items-center text-center">
-              <BiMailSend className=" text-5xl" />
-              <h2 className="card-title">Mail Us</h2>
-              <p className=" text-sm text-gray-500 font-semibold">
-                Info : ask@domain.com{" "}
-              </p>
-              <p className=" text-sm text-gray-500 font-semibold">
-                Support : wearehere@domain.com
-              </p>
-            </div>
+            <p className="text-gray-600 ml-7">info@yourdomain.com</p>
+            <p className="text-gray-600 ml-7">contact@yourdomain.com</p>
           </div>
         </div>
-      </div>
-      {/* form */}
-      <div className=" max-w-5xl mx-auto px-10 py-10">
-        <form  method="dialog">
-          {/* if there is a button in form, it will close the modal */}
-          {/* <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button> */}
-          <div className="flex flex-row mb-6 gap-5">
-            <div className=" flex-1">
-              {/* <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Name</label> */}
+
+        {/* Right Section - Form */}
+        <div className="md:w-1/2 bg-white p-8 md:p-16 rounded-xl">
+          <h2 className="text-2xl font-bold mb-6">Send us a Message</h2>
+          <form>
+            <div className="mb-4">
+              <label
+                htmlFor="fullName"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Full Name*
+              </label>
               <input
                 type="text"
-                name="from_name"
-                id="name"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Enter your name"
+                id="fullName"
+                name="fullName"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                placeholder="Adam Gelius"
               />
             </div>
-            <div className=" flex-1">
-              {/* <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label> */}
+            <div className="mb-4">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Email*
+              </label>
               <input
                 type="email"
-                name="from_email"
                 id="email"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="name@company.com"
+                name="email"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                placeholder="example@yourmail.com"
               />
             </div>
-          </div>
-          <div className="mb-6">
-            {/* <label htmlFor="message" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your message</label> */}
-            <textarea
-              id="message"
-              name="message"
-              rows="4"
-              className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50  border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="Your message..."
-            ></textarea>
-          </div>
-          <button
-            type="submit"
-            value="Send"
-            className="text-white bg-gray-700 hover:bg-gray-800 w-full focus:ring-4 focus:ring-gray-300 font-medium  text-sm px-5 py-2.5 mb-2 dark:bg-gray-600 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800 block"
-          >
-            Send message
-          </button>
-        </form>
+            <div className="mb-4">
+              <label
+                htmlFor="phone"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Phone*
+              </label>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                placeholder="+885 1254 5211 552"
+              />
+            </div>
+            <div className="mb-6">
+              <label
+                htmlFor="message"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Message*
+              </label>
+              <textarea
+                id="message"
+                name="message"
+                rows="4"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                placeholder="Type your message here"
+              ></textarea>
+            </div>
+            <button
+              type="submit"
+              className="w-full bg-indigo-500 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition duration-300"
+            >
+              Send Message
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );
 };
 
-export default Contact;
+export default ContactForm;
