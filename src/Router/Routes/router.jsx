@@ -50,6 +50,7 @@ import Checkout from "../../Pages/SellerWebsite/CheckOut/CheckOut";
 import SignUpCus from "../../Pages/SellerWebsite/Auth/SignUp";
 import FeedbackForm from "../../Pages/Feedback/Feedback";
 import BlogDetails from "../../Pages/SellerWebsite/BlogDetails/BlogDetails";
+import MassageForm from "../../Pages/Dashboard/Seller/MassageForm";
 
 const RoleBasedComponent = () => {
   const { isAdmin, isSeller } = useRole();
@@ -193,6 +194,10 @@ const router = createBrowserRouter([
           {
             path: "/dashboard/support",
             element: <Support />,
+          },
+          {
+            path: "/dashboard/ads",
+            element: <MassageForm />,
           },
 
           {
