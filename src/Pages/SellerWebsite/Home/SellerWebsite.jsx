@@ -7,6 +7,7 @@ import Title from "../../../Components/Common/Title";
 import Services from "../../../Components/SellerWebPage/Services";
 import { Link, useParams } from "react-router-dom";
 import BlogCard from "../../../Components/SellerWebPage/BlogCard";
+import ImageWithMessage from "../../../Components/SellerWebPage/ImageWithMessage";
 
 const SellerWebsite = () => {
   const { webInfo, products, blogs, services, setName } =
@@ -78,8 +79,11 @@ const SellerWebsite = () => {
           </div>
         </section>
       )}
+
+      {webInfo?.message && <ImageWithMessage data={webInfo?.message} />}
+
       {blogs?.length !== 0 && (
-        <div className="mt-10 max-w-7xl px-4 sm:px-6 lg:px-8 mx-auto">
+        <div className=" max-w-7xl px-4 sm:px-6 lg:px-8 mx-auto">
           <div className="py-10">
             <Title title1={"Explore Our Latest"} title2={"BLOG POSTS"} />
           </div>
