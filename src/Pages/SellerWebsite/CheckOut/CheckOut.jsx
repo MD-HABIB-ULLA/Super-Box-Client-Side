@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { WebDataDisContext } from "../../../Context/WebDataDisContext";
 import { AuthContext } from "../../../Provider/AuthProvider";
 import axios from "axios";
@@ -9,10 +9,11 @@ import { Currency } from "lucide-react";
 import { TbCurrencyTaka } from "react-icons/tb";
 
 const Checkout = () => {
-  const { confirmProduct, webData, name, sellerInfo } =
+  const { confirmProduct, webData, name, sellerInfo,setWebCartItem ,getCartItems} =
     useContext(WebDataDisContext);
 
   console.log(sellerInfo);
+  const {shopName} = useParams
   const { user } = useContext(AuthContext);
   const email = user?.email;
   const sellerEmail = webData?.email;
@@ -76,6 +77,7 @@ const Checkout = () => {
           ? "pending"
           : "success",
       buyerEmail: email,
+      productId: product._id,
       isReceived: false,
       paymentMethod: paymentMethod,
       sellerEmail: sellerEmail,
@@ -90,7 +92,8 @@ const Checkout = () => {
           "/payment",
           { ...restOfProduct } // Sending individual product object
         );
-
+        const initialCartItems = await getCartItems(email, shopName);
+        setWebCartItem(initialCartItems);
         toast.success(`Payment for product ${product.name} succeeded`);
         navigate(`/w/${name}`);
       }
@@ -130,9 +133,9 @@ const Checkout = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 p-5">
-      <div className="max-w-7xl mx-auto grid grid-cols-12 gap-6">
+      <div className="max-w-7xl mx-auto grid md:grid-cols-12 gap-6">
         {/* Left Side - Payment Methods */}
-        <div className="col-span-8 bg-white p-6 shadow-lg rounded-md">
+        <div className="md:col-span-8 bg-white p-6 shadow-lg rounded-md">
           <h3 className="text-lg font-semibold mb-4">Choose Payment Method</h3>
           <div className="flex space-x-4 mb-6">
             <button
@@ -333,7 +336,7 @@ const Checkout = () => {
         </div>
 
         {/* Right Side - Order Summary */}
-        <div className="col-span-4 bg-white p-6 shadow-lg rounded-md">
+        <div className="md:col-span-4 bg-white p-6 shadow-lg rounded-md">
           <h4 className="font-semibold text-lg mb-2">Order Summary</h4>
           <div className="flex justify-between mb-2">
             <span>Items Total</span>

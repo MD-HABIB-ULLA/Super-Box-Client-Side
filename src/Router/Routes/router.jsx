@@ -49,6 +49,7 @@ import Shipping from "../../Pages/SellerWebsite/Shipping/Shipping";
 import Checkout from "../../Pages/SellerWebsite/CheckOut/CheckOut";
 import SignUpCus from "../../Pages/SellerWebsite/Auth/SignUp";
 import FeedbackForm from "../../Pages/Feedback/Feedback";
+import BlogDetails from "../../Pages/SellerWebsite/BlogDetails/BlogDetails";
 
 const RoleBasedComponent = () => {
   const { isAdmin, isSeller } = useRole();
@@ -161,7 +162,7 @@ const router = createBrowserRouter([
           },
           {
             path: "/dashboard/feedback",
-            element: <FeedbackForm/>
+            element: <FeedbackForm />,
           },
 
           {
@@ -264,7 +265,7 @@ const router = createBrowserRouter([
       },
       {
         path: "feedback",
-        element: <FeedbackForm/>
+        element: <FeedbackForm />,
       },
       {
         path: "support", // List of products
@@ -292,12 +293,11 @@ const router = createBrowserRouter([
       },
       {
         path: "products/:id",
-        element: (
-          <PrivateRouteForCustomer>
-            {" "}
-            <ProductDetails />
-          </PrivateRouteForCustomer>
-        ),
+        element: <ProductDetails />,
+      },
+      {
+        path: "blog/:id",
+        element: <BlogDetails />,
       },
       {
         path: "login",

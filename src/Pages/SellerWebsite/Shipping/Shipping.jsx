@@ -55,9 +55,9 @@ const Shipping = () => {
   return (
     <div>
       <div className="min-h-screen bg-gray-100 p-5">
-        <div className="max-w-6xl mx-auto grid grid-cols-12 gap-6">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-12 grid-cols-1 gap-6">
           {/* Left Side */}
-          <div className="col-span-8 bg-white p-6 shadow-lg rounded-md">
+          <div className="md:col-span-8 bg-white p-6 shadow-lg rounded-md">
             {/* Shipping and Billing */}
             <div className="border-b pb-4 mb-4">
               <div className="flex justify-between items-center">
@@ -102,7 +102,7 @@ const Shipping = () => {
           </div>
 
           {/* Right Side */}
-          <div className="col-span-4 bg-white p-6 shadow-lg rounded-md">
+          <div className="md:col-span-4 bg-white p-6 shadow-lg rounded-md">
             <div>
               {/* Order Summary */}
               <div className="pt-4">

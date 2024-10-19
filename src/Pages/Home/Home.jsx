@@ -9,6 +9,7 @@ const Home = () => {
 
   return (
     <div>
+      
       <Banner />
       <Feature />
       <About />
