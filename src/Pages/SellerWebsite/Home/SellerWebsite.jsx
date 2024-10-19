@@ -6,6 +6,8 @@ import { WebDataDisContext } from "../../../Context/WebDataDisContext";
 import Title from "../../../Components/Common/Title";
 import Services from "../../../Components/SellerWebPage/Services";
 import { Link, useParams } from "react-router-dom";
+import BlogCard from "../../../Components/SellerWebPage/BlogCard";
+import ImageWithMessage from "../../../Components/SellerWebPage/ImageWithMessage";
 
 const SellerWebsite = () => {
   const { webInfo, products, blogs, services, setName } =
@@ -27,9 +29,7 @@ const SellerWebsite = () => {
           <div className="max-w-7xl mx-auto">
             <Title
               title2={"Choose Your Products"}
-              title1={
-                " Discover our  high-quality products"
-              }
+              title1={" Discover our  high-quality products"}
             />
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {products?.slice(0, 3).map((product) => (
@@ -58,7 +58,7 @@ const SellerWebsite = () => {
                         ${product.price.toFixed(2)}
                       </span>
                       <Link
-                        to={`/product/${product._id}`}
+                        to={`products/${product._id}`}
                         className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-300"
                       >
                         View Details
@@ -79,39 +79,17 @@ const SellerWebsite = () => {
           </div>
         </section>
       )}
+
+      {webInfo?.message && <ImageWithMessage data={webInfo?.message} />}
+
       {blogs?.length !== 0 && (
-        <div className="mt-10 max-w-7xl px-4 sm:px-6 lg:px-8 mx-auto">
+        <div className=" max-w-7xl px-4 sm:px-6 lg:px-8 mx-auto">
           <div className="py-10">
             <Title title1={"Explore Our Latest"} title2={"BLOG POSTS"} />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {blogs?.slice(0, 3).map((blog, index) => (
-              <div
-                key={index}
-                className="bg-white shadow-md rounded-lg overflow-hidden group relative transform transition-transform duration-300 hover:scale-105"
-              >
-                <div className="p-4">
-                  <h2 className="text-lg md:text-xl font-bold mb-2">
-                    {blog.title}
-                  </h2>
-                  <p className="text-xs md:text-sm text-gray-500 mb-4">
-                    {blog.upload_date}
-                  </p>
-                  <div className="h-48 md:h-56">
-                    <img
-                      src={blog.image}
-                      alt={blog.title}
-                      className="h-full w-full object-cover mb-4 rounded"
-                    />
-                  </div>
-                  <p className="text-xs md:text-sm text-gray-600 mb-4">
-                    {blog.description}
-                  </p>
-                  <p className="text-xs text-gray-500">
-                    Posted by: {blog.email}
-                  </p>
-                </div>
-              </div>
+              <BlogCard key={index} blog={blog} />
             ))}
           </div>
         </div>

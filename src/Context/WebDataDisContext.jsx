@@ -15,7 +15,7 @@ const WebDataDisProvider = ({ children }) => {
   const [webData, setWebData] = useState(null);
   const [blogs, setBlogs] = useState(null);
   const [confirmProduct, setConfirmProduct] = useState(null);
-  const { email, webInfo,sellerInfo } = webData || {};
+  const { email, webInfo, sellerInfo } = webData || {};
   console.log(sellerInfo);
   const axiosPublic = useAxiosPublic();
   const { user } = useContext(AuthContext);
@@ -221,6 +221,8 @@ const WebDataDisProvider = ({ children }) => {
         setConfirmProduct,
         confirmProduct,
         webData,
+        getCartItems,
+        setWebCartItem,
       }}
     >
       {children}

@@ -31,6 +31,7 @@ import { NavLink, Outlet } from "react-router-dom";
 import useRole from "../../hooks/useRole";
 import { CiTimer } from "react-icons/ci";
 import { FcFeedback } from "react-icons/fc";
+import { PiBroadcastDuotone } from "react-icons/pi";
 
 const DHome = () => {
   const { isAdmin, isSeller } = useRole();
@@ -151,6 +152,17 @@ const DHome = () => {
             >
               <FaReceipt className="text-3xl text-[#ED7725]" />
               Point Of Sell (pos)
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/dashboard/ads"
+              className={({ isActive }) =>
+                `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
+              }
+            >
+              <PiBroadcastDuotone className="text-3xl text-[#ED7725]" />
+              Ads
             </NavLink>
           </li>
           <li>
