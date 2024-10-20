@@ -51,7 +51,7 @@ const DHome = () => {
               }
               end // Makes sure this matches exactly for /dashboard
             >
-              <FaHome className="text-3xl text-[#ED7725]" />
+              <FaHome className="text-3xl text-indigo-600" />
               Home
             </NavLink>
           </li>
@@ -62,7 +62,7 @@ const DHome = () => {
                 `p-2 text-lg rounded-sm ${isActive ? " bg-gray-600/30" : ""}`
               }
             >
-              <FaEdit className="text-3xl text-[#ED7725]" />
+              <FaEdit className="text-3xl text-indigo-600" />
               Website Preview and Edit
             </NavLink>
           </li>
@@ -73,7 +73,7 @@ const DHome = () => {
                 `p-2 text-lg rounded-sm ${isActive ? " bg-gray-600/30" : ""}`
               }
             >
-              <AiOutlineProduct className="text-3xl text-[#ED7725]" />
+              <AiOutlineProduct className="text-3xl text-indigo-600" />
               Product Management
             </NavLink>
           </li>
@@ -84,7 +84,7 @@ const DHome = () => {
                 `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
               }
             >
-              <MdHomeRepairService className="text-3xl text-[#ED7725]" />
+              <MdHomeRepairService className="text-3xl text-indigo-600" />
               Service Management
             </NavLink>
           </li>
@@ -95,7 +95,7 @@ const DHome = () => {
                 `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
               }
             >
-              <CiTimer className="text-3xl text-[#ED7725]" />
+              <CiTimer className="text-3xl text-indigo-600" />
               Pending orders
             </NavLink>
           </li>
@@ -106,7 +106,7 @@ const DHome = () => {
                 `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
               }
             >
-              <TbLogs className="text-3xl text-[#ED7725]" />
+              <TbLogs className="text-3xl text-indigo-600" />
               Blogs Management
             </NavLink>
           </li>
@@ -117,7 +117,7 @@ const DHome = () => {
                 `p-2 text-lg rounded-sm ${isActive ? " bg-gray-600/30" : ""}`
               }
             >
-              <MdAccountBalanceWallet className="text-3xl text-[#ED7725]" />
+              <MdAccountBalanceWallet className="text-3xl text-indigo-600" />
               Wallet Management
             </NavLink>
           </li>
@@ -128,7 +128,7 @@ const DHome = () => {
                 `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
               }
             >
-              <FaTruck className="text-3xl text-[#ED7725]" />
+              <FaTruck className="text-3xl text-indigo-600" />
               Logistics Report
             </NavLink>
           </li>
@@ -139,7 +139,7 @@ const DHome = () => {
                 `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
               }
             >
-              <HiChatBubbleLeftRight className="text-3xl text-[#ED7725]" />
+              <HiChatBubbleLeftRight className="text-3xl text-indigo-600" />
               Messaging
             </NavLink>
           </li>
@@ -150,7 +150,7 @@ const DHome = () => {
                 `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
               }
             >
-              <FaReceipt className="text-3xl text-[#ED7725]" />
+              <FaReceipt className="text-3xl text-indigo-600" />
               Point Of Sell (pos)
             </NavLink>
           </li>
@@ -161,7 +161,7 @@ const DHome = () => {
                 `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
               }
             >
-              <PiBroadcastDuotone className="text-3xl text-[#ED7725]" />
+              <PiBroadcastDuotone className="text-3xl text-indigo-600" />
               Ads
             </NavLink>
           </li>
@@ -172,7 +172,7 @@ const DHome = () => {
                 `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
               }
             >
-              <MdFeedback className="text-3xl text-[#ED7725]" />
+              <MdFeedback className="text-3xl text-indigo-600" />
               Feedback
             </NavLink>
           </li>
@@ -191,7 +191,7 @@ const DHome = () => {
               `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
             }
           >
-            <MdManageAccounts className="text-3xl text-[#ED7725]" />
+            <MdManageAccounts className="text-3xl text-indigo-600" />
             Account Management <FaCrown />
           </NavLink>
         </li>
@@ -202,7 +202,7 @@ const DHome = () => {
               `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
             }
           >
-            <MdReportProblem className="text-3xl text-[#ED7725]" />
+            <MdReportProblem className="text-3xl text-indigo-600" />
             Conflict Report & Management <FaCrown />
           </NavLink>
         </li>
@@ -213,7 +213,7 @@ const DHome = () => {
               `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
             }
           >
-            <MdVerified className="text-3xl text-[#ED7725]" />
+            <MdVerified className="text-3xl text-indigo-600" />
             Business Authorizations
             <FaCrown />
           </NavLink>
@@ -225,7 +225,7 @@ const DHome = () => {
               `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
             }
           >
-            <MdSettings className="text-3xl text-[#ED7725]" />
+            <MdSettings className="text-3xl text-indigo-600" />
             Support <FaCrown />
           </NavLink>
         </li>
@@ -236,7 +236,7 @@ const DHome = () => {
               `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
             }
           >
-            <MdSettings className="text-3xl text-[#ED7725]" />
+            <MdSettings className="text-3xl text-indigo-600" />
             Settings <FaCrown />
           </NavLink>
         </li>
@@ -253,7 +253,7 @@ const DHome = () => {
               `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
             }
           >
-            <MdBusinessCenter className="text-3xl text-[#ED7725]" />
+            <MdBusinessCenter className="text-3xl text-indigo-600" />
             Business Development & Management <FaCrown />
           </NavLink>
         </li>
@@ -264,7 +264,7 @@ const DHome = () => {
               `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
             }
           >
-            <MdLocalOffer className="text-3xl text-[#ED7725]" />
+            <MdLocalOffer className="text-3xl text-indigo-600" />
             Marketing & Branding <FaCrown />
           </NavLink>
         </li>
@@ -275,7 +275,7 @@ const DHome = () => {
               `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
             }
           >
-            <MdOutlineInventory2 className="text-3xl text-[#ED7725]" />
+            <MdOutlineInventory2 className="text-3xl text-indigo-600" />
             Supply Packaging <FaCrown />
           </NavLink>
         </li>
@@ -286,7 +286,7 @@ const DHome = () => {
               `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
             }
           >
-            <MdSchool className="text-3xl text-[#ED7725]" />
+            <MdSchool className="text-3xl text-indigo-600" />
             Courses & Tutorials <FaCrown />
           </NavLink>
         </li>
@@ -297,7 +297,7 @@ const DHome = () => {
               `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
             }
           >
-            <MdOutlineSupportAgent className="text-3xl text-[#ED7725]" />
+            <MdOutlineSupportAgent className="text-3xl text-indigo-600" />
             Business Consulting <FaCrown />
           </NavLink>
         </li>
@@ -308,7 +308,7 @@ const DHome = () => {
               `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
             }
           >
-            <MdAttachMoney className="text-3xl text-[#ED7725]" />
+            <MdAttachMoney className="text-3xl text-indigo-600" />
             Loans & Finance <FaCrown />
           </NavLink>
         </li>

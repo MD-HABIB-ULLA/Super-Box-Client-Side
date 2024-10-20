@@ -1,15 +1,17 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Footer from "../Components/Common/Footer";
 import Navbar from "../Components/Common/Navbar";
 
 const Main = () => {
+  const url = useLocation();
+  console.log();
   return (
     <div>
       <Navbar />
       <div className=" min-h-screen">
         <Outlet />
       </div>
-      <Footer />
+      {(url.pathname.includes)=== "/dashboard" && <Footer />}
     </div>
   );
 };

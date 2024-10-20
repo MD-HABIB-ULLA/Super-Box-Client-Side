@@ -69,7 +69,7 @@ const SellerDHome = () => {
         className=" px-10 py-20 w-full bg-cover bg-no-repeat rounded-3xl "
         style={{
           backgroundImage:
-            "url(https://i.ibb.co.com/L9MZVQK/63c1e3cbf449c603aa920ffc-63b942267ee4c772e9e1c7b2-banner-main-2x-p-500.png)",
+            "url(https://i.ibb.co.com/BBTQ9s7/abstract-background-5500x2750-11615.png)",
         }}
       >
         <div className=" w-full">
