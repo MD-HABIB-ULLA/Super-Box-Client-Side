@@ -51,6 +51,7 @@ import SignUpCus from "../../Pages/SellerWebsite/Auth/SignUp";
 import FeedbackForm from "../../Pages/Feedback/Feedback";
 import BlogDetails from "../../Pages/SellerWebsite/BlogDetails/BlogDetails";
 import MassageForm from "../../Pages/Dashboard/Seller/MassageForm";
+import ErrorPage from "../../Pages/Errorpage/ErrorPage";
 
 const RoleBasedComponent = () => {
   const { isAdmin, isSeller } = useRole();
@@ -73,6 +74,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Main />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/",
