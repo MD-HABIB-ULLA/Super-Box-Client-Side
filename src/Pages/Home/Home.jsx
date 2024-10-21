@@ -5,6 +5,7 @@ import Chart from "../../Components/Other/Chart";
 import Contact from "../../Components/Other/Contact";
 import Feature from "../../Components/Other/Feature";
 import FollowUs from "../../Components/Other/FollowUs";
+import Typo from "../../Components/Other/Typo";
 
 const Home = () => {
 
@@ -14,6 +15,7 @@ const Home = () => {
       
       <Banner />
       <Feature />
+      <Typo/>
       {/* <MyApexChart/> */}
       <About />
       <Contact />
