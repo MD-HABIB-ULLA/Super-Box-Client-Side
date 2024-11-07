@@ -41,15 +41,13 @@ const About = () => {
                 Make your customers happy by giving services.
               </h2>
               <p className="mb-5 text-base text-body-color dark:text-dark-6">
-                It is a long established fact that a reader will be distracted
-                by the readable content of a page when looking at its layout.
-                The point of using Lorem Ipsum is that it has a more-or-less.
+                We’re offering an exclusive opportunity to join our beta launch
+                with a 70% discount for the first 10 businesses. By joining now,
+                you’ll not only gain early access to our platform but also
+                secure free access to our future Lite Package and receive
+                exclusive discounts on the Pro Pack.
               </p>
-              <p className="mb-8 text-base text-body-color dark:text-dark-6">
-                A domain name is one of the first steps to establishing your
-                brand. Secure a consistent brand image with a domain name that
-                matches your business.
-              </p>
+            
               <a
                 href="/dashboard"
                 className="inline-flex items-center justify-center py-3 text-base font-medium text-center text-white border border-transparent rounded-md px-7 bg-indigo-500 hover:bg-opacity-90"

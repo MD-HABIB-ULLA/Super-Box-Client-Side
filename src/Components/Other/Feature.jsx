@@ -1,57 +1,54 @@
 import React from 'react'
 import {
   FaRocket,
-  FaCashRegister,
-  FaBoxes,
-  FaWrench,
-  FaGlobe,
-  FaStore,
+  FaCreditCard,
+  FaBox,
+  FaFileInvoice,
+  FaRegClipboard,
+  FaChartLine,
 } from "react-icons/fa"
 
 const features = [
   {
+    icon: <FaCreditCard className="w-8 h-8" />,
+    title: "Secure Payments & Business Verification",
+    desc: "Accept payments confidently with fraud protection and business verification that builds trust with your customers.",
+  },
+  {
     icon: <FaRocket className="w-8 h-8" />,
-    title: "Build Lightweight Webpage",
-    desc: "Optimize your webpage for speed and performance, ensuring faster load times and a smooth user experience.",
+    title: "Website Creation",
+    desc: "Build a professional website to expand your business online, attracting new customers and showcasing your products or services.",
   },
   {
-    icon: <FaCashRegister className="w-8 h-8" />,
-    title: "POS System",
-    desc: "Seamless integration of point-of-sale features to manage in-store sales effortlessly.",
+    icon: <FaBox className="w-8 h-8" />,
+    title: "Multiple Delivery and Logistics Integration",
+    desc: "Seamlessly manage deliveries, whether you’re shipping products or coordinating services. Choose from multiple delivery options that suit your business needs.",
   },
   {
-    icon: <FaBoxes className="w-8 h-8" />,
-    title: "Product Management",
-    desc: "Easily manage your products, including adding, removing, and updating listings in real-time.",
+    icon: <FaFileInvoice className="w-8 h-8" />,
+    title: "Invoicing & Sales Tracking",
+    desc: "Automate invoicing and track sales in real-time, so you can stay focused on growth while we handle the paperwork.",
   },
   {
-    icon: <FaWrench className="w-8 h-8" />,
-    title: "Service Management",
-    desc: "Offer and manage services through your platform with dedicated features to streamline bookings and support.",
+    icon: <FaRegClipboard className="w-8 h-8" />,
+    title: "Order and Booking Management",
+    desc: "Efficiently manage customer orders or bookings, ensuring you meet customer expectations, whether online or in-store.",
   },
   {
-    icon: <FaGlobe className="w-8 h-8" />,
-    title: "Separate Web URL",
-    desc: "Get your own custom web URL to build a personalized online presence for your business.",
-  },
-  {
-    icon: <FaStore className="w-8 h-8" />,
-    title: "Make Your Store Online",
-    desc: "Bring your physical store online with all the tools needed to sell products and services virtually.",
+    icon: <FaChartLine className="w-8 h-8" />,
+    title: "Basic Reporting & Business Insights",
+    desc: "Access powerful reports that provide real-time data on sales, customer activity, and operational performance to help you make informed business decisions.",
   },
 ]
 
 export default function Features() {
   return (
-    <section className="py-20 ">
+    <section className="py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div className="text-center mb-16">
-          <h2 className="text-base text-indigo-600 font-semibold tracking-wide uppercase">Features</h2>
+          <h2 className="text-base text-indigo-600 font-semibold tracking-wide uppercase">What We Offer</h2>
           <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-            Boost Your Business with Essential Tools
-          </p>
-          <p className="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">
-            Seamlessly manage your online and in-store operations with our cutting-edge features.
+            We provide a complete solution for your business—whether you’re expanding digitally or optimizing your operations in the real world.
           </p>
         </div>
         <div className="absolute inset-0 max-w-xs mx-auto h-44 blur-[118px]" style={{ background: "linear-gradient(152.92deg, rgba(75, 0, 130, 0.2) 6.54%, rgba(75, 0, 130, 0.26) 84.2%, rgba(75, 0, 130, 0.1) 77.55%)", }} ></div>  
