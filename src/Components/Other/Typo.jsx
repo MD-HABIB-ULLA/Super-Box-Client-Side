@@ -17,7 +17,7 @@ const Typo = () => {
     
     <div className="mt-12 w-full max-w-md grid grid-cols-1 gap-4 sm:grid-cols-2">
       <a 
-        href="https://example.com/new-feature"
+        
         className="flex flex-row items-center justify-center gap-x-2 rounded-lg text-white px-6 py-3 bg-indigo-500 hover:bg-indigo-600 transition duration-300"
       >
         <svg className="h-[30px] text-white" stroke="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" strokeWidth="3" fill="none">

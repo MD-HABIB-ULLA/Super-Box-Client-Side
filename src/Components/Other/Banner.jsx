@@ -1,59 +1,67 @@
-import { useState } from "react";
+
 
 const Banner = () => {
-
   return (
     <>
-      <section className="py-28">
-        <div className="max-w-screen-xl mx-auto text-gray-600 gap-x-12 items-center justify-between overflow-hidden md:flex md:px-8">
-          <div className="flex-none space-y-5 px-4 sm:max-w-lg md:px-0 lg:max-w-xl">
-            <h1 className="text-sm text-indigo-600 font-medium">
-              Over 200 successful deals
+   <section className="overflow-hidden bg-gray-100">
+      <div className="max-w-7xl mx-auto px-4 py-12 md:px-6 lg:px-8 lg:py-16">
+        <div className="grid items-center gap-6 lg:grid-cols-2 lg:gap-12">
+          <div className="space-y-6">
+            <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl ">
+              Empower Your Business with an All-in-One Digital and Growth Platform
             </h1>
-            <h2 className="text-4xl text-gray-800 font-extrabold md:text-5xl">
-              We help startups to grow and make money
-            </h2>
-            <p>
-              Sed ut perspiciatis unde omnis iste natus voluptatem accusantium
-              doloremque laudantium, totam rem aperiam, eaque ipsa quae.
+            <p className="max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+              Take control of your business operations, streamline workflows, and scale your brand—both online and offline. Get the tools you need to thrive in the digital world and beyond.
             </p>
-            <div className="items-center gap-x-3 space-y-3 sm:flex sm:space-y-0">
+            <div className="space-y-4">
+              <h2 className="text-2xl font-bold tracking-tighter sm:text-3xl">
+                Your Partner for Business Growth
+              </h2>
+              <p className="max-w-[600px] text-gray-500 md:text-lg/relaxed lg:text-base/relaxed xl:text-lg/relaxed">
+                From secure payments and delivery management to invoicing, sales tracking, and business consulting, our platform is designed to help you succeed in today's competitive market, whether you're expanding online or enhancing your physical presence.
+              </p>
+            </div>
+            <div className="flex flex-col gap-3 min-[400px]:flex-row">
               <a
                 href="/dashboard"
-                className="block py-2 px-4 text-center text-white font-medium bg-indigo-600 duration-150 hover:bg-indigo-500 active:bg-indigo-700 rounded-lg shadow-lg hover:shadow-none"
+                className="inline-flex items-center justify-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               >
                 Let's get started
               </a>
               <a
                 href="/dashboard"
-                className="flex items-center justify-center gap-x-2 py-2 px-4 text-gray-700 hover:text-gray-500 font-medium duration-150 active:bg-gray-100 border rounded-lg md:inline-flex"
+                className="inline-flex items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               >
                 Get access
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  className="w-5 h-5"
+                  className="ml-2 h-4 w-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
                 >
                   <path
-                    fillRule="evenodd"
-                    d="M2 10a.75.75 0 01.75-.75h12.59l-2.1-1.95a.75.75 0 111.02-1.1l3.5 3.25a.75.75 0 010 1.1l-3.5 3.25a.75.75 0 11-1.02-1.1l2.1-1.95H2.75A.75.75 0 012 10z"
-                    clipRule="evenodd"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M14 5l7 7m0 0l-7 7m7-7H3"
                   />
                 </svg>
               </a>
             </div>
           </div>
-          <div className="flex-none mt-14 md:mt-0 md:max-w-xl">
-            <img
-              src="https://images.unsplash.com/photo-1573164713619-24c711fe7878?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1738&q=80"
-              className=" md:rounded-tl-[108px]"
-              alt=""
-            />
+          <div className="flex items-center justify-center lg:justify-end">
+            <div className="relative w-full max-w-[500px] aspect-[4/3] overflow-hidden rounded-lg shadow-xl">
+              <img
+                src="https://images.unsplash.com/photo-1573164713619-24c711fe7878?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1738&q=80"
+                alt="Business growth illustration showing a person working on a laptop"
+                className="object-cover w-full h-full"
+              />
+            </div>
           </div>
         </div>
-       
-      </section>
+      </div>
+    </section>
     </>
   );
 };

@@ -11,7 +11,7 @@ const Main = () => {
       <div className=" min-h-screen">
         <Outlet />
       </div>
-      {(url.pathname.includes)=== "/dashboard" && <Footer />}
+      {!url.pathname.startsWith("/dashboard") && <Footer />}
     </div>
   );
 };

@@ -302,7 +302,7 @@ const ProductManagement = () => {
               <label className="block text-gray-700">Product Name</label>
               <input
                 type="text"
-                name="productName"
+                name="name"
                 defaultValue={productDetails?.productName}
                 className="input input-bordered w-full"
                 placeholder="Enter product name"
