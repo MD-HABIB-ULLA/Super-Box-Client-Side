@@ -16,7 +16,7 @@ const ProductItem = ({ product }) => {
       <div className="text-center">
         <h3 className="text-lg font-semibold">Product ID: {product.productId}</h3>
         <p>Shop Name: {product.shopName}</p>
-        <p>Price: ${product.price}</p>
+        <p>Price: {product.price}Tk</p>
         <p>Transaction ID: {product.transactionId}</p>
       </div>
     </div>

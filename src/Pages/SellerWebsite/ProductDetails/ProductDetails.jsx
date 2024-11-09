@@ -23,7 +23,7 @@ const ProductDetails = () => {
               <h2 className="card-title">{data?.name}</h2>
               <p>{data?.description}</p>
               <div className="card-actions justify-between items-center">
-                <span className="text-lg font-bold">${data?.price}</span>
+                <span className="text-lg font-bold">BDT: {data?.price}Tk</span>
                 <Link>
                   <button className="btn btn-primary">Buy Now</button>
                 </Link>

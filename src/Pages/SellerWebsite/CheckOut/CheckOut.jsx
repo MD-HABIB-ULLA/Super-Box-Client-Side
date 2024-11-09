@@ -197,7 +197,7 @@ const Checkout = () => {
             <div className="bg-gray-50 p-4 rounded-md">
               <p className=" flex items-center gap-1">
                 Cash on Delivery is selected. A
-                <TbCurrencyTaka /> 10 charge will be added to your total.
+                BDT: 10 Tk charge will be added to your total.
               </p>
             </div>
           )}
@@ -342,7 +342,7 @@ const Checkout = () => {
             <span>Items Total</span>
             <span className="flex items-center gap-2">
               {" "}
-              <TbCurrencyTaka /> {totalPrice.toFixed(2)}
+            BDT: {totalPrice.toFixed(2)}Tk
             </span>
           </div>
           {paymentMethod === "cashOnDelivery" && (
@@ -350,7 +350,7 @@ const Checkout = () => {
               <span>Cash on Delivery Fee</span>
               <span className="flex items-center gap-2">
                 {" "}
-                <TbCurrencyTaka /> 10.00
+               BDT: 10.00 Tk
               </span>
             </div>
           )}
@@ -358,7 +358,7 @@ const Checkout = () => {
           <div className="flex justify-between font-bold text-orange-600 text-lg">
             <span>Total</span>
             <span className="flex items-center gap-2">
-              <TbCurrencyTaka /> {calculateTotal().toFixed(2)}
+              BDT: {calculateTotal().toFixed(2)}Tk
             </span>
           </div>
 

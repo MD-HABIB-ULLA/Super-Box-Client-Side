@@ -21,7 +21,7 @@ const TransactionItem = ({ product, onDelete }) => {
       />
       <div className="ml-4 flex-1">
         <h3 className="text-lg font-semibold">{product.shopName}</h3>
-        <p>Price: ${product.price.toFixed(2)}</p>
+        <p>Price: BDT: {product.price.toFixed(2)}Tk</p>
         <p>Transaction id: {product.transactionId}</p>
         <p>Status: {product.isReceived ? "Received" : "Not Received"}</p>
       </div>

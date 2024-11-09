@@ -9,6 +9,7 @@ import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { AiFillClockCircle, AiOutlineCalendar } from "react-icons/ai";
 import { FaTrash } from "react-icons/fa";
+import PendingServiceTable from "../../../Components/Other/PendingServiceTable";
 
 const ServiceManagement = () => {
   const axiosPublic = useAxiosPublic();
@@ -20,6 +21,7 @@ const ServiceManagement = () => {
     formState: { errors },
   } = useForm();
   const [submittedData, setSubmittedData] = useState(null);
+  const [selectedTab, setSelectedTab] = useState("pending");
   const {
     data: services,
     isPending,
@@ -97,19 +99,46 @@ const ServiceManagement = () => {
     <div>
       <div className="py-10 border-b-2 border-dashed ">
         <Title title2={"Service Management"} />
-        <div className="flex justify-end">
+        <div className="flex justify-between items-center px-5">
+          <div className="flex space-x-4 ">
+            <button
+              onClick={() => setSelectedTab("pending")}
+              className={`px-4 py-2 rounded-lg ${
+                selectedTab === "pending"
+                  ? "bg-indigo-500 text-white"
+                  : "bg-white border-[1px] text-black"
+              }`}
+            >
+              Pending Service
+            </button>
+            <button
+              onClick={() => setSelectedTab("available")}
+              className={`px-4 py-2 rounded-lg ${
+                selectedTab === "available"
+                  ? "bg-indigo-500 text-white"
+                  : "bg-white border-[1px] text-black"
+              }`}
+            >
+              Available Service
+            </button>
+          </div>
+
           <button
             onClick={() => {
               document.getElementById("my_modal_addServices").showModal();
             }}
-            className="flex flex-row items-center gap-1 justify-end text-2xl mt-10 mr-5"
+            className="flex flex-row items-center gap-1 justify-end text-2xl mr-5"
           >
             <MdAddCircle className="text-green-500 text-3xl" />
             Add Services
           </button>
         </div>
       </div>
-      <div className="grid grid-cols-3 gap-8">
+      <div
+        className={`grid lg:grid-cols-3 gap-8 md:grid-cols-2 grid-cols-1 ${
+          selectedTab === "available" ? "block" : "hidden"
+        }`}
+      >
         {services &&
           services.map((service) => (
             <div
@@ -145,6 +174,9 @@ const ServiceManagement = () => {
               </div>
             </div>
           ))}
+      </div>
+      <div className={` ${selectedTab === "pending" ? "block" : "hidden"}`}>
+        <PendingServiceTable />
       </div>
       <dialog id="my_modal_addServices" className="modal">
         <div className="modal-box">

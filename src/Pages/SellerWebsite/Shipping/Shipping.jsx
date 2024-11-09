@@ -73,8 +73,9 @@ const Shipping = () => {
                   Location
                 </span>
                 <p>
-                  {customerData?.address.state} / {customerData?.address.street},{" "}
-                  {customerData?.address.city}, {customerData?.address.country}
+                  {customerData?.address.state} / {customerData?.address.street}
+                  , {customerData?.address.city},{" "}
+                  {customerData?.address.country}
                 </p>
               </div>
             </div>
@@ -93,7 +94,7 @@ const Shipping = () => {
                       <p className="font-semibold">{item?.name}</p>
                       <p className="text-gray-500">{item.description}</p>
                       <p className="font-bold text-orange-600 mt-2">
-                        $ {item.price}
+                        BDT: {item.price}Tk
                       </p>
                     </div>
                   </div>
@@ -110,19 +111,20 @@ const Shipping = () => {
                 <div className="flex justify-between mb-2">
                   <span>Items Total ({productData?.length || 0} Items)</span>
                   <span>
-                    ${" "}
+                    BDT{" "}
                     {productData
                       ?.reduce((acc, item) => acc + item.price, 0)
-                      .toFixed(2)}
+                      .toFixed(2)}{" "}
+                    Tk
                   </span>
                 </div>
                 <div className="flex justify-between mb-2">
                   <span>Shipping Fee (4.99 per item)</span>
-                  <span>$ {(productData?.length * 4.99).toFixed(2)}</span>
+                  <span>BDT: {(productData?.length * 4.99).toFixed(2)}Tk</span>
                 </div>
                 <div className="flex justify-between font-bold text-orange-600 text-lg">
                   <span>Total</span>
-                  <span>$ {totalPrice.toFixed(2)}</span>
+                  <span>BDT: {totalPrice.toFixed(2)}Tk</span>
                 </div>
               </div>
 

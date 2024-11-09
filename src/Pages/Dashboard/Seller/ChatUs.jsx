@@ -2,7 +2,10 @@ import React from "react";
 
 const ChatUs = () => {
   return (
-    <div>
+    <div className="relative">
+      <div className="absolute h-full w-full bg-gray-400/60 flex items-center justify-center ">
+        <p className="text-4xl  font-bold">This Feature is under maintenance</p>
+      </div>
       <div className="container mx-auto shadow-lg rounded-lg">
         <div className="px-5 py-5 flex justify-between items-center bg-white border-b-2">
           <div className="font-semibold text-2xl">GoingChat</div>

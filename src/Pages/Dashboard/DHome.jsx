@@ -1,5 +1,6 @@
 import { AiOutlineProduct } from "react-icons/ai";
 import {
+  FaBars,
   FaCrown,
   FaEdit,
   FaHome,
@@ -397,14 +398,16 @@ const DHome = () => {
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content ">
           <div>
+            <div className=" px-6 mt-2">
+              <label
+                htmlFor="my-drawer-2"
+                className="btn bg-white border-[1px]  drawer-button lg:hidden"
+              >
+                <FaBars />
+              </label>
+            </div>
             <Outlet />
           </div>
-          <label
-            htmlFor="my-drawer-2"
-            className="btn btn-primary drawer-button lg:hidden"
-          >
-            Open drawer
-          </label>
         </div>
         <div className="drawer-side">
           <label

@@ -41,7 +41,7 @@ const Services = ({ services }) => {
                   <div className="flex justify-between items-center mt-4">
                     <span className="text-gray-700">Starting from:</span>
                     <span className="text-blue-500 font-bold">
-                      ${service.serviceCost}
+                      BDT: {service.serviceCost}TK
                     </span>
                   </div>
                 </div>

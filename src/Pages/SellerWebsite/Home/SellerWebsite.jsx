@@ -55,7 +55,7 @@ const SellerWebsite = () => {
                     </p>
                     <div className="flex items-center justify-between">
                       <span className="text-2xl font-bold text-indigo-600">
-                        ${product.price.toFixed(2)}
+                        BDT: {product.price.toFixed(2)}TK
                       </span>
                       <Link
                         to={`products/${product._id}`}

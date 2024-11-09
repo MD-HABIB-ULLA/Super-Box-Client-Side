@@ -51,11 +51,11 @@ const ProductCard = ({ product, handleAddToCart, handlePayment }) => {
           </h3>
           <div className="flex items-center justify-between">
             <p className="text-2xl font-bold text-gray-900">
-              ${product.price?.toFixed(2)}
+              BDT : {product.price?.toFixed(2)}tk
             </p>
             {product.oldPrice && (
               <p className="text-sm text-gray-500 line-through">
-                ${product.oldPrice.toFixed(2)}
+                BDT: {product.oldPrice.toFixed(2)}TK
               </p>
             )}
           </div>

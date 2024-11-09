@@ -129,7 +129,7 @@ export default function Cart() {
                             </h3>
                           </div>
                           <p className="mt-1 text-sm font-medium text-gray-900">
-                            ${item.price.toFixed(2)}
+                            BDT: {item.price.toFixed(2)}Tk
                           </p>
                         </div>
 
@@ -213,7 +213,7 @@ export default function Cart() {
               <div className="flex items-center justify-between">
                 <dt className="text-sm text-gray-600">Subtotal</dt>
                 <dd className="text-sm font-medium text-gray-900">
-                  ${calculateSubtotal().toFixed(2)}
+                  BDT: {calculateSubtotal().toFixed(2)}Tk
                 </dd>
               </div>
               <div className="border-t border-gray-200 pt-4 flex items-center justify-between">
@@ -221,7 +221,7 @@ export default function Cart() {
                   <span>Shipping estimate</span>
                 </dt>
                 <dd className="text-sm font-medium text-gray-900">
-                  ${(webCartItem.length * shippingCostPerItem).toFixed(2)}
+                  BDT: {(webCartItem.length * shippingCostPerItem).toFixed(2)}Tk
                 </dd>
               </div>
               <div className="border-t border-gray-200 pt-4 flex items-center justify-between">
@@ -229,7 +229,7 @@ export default function Cart() {
                   Order total
                 </dt>
                 <dd className="text-base font-medium text-gray-900">
-                  ${calculateTotal().toFixed(2)}
+                  BDT: {calculateTotal().toFixed(2)}Tk
                 </dd>
               </div>
             </dl>

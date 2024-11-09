@@ -2,7 +2,8 @@ import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import CreateWebsiteForm from "../../../Components/Other/CreateWebsiteForm";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
-import { FormContext } from "../../../Context/createWebFormContext";
+import { FormContext } from "../../../Context/CreateWebFormContext";
+
 
 const CreateWebsite = () => {
   const { setSellerInfo, sellerInfo, sellerExist } = useContext(FormContext);
@@ -67,7 +68,7 @@ const CreateWebsite = () => {
       sellerCountry: data.sellerCountry,
       sellerAddress: data.sellerAddress,
       bkashNumber: data.bkashNumber,
-      shopLocation : data.storeLocation,
+      shopLocation: data.storeLocation,
       pickedUpAddress: [data.PA1, data.PA2, data.PA3],
       isAvailableStore,
       tradeLicense,
@@ -105,14 +106,16 @@ const CreateWebsite = () => {
               Fill this form first to Create Your website{" "}
             </p>
           </div>
-          <form className="px-4" onSubmit={handleSubmit(onSubmit)}>
-            <div className="flex flex-row gap-4">
+          <form
+            className="px-4 md:px-8 lg:px-16"
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <div className="flex flex-col md:flex-row gap-4">
               {/* Country */}
-              <div className="form-control flex-1 ">
+              <div className="form-control flex-1">
                 <label className="label">
                   <span className="label-text text-lg">Country</span>
                 </label>
-
                 <input
                   type="text"
                   placeholder="Type your country name"
@@ -121,33 +124,33 @@ const CreateWebsite = () => {
                 />
               </div>
               {/* Address */}
-              <div className="form-control flex-1 ">
+              <div className="form-control flex-1">
                 <label className="label">
                   <span className="label-text text-lg">Address</span>
                 </label>
                 <input
                   type="text"
-                  placeholder="please enter your full address"
+                  placeholder="Please enter your full address"
                   {...register("sellerAddress", { required: true })}
-                  className="input input-bordered "
+                  className="input input-bordered"
                 />
               </div>
             </div>
 
             {/* NID picture */}
-            <div className="flex flex-row gap-4">
-              <div className="form-control w-full ">
+            <div className="flex flex-col md:flex-row gap-4 mt-4">
+              <div className="form-control flex-1">
                 <label className="label">
                   <span className="label-text text-lg">NID Picture</span>
                 </label>
                 <input
                   {...register("nidPicture", { required: true })}
                   type="file"
-                  className="file-input  input-bordered file-input-info"
+                  className="file-input input-bordered file-input-info"
                 />
               </div>
               {/* Bkash Number */}
-              <div className="form-control w-full flex flex-col justify-between ">
+              <div className="form-control flex-1">
                 <label className="label">
                   <span className="label-text text-sm">
                     Bkash Number that will be open with same NID
@@ -157,49 +160,49 @@ const CreateWebsite = () => {
                   type="tel"
                   placeholder="Enter a Bkash number"
                   {...register("bkashNumber", { required: true })}
-                  className="input input-bordered  "
+                  className="input input-bordered"
                 />
               </div>
             </div>
 
-            <div className="">
-              {/* Trade License */}
+            <div className="mt-4">
+              {/* Three pickup addresses */}
               <label className="label">
                 <span className="label-text text-lg capitalize">
-                  Three pickup address
+                  Three pickup addresses
                 </span>
               </label>
-              <div className="flex flex-row gap-4">
-                <div className="form-control flex-1 ">
+              <div className="flex flex-col md:flex-row gap-4">
+                <div className="form-control flex-1">
                   <input
                     type="text"
-                    placeholder="please enter your full address"
+                    placeholder="Please enter your full address"
                     {...register("PA1", { required: true })}
-                    className="input input-bordered "
+                    className="input input-bordered"
                   />
                 </div>
-
-                <div className="form-control flex-1 ">
+                <div className="form-control flex-1">
                   <input
                     type="text"
-                    placeholder="please enter your full address"
+                    placeholder="Please enter your full address"
                     {...register("PA2", { required: true })}
-                    className="input input-bordered "
+                    className="input input-bordered"
                   />
                 </div>
-                <div className="form-control flex-1 ">
+                <div className="form-control flex-1">
                   <input
                     type="text"
-                    placeholder="please enter your full address"
+                    placeholder="Please enter your full address"
                     {...register("PA3", { required: true })}
-                    className="input input-bordered "
+                    className="input input-bordered"
                   />
                 </div>
               </div>
             </div>
-            <div className="flex flex-row gap-4">
+
+            <div className="flex flex-col md:flex-row gap-4 mt-4">
               {/* Trade License */}
-              <div className="form-control flex-1 ">
+              <div className="form-control flex-1">
                 <label className="label">
                   <span className="label-text text-lg">
                     Trade License (Optional)
@@ -208,11 +211,11 @@ const CreateWebsite = () => {
                 <input
                   {...register("tradeLicense")}
                   type="file"
-                  className="file-input  input-bordered file-input-info"
+                  className="file-input input-bordered file-input-info"
                 />
               </div>
               {/* Introduction video */}
-              <div className="form-control flex-1 ">
+              <div className="form-control flex-1">
                 <label className="label">
                   <span className="label-text text-lg">
                     Introduction Video (Optional)
@@ -221,14 +224,14 @@ const CreateWebsite = () => {
                 <input
                   {...register("introVdo")}
                   type="file"
-                  className="file-input  input-bordered file-input-info"
+                  className="file-input input-bordered file-input-info"
                 />
               </div>
             </div>
 
-            <div>
-              <div className="form-control mt-3 ">
-                <label className="cursor-pointer  label justify-start items-center  gap-2">
+            <div className="mt-4">
+              <div className="form-control">
+                <label className="cursor-pointer label justify-start items-center gap-2">
                   <input
                     type="checkbox"
                     onChange={() => setIsAvailableStore(!isAvailableStore)}
@@ -240,25 +243,26 @@ const CreateWebsite = () => {
                 </label>
               </div>
             </div>
-            {isAvailableStore && (
-              <div>
-                <div className="form-control flex-1 ">
-                  <label className="label">
-                    <span className="label-text text-lg">Shop location</span>
-                  </label>
 
+            {isAvailableStore && (
+              <div className="mt-4">
+                <div className="form-control flex-1">
+                  <label className="label">
+                    <span className="label-text text-lg">Shop Location</span>
+                  </label>
                   <input
                     type="text"
-                    placeholder="your Shop location"
+                    placeholder="Your Shop Location"
                     {...register("storeLocation", { required: true })}
                     className="input input-bordered"
                   />
                 </div>
               </div>
             )}
-            <div className="text-center mt-3">
-              <button className="btn bg-sky-500 text-white font-bold ">
-                {loading ? "loading..." : "Submit"}
+
+            <div className="text-center mt-6">
+              <button className="btn bg-sky-500 text-white font-bold hover:bg-sky-600 transition duration-300">
+                {loading ? "Loading..." : "Submit"}
               </button>
             </div>
           </form>

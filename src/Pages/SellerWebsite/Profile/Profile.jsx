@@ -21,6 +21,7 @@ const Profile = () => {
   useEffect(() => {
     setCustomerEmail(customerInfo?.email);
   }, [customerInfo]);
+  console.log(customerInfo)
 
   const {
     register,

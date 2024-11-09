@@ -12,7 +12,7 @@ const Typo = () => {
     </span>
     
     <p className="mt-6 rounded border px-3 py-1 shadow">
-      🎁 <span className="text-indigo-500 font-semibold">$50 off</span> for the first 1,000 customers!
+      🎁 <span className="text-indigo-500 font-semibold">50tk off</span> for the first 1,000 customers!
     </p>
     
     <div className="mt-12 w-full max-w-md grid grid-cols-1 gap-4 sm:grid-cols-2">
