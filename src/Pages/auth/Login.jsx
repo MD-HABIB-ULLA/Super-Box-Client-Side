@@ -1,133 +1,137 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import facebookIcon from "/facebook.png";
-import instagramIcon from "/instagram.png";
-import linkedinIcon from "/linkedin.png";
 import { useForm } from "react-hook-form";
 import GoogleLoginBtn from "../../Components/Common/GoogleLoginBtn";
 import toast from "react-hot-toast";
 import { useContext } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 
+
 const Login = () => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm();
   const { logOut, loginWithEmailAndPassword } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
-  const onSubmit = (data, e) => {
+
+  const onSubmit = (data) => {
     logOut();
     loginWithEmailAndPassword(data.email, data.password)
       .then((result) => {
-        toast.success("Login sucsessful");
-        e.target.reset();
-        navigate( "/dashboard");
+        toast.success("Login successful");
+        navigate("/dashboard");
       })
       .catch((error) => {
         if (error.code === "auth/invalid-credential") {
           toast.error("Invalid email or password. Please try again.");
+        } else {
+          toast.error("Login failed. Please try again.");
         }
       });
   };
 
   return (
-    <div className="min-h-screen  w-full flex flex-row">
-      <div className="flex-auto w-1/2 p-5 bg-gray-200">
-        <img
-          className="w-full h-full"
-          src="https://i.ibb.co/BN1gwPM/loginn.png"
-          alt=""
-        />
-      </div>
-      <div className="py-5 px-20 flex-auto w-1/2 bg-blue-100  ">
-        <h1 className=" text-3xl font-mono italic text-center font-extrabold mb-10 ">
-          Super Box
-        </h1>
-        <p className="text-xl font-semibold">Login to your account</p>
-        <p className="text-gray-600 font-light max-w-[70%]">
-          Inter your name, valid email address and password to register your
-          account
-        </p>
-
-        <form
-          className="flex flex-col gap-5 py-8"
-          onSubmit={handleSubmit(onSubmit)}
-        >
-          <label className="input input-bordered flex items-center gap-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 16 16"
-              fill="currentColor"
-              className="w-4 h-4 opacity-70"
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-300 to-indigo-200 p-4">
+      <div className="bg-white rounded-lg shadow-2xl p-8 w-full max-w-md">
+        <div className="flex justify-center mb-8">
+          <Link to="/" className="flex-shrink-0">
+            <img
+              className="h-8 w-auto"
+              src="https://i.ibb.co/N9h9pts/2024-10-19-17-36-43-Black-White-Minimalist-Business-Logo-Logo.png"
+              alt="Logo"
+            />
+          </Link>
+        </div>
+        <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">
+          Welcome Back
+        </h2>
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          <div>
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700 mb-1"
             >
-              <path d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.206.1.446.1.652 0l6.598-3.185A.755.755 0 0 1 15 5.293V4.5A1.5 1.5 0 0 0 13.5 3h-11Z" />
-              <path d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z" />
-            </svg>
+              Email Address
+            </label>
             <input
+              id="email"
               type="email"
-              {...register("email", { required: true })}
-              placeholder="Email"
-              required
+              placeholder="you@example.com"
+              {...register("email", { required: "Email is required" })}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
             />
-          </label>
-
-          <label className="input input-bordered flex items-center gap-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 16 16"
-              fill="currentColor"
-              className="w-4 h-4 opacity-70"
-            >
-              <path
-                fillRule="evenodd"
-                d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z"
-                clipRule="evenodd"
-              />
-            </svg>
-            <input
-              type="password"
-              {...register("password", { required: true })}
-              required
-              className="grow"
-              placeholder="password"
-            />
-          </label>
-
-          <div className="flex flex-row justify-between items-center">
-            <div className="form-control flex flex-row gap-2">
-              <input type="checkbox" className="checkbox checkbox-info" />
-              <p className=" text-sm  font-medium">Remember me</p>
-            </div>
-
-            <div>
-              <Link
-                href="#"
-                className="text-sm font-medium text-blue-600 hover:text-blue-800"
-              >
-                Forget Password?
-              </Link>
-            </div>
+            {errors.email && (
+              <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>
+            )}
           </div>
-
-          <button type="submit" className="btn btn-info text-white text-xl">
-            Login
+          <div>
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              Password
+            </label>
+            <input
+              id="password"
+              type="password"
+              placeholder="••••••••"
+              {...register("password", { required: "Password is required" })}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
+            />
+            {errors.password && (
+              <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>
+            )}
+          </div>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center">
+              <input
+                id="remember"
+                type="checkbox"
+                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+              />
+              <label
+                htmlFor="remember"
+                className="ml-2 block text-sm text-gray-700"
+              >
+                Remember me
+              </label>
+            </div>
+            <a
+              href="#"
+              className="text-sm text-blue-600 hover:text-blue-500 transition duration-200"
+            >
+              Forgot password?
+            </a>
+          </div>
+          <button
+            type="submit"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md transition duration-300"
+          >
+            Sign In
           </button>
         </form>
-        <div>
-          <p className=" text-sm font-semibold">Or login with</p>
-          <div className="flex flex-row gap-2 py-2 ">
-            <GoogleLoginBtn />
-
-            <img className=" w-8" src={facebookIcon} alt="" />
-            <img className=" w-8" src={instagramIcon} alt="" />
-            <img className=" w-8" src={linkedinIcon} alt="" />
+        <div className="mt-6">
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-300"></div>
+            </div>
+            <div className="relative flex justify-center text-sm">
+              <span className="px-2 bg-white text-gray-500">
+                Or continue with
+              </span>
+            </div>
           </div>
-
-          <p className=" mt-4 font-semibold">
-            Do not have an account?{" "}
-            <span className="text-blue-700 hover:text-blue-900">
-              <Link to={"/sign-up"}>Sign Up Now!</Link>
-            </span>
-          </p>
+          <div className="mt-6">
+            <GoogleLoginBtn />
+          </div>
         </div>
+        <p className="mt-8 text-center text-sm text-gray-600">
+          Not a member?{" "}
+          <Link
+            to="/sign-up"
+            className="font-medium text-blue-600 hover:text-blue-500 transition duration-200"
+          >
+           Create an account
+          </Link>
+        </p>
       </div>
     </div>
   );
