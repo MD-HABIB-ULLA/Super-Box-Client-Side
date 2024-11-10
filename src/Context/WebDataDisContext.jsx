@@ -16,7 +16,7 @@ const WebDataDisProvider = ({ children }) => {
   const [blogs, setBlogs] = useState(null);
   const [confirmProduct, setConfirmProduct] = useState(null);
   const { email, webInfo, sellerInfo } = webData || {};
-  console.log(sellerInfo);
+ 
   const axiosPublic = useAxiosPublic();
   const { user } = useContext(AuthContext);
 

@@ -32,7 +32,9 @@ import { NavLink, Outlet } from "react-router-dom";
 import useRole from "../../hooks/useRole";
 import { CiTimer } from "react-icons/ci";
 import { FcFeedback } from "react-icons/fc";
-import { PiBroadcastDuotone } from "react-icons/pi";
+import { PiBroadcastDuotone, PiClockCountdownDuotone } from "react-icons/pi";
+import { Timer, WatchIcon } from "lucide-react";
+import { FaUpLong } from "react-icons/fa6";
 
 const DHome = () => {
   const { isAdmin, isSeller } = useRole();
@@ -98,6 +100,17 @@ const DHome = () => {
             >
               <CiTimer className="text-3xl text-indigo-600" />
               Pending orders
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/dashboard/pendingServices"
+              className={({ isActive }) =>
+                `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
+              }
+            >
+              < PiClockCountdownDuotone className="text-3xl text-indigo-600" />
+              Pending services
             </NavLink>
           </li>
           <li>

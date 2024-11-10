@@ -1,6 +1,10 @@
 import React, { useContext, useState } from "react";
+import axios from "axios";
 import { WebDataDisContext } from "../../../Context/WebDataDisContext";
 import { AiFillClockCircle, AiOutlineCalendar } from "react-icons/ai";
+import { AuthContext } from "../../../Provider/AuthProvider";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import toast from "react-hot-toast";
 
 const Title = ({ children }) => (
   <h1 className="text-4xl font-extrabold text-center text-gray-900 sm:text-5xl sm:tracking-tight lg:text-6xl mb-4">
@@ -9,11 +13,14 @@ const Title = ({ children }) => (
 );
 
 export default function Services() {
-  const { services } = useContext(WebDataDisContext);
+  const { services, sellerInfo, webInfo } = useContext(WebDataDisContext);
+  const { user } = useContext(AuthContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedService, setSelectedService] = useState(null);
-
-  // Toggle modal visibility
+  const [transactionId, setTransactionId] = useState("");
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
+  const axiosPublic = useAxiosPublic();
   const openModal = (service) => {
     setSelectedService(service);
     setIsModalOpen(true);
@@ -22,7 +29,42 @@ export default function Services() {
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedService(null);
+    setTransactionId("");
+    setDate("");
+    setTime("");
   };
+
+  const handleBooking = async (e) => {
+    e.preventDefault();
+  
+    const bookingData = {
+      serviceId: selectedService._id,
+      serviceName: selectedService.serviceTitle,
+      shopName: webInfo.shopName,
+      userEmail: user.email,
+      transactionId,
+      date,
+      time,
+      serviceCost: selectedService.serviceCost,
+    };
+  
+    try {
+      const response = await axiosPublic.post("/bookService", bookingData);
+      console.log("Booking successful:", response.data);
+      toast.success(response.data.message);
+      closeModal();
+    } catch (error) {
+      console.error("Error booking service:", error);
+  
+      // Show the error message returned from the backend
+      if (error.response && error.response.data && error.response.data.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("An error occurred while booking the service. Please try again.");
+      }
+    }
+  };
+  
 
   return (
     <div className="bg-gray-100 min-h-screen py-12 px-4 sm:px-6 lg:px-8">
@@ -67,7 +109,7 @@ export default function Services() {
                   <div className="flex justify-between items-center mt-4 pt-4 border-t border-gray-200">
                     <span className="text-gray-600">Starting from:</span>
                     <span className="text-xl font-bold text-indigo-600">
-                      BDT: {service.serviceCost}Tk
+                      BDT: {service.serviceCost} Tk
                     </span>
                   </div>
                 </div>
@@ -84,15 +126,13 @@ export default function Services() {
         </div>
       </div>
 
-      {/* Modal for Date and Time Input */}
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative">
             <h2 className="text-2xl font-bold text-gray-800 mb-4">
               Book {selectedService?.serviceTitle}
             </h2>
-            <form className="space-y-4">
-              {/* Date Input */}
+            <form onSubmit={handleBooking} className="space-y-4">
               <div className="form-control">
                 <label className="label">
                   <span className="label-text text-lg">Select Date</span>
@@ -101,10 +141,11 @@ export default function Services() {
                   type="date"
                   className="input input-bordered w-full"
                   required
+                  value={date}
+                  onChange={(e) => setDate(e.target.value)}
                 />
               </div>
 
-              {/* Time Input */}
               <div className="form-control">
                 <label className="label">
                   <span className="label-text text-lg">Select Time</span>
@@ -113,10 +154,36 @@ export default function Services() {
                   type="time"
                   className="input input-bordered w-full"
                   required
+                  value={time}
+                  onChange={(e) => setTime(e.target.value)}
                 />
               </div>
 
-              {/* Submit Button */}
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Transaction ID</span>
+                </label>
+                <input
+                  type="text"
+                  className="input input-bordered w-full"
+                  placeholder="Enter your transaction ID"
+                  required
+                  value={transactionId}
+                  onChange={(e) => setTransactionId(e.target.value)}
+                />
+              </div>
+
+              <div>
+                <p className="text-green-500">
+                  Send{" "}
+                  <span className="font-bold">
+                    {selectedService?.serviceCost?.toFixed(2)}
+                  </span>{" "}
+                  BDT to this number:{" "}
+                  <span className="font-bold">{sellerInfo?.bkashNumber}</span>
+                </p>
+              </div>
+
               <button
                 type="submit"
                 className="btn bg-indigo-500 w-full text-white font-semibold"
@@ -125,7 +192,6 @@ export default function Services() {
               </button>
             </form>
 
-            {/* Close Button */}
             <button
               onClick={closeModal}
               className="absolute top-2 right-2 text-gray-500 hover:text-gray-800"

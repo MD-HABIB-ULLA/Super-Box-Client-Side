@@ -93,7 +93,7 @@ const Shipping = () => {
                     <div className="ml-4">
                       <p className="font-semibold">{item?.name}</p>
                       <p className="text-gray-500">{item.description}</p>
-                      <p className="font-bold text-orange-600 mt-2">
+                      <p className="font-bold text-indigo-600 mt-2">
                         BDT: {item.price}Tk
                       </p>
                     </div>
@@ -122,7 +122,7 @@ const Shipping = () => {
                   <span>Shipping Fee (4.99 per item)</span>
                   <span>BDT: {(productData?.length * 4.99).toFixed(2)}Tk</span>
                 </div>
-                <div className="flex justify-between font-bold text-orange-600 text-lg">
+                <div className="flex justify-between font-bold text-indigo-600 text-lg">
                   <span>Total</span>
                   <span>BDT: {totalPrice.toFixed(2)}Tk</span>
                 </div>
@@ -135,7 +135,7 @@ const Shipping = () => {
                     `/w/${name}/checkout?totalAmount=${totalPrice.toFixed(2)}`
                   )
                 }
-                className="w-full bg-orange-500 text-white font-bold py-3 mt-6 rounded hover:bg-orange-600"
+                className="w-full bg-indigo-500 text-white font-bold py-3 mt-6 rounded hover:bg-indigo-600"
               >
                 Order
               </button>
