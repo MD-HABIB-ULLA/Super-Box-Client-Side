@@ -355,7 +355,7 @@ const Checkout = () => {
             </div>
           )}
 
-          <div className="flex justify-between font-bold text-orange-600 text-lg">
+          <div className="flex justify-between font-bold text-indigo-600 text-lg">
             <span>Total</span>
             <span className="flex items-center gap-2">
               BDT: {calculateTotal().toFixed(2)}Tk
@@ -377,7 +377,7 @@ const Checkout = () => {
                 toast.error("This feature under working process");
               }
             }}
-            className="w-full bg-orange-500 text-white font-bold py-3 mt-6 rounded hover:bg-orange-600"
+            className="w-full bg-indigo-500 text-white font-bold py-3 mt-6 rounded hover:bg-indigo-600"
           >
             Proceed to Pay
           </button>

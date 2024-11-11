@@ -12,8 +12,9 @@ import { FaTrash } from "react-icons/fa";
 import PendingServiceTable from "../../../Components/Other/PendingServiceTable";
 
 const ServiceManagement = () => {
+
   const axiosPublic = useAxiosPublic();
-  const { data } = useContext(WebDataDisContext);
+  const { data , sellerInfo} = useContext(WebDataDisContext);
   const {
     register,
     handleSubmit,
@@ -321,6 +322,7 @@ const ServiceManagement = () => {
                 </span>
               )}
             </div>
+            
 
             {/* Submit Button */}
             <button

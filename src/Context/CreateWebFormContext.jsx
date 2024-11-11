@@ -28,7 +28,7 @@ const CreateWebFormContext = ({ children }) => {
   const findRequest = async () => {
     // Set loading state to true before request
     try {
-      const res = await axiosPublic.get(`/pendingSeller/${user.email}`); // Call the API
+      const res = await axiosPublic.get(`/pendingSeller/${user?.email}`); // Call the API
       setSellerExist(res.data);
     } catch (error) {
       console.error("Error fetching data:", error);
