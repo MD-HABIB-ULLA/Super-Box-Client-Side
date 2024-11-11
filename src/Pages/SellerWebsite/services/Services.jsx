@@ -20,7 +20,9 @@ export default function Services() {
   const [transactionId, setTransactionId] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("Full Payment");
   const axiosPublic = useAxiosPublic();
+  
   const openModal = (service) => {
     setSelectedService(service);
     setIsModalOpen(true);
@@ -32,6 +34,7 @@ export default function Services() {
     setTransactionId("");
     setDate("");
     setTime("");
+    setPaymentMethod("Full Payment");
   };
 
   const handleBooking = async (e) => {
@@ -42,10 +45,11 @@ export default function Services() {
       serviceName: selectedService.serviceTitle,
       shopName: webInfo.shopName,
       userEmail: user.email,
-      transactionId,
+      transactionId: paymentMethod === "Full Payment" ? transactionId : null,
       date,
       time,
       serviceCost: selectedService.serviceCost,
+      paymentMethod,
     };
   
     try {
@@ -64,7 +68,6 @@ export default function Services() {
       }
     }
   };
-  
 
   return (
     <div className="bg-gray-100 min-h-screen py-12 px-4 sm:px-6 lg:px-8">
@@ -72,8 +75,7 @@ export default function Services() {
         <div className="text-center mb-12">
           <Title>Service Management</Title>
           <p className="mt-5 max-w-xl mx-auto text-xl text-gray-500">
-            Explore our range of professional services tailored to meet your
-            needs
+            Explore our range of professional services tailored to meet your needs
           </p>
         </div>
 
@@ -161,28 +163,46 @@ export default function Services() {
 
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">Transaction ID</span>
+                  <span className="label-text text-lg">Payment Method</span>
                 </label>
-                <input
-                  type="text"
+                <select
                   className="input input-bordered w-full"
-                  placeholder="Enter your transaction ID"
-                  required
-                  value={transactionId}
-                  onChange={(e) => setTransactionId(e.target.value)}
-                />
+                  value={paymentMethod}
+                  onChange={(e) => setPaymentMethod(e.target.value)}
+                >
+                  <option value="Full Payment">Full Payment</option>
+                  <option value="Pay on Hand">Pay on Hand</option>
+                </select>
               </div>
 
-              <div>
-                <p className="text-green-500">
-                  Send{" "}
-                  <span className="font-bold">
-                    {selectedService?.serviceCost?.toFixed(2)}
-                  </span>{" "}
-                  BDT to this number:{" "}
-                  <span className="font-bold">{sellerInfo?.bkashNumber}</span>
-                </p>
-              </div>
+              {paymentMethod === "Full Payment" && (
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Transaction ID</span>
+                  </label>
+                  <input
+                    type="text"
+                    className="input input-bordered w-full"
+                    placeholder="Enter your transaction ID"
+                    required
+                    value={transactionId}
+                    onChange={(e) => setTransactionId(e.target.value)}
+                  />
+                </div>
+              )}
+
+              {paymentMethod === "Full Payment" && (
+                <div>
+                  <p className="text-green-500">
+                    Send{" "}
+                    <span className="font-bold">
+                      {selectedService?.serviceCost?.toFixed(2)}
+                    </span>{" "}
+                    BDT to this number:{" "}
+                    <span className="font-bold">{sellerInfo?.bkashNumber}</span>
+                  </p>
+                </div>
+              )}
 
               <button
                 type="submit"

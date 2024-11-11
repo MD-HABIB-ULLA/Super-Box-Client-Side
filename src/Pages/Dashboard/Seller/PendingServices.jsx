@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useContext, useEffect, useState } from "react";
 import { WebDataDisContext } from "../../../Context/WebDataDisContext";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
@@ -60,6 +58,7 @@ const PendingServices = () => {
     }
   };
 
+  console.log(services);
   if (isLoading) return <p className="text-center py-4">Loading...</p>;
   if (error) return <p className="text-center py-4 text-red-500">Error: {error.message}</p>;
 
@@ -74,6 +73,9 @@ const PendingServices = () => {
               <th className="py-2 px-4 border-b">Date</th>
               <th className="py-2 px-4 border-b">Time</th>
               <th className="py-2 px-4 border-b">Cost</th>
+              <th className="py-2 px-4 border-b">Transaction ID</th>
+              <th className="py-2 px-4 border-b">Payment Status</th>
+              <th className="py-2 px-4 border-b">Payment Method</th>
               <th className="py-2 px-4 border-b">Status</th>
               <th className="py-2 px-4 border-b">Actions</th>
             </tr>
@@ -84,7 +86,16 @@ const PendingServices = () => {
                 <td className="py-2 px-4 border-b">{service.serviceName}</td>
                 <td className="py-2 px-4 border-b">{service.date}</td>
                 <td className="py-2 px-4 border-b">{service.time}</td>
-                <td className="py-2 px-4 border-b">${service.serviceCost}</td>
+                <td className="py-2 px-4 border-b">BDT {service.serviceCost}</td>
+                <td className="py-2 px-4 border-b">
+                  {service.transactionId || "N/A"}
+                </td>
+                <td className="py-2 px-4 border-b">
+                  {service.transactionId ? "Paid" : "Pending"}
+                </td>
+                <td className="py-2 px-4 border-b">
+                  {service.paymentMethod || "N/A"}
+                </td>
                 <td className="py-2 px-4 border-b">
                   <div className="relative">
                     <select
