@@ -53,6 +53,7 @@ import BlogDetails from "../../Pages/SellerWebsite/BlogDetails/BlogDetails";
 import MassageForm from "../../Pages/Dashboard/Seller/MassageForm";
 import ErrorPage from "../../Pages/Errorpage/ErrorPage";
 import PendingServices from "../../Pages/Dashboard/Seller/PendingServices";
+import BookedServices from "../../Pages/SellerWebsite/bookedServices/BookedServices";
 
 const RoleBasedComponent = () => {
   const { isAdmin, isSeller } = useRole();
@@ -266,6 +267,10 @@ const router = createBrowserRouter([
       {
         path: "services", // List of products
         element: <Services />,
+      },
+      {
+        path: "bookedServices", // List of products
+        element: <BookedServices />,
       },
       {
         path: "blogs", // List of products

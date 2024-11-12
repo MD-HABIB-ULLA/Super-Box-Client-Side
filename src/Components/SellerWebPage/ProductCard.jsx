@@ -64,7 +64,9 @@ const ProductCard = ({ product, handleAddToCart, handlePayment }) => {
         {/* Action Buttons */}
         <div className="space-y-2">
           <button
-            onClick={() => handlePayment(product._id)}
+            onClick={() => {
+              handlePayment(product._id);
+            }}
             className="w-full bg-gradient-to-r from-green-600 to-green-500 text-white py-2.5 px-4 rounded-lg font-medium
                      hover:from-green-700 hover:to-green-600 transition-all duration-200 flex items-center justify-center gap-2
                      focus:ring-2 focus:ring-green-500 focus:ring-offset-2 active:scale-[0.98]"
@@ -72,7 +74,6 @@ const ProductCard = ({ product, handleAddToCart, handlePayment }) => {
             <CreditCard className="w-5 h-5" />
             Buy Now
           </button>
-          
         </div>
 
         {/* Additional Info */}
