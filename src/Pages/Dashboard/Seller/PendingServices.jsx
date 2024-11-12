@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { WebDataDisContext } from "../../../Context/WebDataDisContext";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import { Check, ChevronDown } from "lucide-react";
+import toast from "react-hot-toast";
 
 const PendingServices = () => {
   const { data: contextData } = useContext(WebDataDisContext);
@@ -10,29 +11,38 @@ const PendingServices = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchServices = async () => {
-      if (contextData?.webInfo?.shopName) {
-        try {
-          setIsLoading(true);
-          const res = await axiosPublic.get(
-            `/bookService?key=shopName&value=${contextData?.webInfo?.shopName}`
-          );
-          setServices(res.data);
-        } catch (err) {
-          setError(err);
-        } finally {
-          setIsLoading(false);
-        }
+  const fetchServices = async () => {
+    if (contextData?.webInfo?.shopName) {
+      try {
+        setIsLoading(true);
+        const res = await axiosPublic.get(
+          `/bookService?key=shopName&value=${contextData?.webInfo?.shopName}`
+        );
+        setServices(res.data);
+      } catch (err) {
+        setError(err);
+      } finally {
+        setIsLoading(false);
       }
-    };
+    }
+  };
 
+  // Fetch the services when the component mounts or shopName changes
+  useEffect(() => {
     fetchServices();
-  }, [contextData?.webInfo?.shopName]); // Dependency array ensures this runs when shopName changes
+  }, [contextData?.webInfo?.shopName]);
 
+  // Handler to update service status
   const handleStatusChange = async (id, newStatus) => {
+    console.log(newStatus);
     try {
-      await axiosPublic.patch(`/bookService/${id}`, { status: newStatus });
+      await axiosPublic
+        .put(`/bookService/${id}`, { status: newStatus })
+        .then((response) => {
+          fetchServices();
+          toast.success(response.data.message);
+          console.log(response.data);
+        });
       setServices((prevServices) =>
         prevServices.map((service) =>
           service._id === id ? { ...service, status: newStatus } : service
@@ -40,27 +50,35 @@ const PendingServices = () => {
       );
     } catch (error) {
       console.error("Error updating status:", error);
-      alert("Failed to update the service status. Please try again.");
     }
   };
 
+  // Handler to approve the service and set isPaid to true
   const handleApprove = async (id) => {
     try {
-      await axiosPublic.patch(`/bookService/${id}`, { isFinished: true });
-      setServices((prevServices) =>
-        prevServices.map((service) =>
-          service._id === id ? { ...service, isFinished: true } : service
-        )
-      );
+      const res = await axiosPublic.put(`/bookService/${id}`, {
+        isPaid: true,
+      });
+
+      if (res.data.result.modifiedCount) {
+        fetchServices();
+        toast.success(res.data.message);
+        setServices((prevServices) =>
+          prevServices.map((service) =>
+            service._id === id ? { ...service, isPaid: true } : service
+          )
+        );
+      }
     } catch (error) {
       console.error("Error approving service:", error);
-      alert("Failed to approve the service. Please try again.");
     }
   };
 
-  console.log(services);
   if (isLoading) return <p className="text-center py-4">Loading...</p>;
-  if (error) return <p className="text-center py-4 text-red-500">Error: {error.message}</p>;
+  if (error)
+    return (
+      <p className="text-center py-4 text-red-500">Error: {error.message}</p>
+    );
 
   return (
     <div className="p-6">
@@ -86,12 +104,14 @@ const PendingServices = () => {
                 <td className="py-2 px-4 border-b">{service.serviceName}</td>
                 <td className="py-2 px-4 border-b">{service.date}</td>
                 <td className="py-2 px-4 border-b">{service.time}</td>
-                <td className="py-2 px-4 border-b">BDT {service.serviceCost}</td>
+                <td className="py-2 px-4 border-b">
+                  BDT {service.serviceCost}
+                </td>
                 <td className="py-2 px-4 border-b">
                   {service.transactionId || "N/A"}
                 </td>
                 <td className="py-2 px-4 border-b">
-                  {service.transactionId ? "Paid" : "Pending"}
+                  {service.isPaid ? "Paid" : "Pending"}
                 </td>
                 <td className="py-2 px-4 border-b">
                   {service.paymentMethod || "N/A"}
@@ -100,8 +120,10 @@ const PendingServices = () => {
                   <div className="relative">
                     <select
                       value={service.status}
-                      onChange={(e) => handleStatusChange(service._id, e.target.value)}
-                      disabled={service.isFinished}
+                      onChange={(e) =>
+                        handleStatusChange(service._id, e.target.value)
+                      }
+                      disabled={service.isPaid}
                       className="appearance-none bg-white border border-gray-300 rounded px-3 py-2 pr-8 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
                       <option value="booked">Booked</option>
@@ -116,9 +138,9 @@ const PendingServices = () => {
                 <td className="py-2 px-4 border-b">
                   <button
                     onClick={() => handleApprove(service._id)}
-                    disabled={service.isFinished}
+                    disabled={service.isPaid}
                     className={`flex items-center justify-center px-4 py-2 rounded ${
-                      service.isFinished
+                      service.isPaid
                         ? "bg-gray-300 cursor-not-allowed"
                         : "bg-green-500 hover:bg-green-600 text-white"
                     }`}

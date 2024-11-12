@@ -6,6 +6,7 @@ import { Clock, LogOut, Package, ShoppingCart, User } from "lucide-react";
 import { HiChatBubbleLeftRight } from "react-icons/hi2";
 import { AuthContext } from "../../../Provider/AuthProvider";
 import { MdFeedback } from "react-icons/md";
+import { PiClockCountdownDuotone } from "react-icons/pi";
 
 const Layout = () => {
   const { name } = useParams();
@@ -63,6 +64,15 @@ const Layout = () => {
                   >
                     <ShoppingCart className="mr-3" size={20} />
                     Cart Items
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to={`/w/${name}/bookedServices`}
+                    className="flex items-center py-2 px-4 hover:bg-gray-700 hover:text-white rounded transition duration-150 ease-in-out"
+                  >
+                    <PiClockCountdownDuotone  className="mr-3" />
+                    Pending services
                   </Link>
                 </li>
                 <li>

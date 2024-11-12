@@ -32,6 +32,7 @@ const Products = () => {
     }
 
     if (customerData.phone !== "") {
+      addWebCartItem(id);
       navigate(`/w/${name}/shipping?type=single&productId=${id}`);
     } else {
       document.getElementById("customerInfo").showModal();
