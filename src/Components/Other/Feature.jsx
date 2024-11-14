@@ -36,7 +36,7 @@ const features = [
   },
   {
     icon: <FaChartLine className="w-8 h-8" />,
-    title: "Basic Reporting & Business Insights",
+    title: "Reporting & Business Insights",
     desc: "Access powerful reports that provide real-time data on sales, customer activity, and operational performance to help you make informed business decisions.",
   },
 ]

@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { WebDataDisContext } from "../../../Context/WebDataDisContext";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
-import { Check, ChevronDown } from "lucide-react";
-import toast from "react-hot-toast";
+import { Check, Plus, Printer } from "lucide-react";
+import { toast } from "react-hot-toast";
 
 const PendingServices = () => {
   const { data: contextData } = useContext(WebDataDisContext);
@@ -10,13 +10,22 @@ const PendingServices = () => {
   const [services, setServices] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const [extraServices, setExtraServices] = useState([]); // Changed to array for multiple extra services
+  const [newExtraService, setNewExtraService] = useState({
+    name: "",
+    price: "",
+  });
+  const [selectedService, setSelectedService] = useState(null);
+  const [showReceipt, setShowReceipt] = useState(false);
 
   const fetchServices = async () => {
     if (contextData?.webInfo?.shopName) {
       try {
         setIsLoading(true);
         const res = await axiosPublic.get(
-          `/bookService?key=shopName&value=${contextData?.webInfo?.shopName}`
+          `/bookService?key=shopName&value=${contextData.webInfo.shopName}`
         );
         setServices(res.data);
       } catch (err) {
@@ -27,33 +36,17 @@ const PendingServices = () => {
     }
   };
 
-  // Fetch the services when the component mounts or shopName changes
   useEffect(() => {
     fetchServices();
   }, [contextData?.webInfo?.shopName]);
 
-  // Handler to update service status
-  const handleStatusChange = async (id, newStatus) => {
-    console.log(newStatus);
-    try {
-      await axiosPublic
-        .put(`/bookService/${id}`, { status: newStatus })
-        .then((response) => {
-          fetchServices();
-          toast.success(response.data.message);
-          console.log(response.data);
-        });
-      setServices((prevServices) =>
-        prevServices.map((service) =>
-          service._id === id ? { ...service, status: newStatus } : service
-        )
-      );
-    } catch (error) {
-      console.error("Error updating status:", error);
+  const handleStatusChange = async (id, newStatus, service) => {
+    if (newStatus === "finished") {
+      setSelectedService(service);
+      setIsConfirmModalOpen(true);
     }
   };
 
-  // Handler to approve the service and set isPaid to true
   const handleApprove = async (id) => {
     try {
       const res = await axiosPublic.put(`/bookService/${id}`, {
@@ -62,98 +55,287 @@ const PendingServices = () => {
 
       if (res.data.result.modifiedCount) {
         fetchServices();
-        toast.success(res.data.message);
-        setServices((prevServices) =>
-          prevServices.map((service) =>
-            service._id === id ? { ...service, isPaid: true } : service
-          )
-        );
+        toast.success("Service approved successfully");
       }
     } catch (error) {
-      console.error("Error approving service:", error);
+      toast.error("Error approving service");
     }
   };
 
-  if (isLoading) return <p className="text-center py-4">Loading...</p>;
-  if (error)
-    return (
-      <p className="text-center py-4 text-red-500">Error: {error.message}</p>
+  const handleAddExtraService = () => {
+    setIsConfirmModalOpen(false);
+    setIsModalOpen(true);
+  };
+
+  const handleExtraServiceSubmit = async () => {
+    if (!selectedService) return;
+
+    const updatedExtraServices = [
+      ...extraServices,
+      { ...newExtraService, price: parseFloat(newExtraService.price) },
+    ];
+    setExtraServices(updatedExtraServices);
+
+    setIsModalOpen(false);
+    setIsConfirmModalOpen(true);
+    setNewExtraService({
+      name: "",
+      price: "",
+    });
+  };
+  const calculateTotalPrice = () => {
+    const extraServicesTotal = extraServices.reduce(
+      (total, service) => total + parseFloat(service.price),
+      0
     );
+    return parseFloat(selectedService.serviceCost) + extraServicesTotal;
+  };
+
+  const handlePrint = () => {
+    const printContent = document.getElementById("print-area")?.innerHTML;
+    if (!printContent) return;
+
+    const originalContent = document.body.innerHTML;
+    document.body.innerHTML = printContent;
+    window.print();
+    document.body.innerHTML = originalContent;
+    window.location.reload();
+  };
+
+  if (isLoading)
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <span className="loading loading-spinner loading-lg"></span>
+      </div>
+    );
+  if (error) return <div className="alert alert-error">{error.message}</div>;
+
+  const handleConfirm = async () => {
+    if (!selectedService) return;
+
+    try {
+      // Update the service to mark it as paid and finished
+      const res = await axiosPublic.put(`/bookService/${selectedService._id}`, {
+        isPaid: true, // Mark the service as paid
+        status: "finished", // Mark the service as finished
+      });
+
+      // Check if the update was successful
+      if (res.data.result.modifiedCount) {
+        toast.success("Service finished successfully");
+        fetchServices(); // Reload the services
+        setShowReceipt(true); // Show the receipt modal after successful confirmation
+      } else {
+        toast.error("Failed to update service status");
+      }
+
+      // Close the confirmation modal after confirmation
+      setIsConfirmModalOpen(false);
+    } catch (error) {
+      toast.error("Error confirming service");
+    }
+  };
 
   return (
     <div className="p-6">
       <h2 className="text-2xl font-bold mb-4">Pending Services</h2>
       <div className="overflow-x-auto">
-        <table className="min-w-full bg-white border border-gray-300">
+        <table className="table w-full">
           <thead>
-            <tr className="bg-gray-100">
-              <th className="py-2 px-4 border-b">Service Name</th>
-              <th className="py-2 px-4 border-b">Date</th>
-              <th className="py-2 px-4 border-b">Time</th>
-              <th className="py-2 px-4 border-b">Cost</th>
-              <th className="py-2 px-4 border-b">Transaction ID</th>
-              <th className="py-2 px-4 border-b">Payment Status</th>
-              <th className="py-2 px-4 border-b">Payment Method</th>
-              <th className="py-2 px-4 border-b">Status</th>
-              <th className="py-2 px-4 border-b">Actions</th>
+            <tr>
+              <th>Service Name</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Cost</th>
+              <th>Transaction ID</th>
+              <th>Payment Status</th>
+              <th>Payment Method</th>
+              <th>Status</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {services.map((service) => (
-              <tr key={service._id} className="hover:bg-gray-50">
-                <td className="py-2 px-4 border-b">{service.serviceName}</td>
-                <td className="py-2 px-4 border-b">{service.date}</td>
-                <td className="py-2 px-4 border-b">{service.time}</td>
-                <td className="py-2 px-4 border-b">
-                  BDT {service.serviceCost}
-                </td>
-                <td className="py-2 px-4 border-b">
-                  {service.transactionId || "N/A"}
-                </td>
-                <td className="py-2 px-4 border-b">
-                  {service.isPaid ? "Paid" : "Pending"}
-                </td>
-                <td className="py-2 px-4 border-b">
-                  {service.paymentMethod || "N/A"}
-                </td>
-                <td className="py-2 px-4 border-b">
-                  <div className="relative">
-                    <select
-                      value={service.status}
-                      onChange={(e) =>
-                        handleStatusChange(service._id, e.target.value)
-                      }
-                      disabled={service.isPaid}
-                      className="appearance-none bg-white border border-gray-300 rounded px-3 py-2 pr-8 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    >
-                      <option value="booked">Booked</option>
-                      <option value="on working">On Working</option>
-                      <option value="finished">Finished</option>
-                    </select>
-                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                      <ChevronDown size={16} />
-                    </div>
-                  </div>
-                </td>
-                <td className="py-2 px-4 border-b">
-                  <button
-                    onClick={() => handleApprove(service._id)}
-                    disabled={service.isPaid}
-                    className={`flex items-center justify-center px-4 py-2 rounded ${
-                      service.isPaid
-                        ? "bg-gray-300 cursor-not-allowed"
-                        : "bg-green-500 hover:bg-green-600 text-white"
-                    }`}
+              <tr key={service._id}>
+                <td>{service.serviceName}</td>
+                <td>{service.date}</td>
+                <td>{service.time}</td>
+                <td>BDT {service.serviceCost}</td>
+                <td>{service.transactionId || "N/A"}</td>
+                <td>{service.isPaid ? "Paid" : "Pending"}</td>
+                <td>{service.paymentMethod || "N/A"}</td>
+                <td>
+                  <select
+                    value={service.status}
+                    onChange={(e) =>
+                      handleStatusChange(service._id, e.target.value, service)
+                    }
+                    disabled={service.status === "finished"}
+                    className="select select-bordered w-full max-w-xs"
                   >
-                    <Check size={16} className="mr-2" />
-                    Approve
-                  </button>
+                    <option value="booked">Booked</option>
+                    <option value="on working">On Working</option>
+                    <option value="finished">Finished</option>
+                  </select>
+                </td>
+                <td>
+                  <div className="flex space-x-2">
+                    <button
+                      onClick={() => handleApprove(service._id)}
+                      disabled={service.isPaid}
+                      className={`btn btn-sm ${
+                        service.isPaid ? "btn-disabled" : "btn-success"
+                      }`}
+                    >
+                      <Check size={16} className="mr-2" />
+                      Approve
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+
+      {isConfirmModalOpen && selectedService && (
+        <div className="modal modal-open">
+          <div className="modal-box">
+            <h3 className="font-bold text-lg mb-4">Service Details</h3>
+            <div className="overflow-x-auto">
+              <table className="table w-full">
+                <tbody>
+                  <tr>
+                    <th className="font-semibold">Name</th>
+                    <th className="font-semibold">Cost</th>
+                  </tr>
+                  <tr>
+                    <td>{selectedService.serviceName}</td>
+                    <td>BDT {selectedService.serviceCost}</td>
+                  </tr>
+                  {extraServices.map((service) => (
+                    <tr>
+                      <td>{service.name}</td>
+                      <td>BDT {service.price}</td>
+                    </tr>
+                  ))}
+                  <tr>
+                    <th className="font-semibold">Total</th>
+                    <th className="font-semibold">
+                      BDT {calculateTotalPrice()}
+                    </th>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div className="modal-action mt-6">
+              <button onClick={() => handleConfirm()} className="btn">
+                Confirm
+              </button>
+              <button
+                onClick={handleAddExtraService}
+                className="btn btn-primary"
+              >
+                <Plus size={16} className="mr-2" />
+                Add Extra Service
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {isModalOpen && (
+        <div className="modal modal-open">
+          <div className="modal-box">
+            <h3 className="font-bold text-lg">Add Extra Service</h3>
+            <input
+              type="text"
+              placeholder="Service Name"
+              value={newExtraService.name}
+              onChange={(e) =>
+                setNewExtraService({ ...newExtraService, name: e.target.value })
+              }
+              className="input input-bordered w-full mt-4"
+            />
+            <input
+              type="number"
+              placeholder="Price"
+              value={newExtraService.price}
+              onChange={(e) =>
+                setNewExtraService({
+                  ...newExtraService,
+                  price: e.target.value,
+                })
+              }
+              className="input input-bordered w-full mt-4"
+            />
+            <div className="modal-action">
+              <button onClick={() => setIsModalOpen(false)} className="btn">
+                Cancel
+              </button>
+              <button
+                onClick={handleExtraServiceSubmit}
+                className="btn btn-primary"
+              >
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showReceipt && selectedService && (
+        <div className="modal modal-open">
+          <div className="modal-box" id="print-area">
+            <h3 className="font-bold text-lg">Receipt</h3>
+            <div className="mt-4">
+              {/* Displaying the main service */}
+              <p>
+                <strong>Service:</strong> {selectedService.serviceName}
+              </p>
+              <p>
+                <strong>Original Cost:</strong> BDT{" "}
+                {selectedService.serviceCost}
+              </p>
+
+              {/* Displaying all extra services */}
+              {extraServices.length > 0 ? (
+                <div>
+                  <p className="font-semibold mt-4">Extra Services:</p>
+                  {extraServices.map((extra, index) => (
+                    <div key={index} className="mt-2">
+                      <p>
+                        <strong>{extra.name}</strong>
+                      </p>
+                      <p>BDT {extra.price}</p>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="mt-4">No extra services added.</p>
+              )}
+
+              {/* Displaying the total cost */}
+              <p className="font-semibold mt-4">
+                <strong>Total Cost:</strong> BDT{" "}
+                {selectedService.serviceCost +
+                  extraServices.reduce((sum, extra) => sum + extra.price, 0)}
+              </p>
+            </div>
+
+            {/* Modal actions */}
+            <div className="modal-action mt-6">
+              <button onClick={() => setShowReceipt(false)} className="btn">
+                Close
+              </button>
+              <button onClick={handlePrint} className="btn btn-primary">
+                <Printer size={16} className="mr-2" />
+                Print
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
