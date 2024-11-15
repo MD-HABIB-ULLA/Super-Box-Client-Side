@@ -109,7 +109,7 @@ const DHome = () => {
                 `p-2 text-lg rounded-sm ${isActive ? "bg-gray-600/30" : ""}`
               }
             >
-              < PiClockCountdownDuotone className="text-3xl text-indigo-600" />
+              <PiClockCountdownDuotone className="text-3xl text-indigo-600" />
               Pending services
             </NavLink>
           </li>
@@ -419,7 +419,10 @@ const DHome = () => {
                 <FaBars />
               </label>
             </div>
-            <Outlet />
+            <div className="max-w-7xl m-auto">
+              {" "}
+              <Outlet />
+            </div>
           </div>
         </div>
         <div className="drawer-side">
