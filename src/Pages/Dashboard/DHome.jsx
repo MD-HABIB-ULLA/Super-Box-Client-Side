@@ -33,8 +33,9 @@ import useRole from "../../hooks/useRole";
 import { CiTimer } from "react-icons/ci";
 import { FcFeedback } from "react-icons/fc";
 import { PiBroadcastDuotone, PiClockCountdownDuotone } from "react-icons/pi";
-import { Timer, WatchIcon } from "lucide-react";
+import { Clock, Timer, WatchIcon } from "lucide-react";
 import { FaUpLong } from "react-icons/fa6";
+import { RiFeedbackFill } from "react-icons/ri";
 
 const DHome = () => {
   const { isAdmin, isSeller } = useRole();
@@ -376,6 +377,24 @@ const DHome = () => {
         >
           <TbLogs className="text-3xl" />
           Selling details
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="/dashboard/feedbacks"
+          className={`p-2 text-lg rounded-sm`}
+        >
+          <RiFeedbackFill className="text-3xl" />
+       Feedback
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="/dashboard/pending-orders"
+          className={`p-2 text-lg rounded-sm`}
+        >
+          <Clock className="text-3xl" />
+          padding orders
         </NavLink>
       </li>
       <li>

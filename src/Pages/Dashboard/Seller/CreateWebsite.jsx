@@ -181,22 +181,7 @@ const CreateWebsite = () => {
                     className="input input-bordered"
                   />
                 </div>
-                <div className="form-control flex-1">
-                  <input
-                    type="text"
-                    placeholder="Please enter your full address"
-                    {...register("PA2", { required: true })}
-                    className="input input-bordered"
-                  />
-                </div>
-                <div className="form-control flex-1">
-                  <input
-                    type="text"
-                    placeholder="Please enter your full address"
-                    {...register("PA3", { required: true })}
-                    className="input input-bordered"
-                  />
-                </div>
+                
               </div>
             </div>
 
