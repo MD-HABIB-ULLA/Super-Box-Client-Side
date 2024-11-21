@@ -2,24 +2,34 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import GoogleLoginBtn from "../../Components/Common/GoogleLoginBtn";
 import toast from "react-hot-toast";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
-
 
 const Login = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const { logOut, loginWithEmailAndPassword } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = (data) => {
+    setLoading(true);
+    // First log out the user in case there are any active sessions
     logOut();
     loginWithEmailAndPassword(data.email, data.password)
       .then((result) => {
-        toast.success("Login successful");
-        navigate("/dashboard");
+        const user = result.user;
+
+        // Check if the user's email is verified
+        if (user.emailVerified) {
+          toast.success("Login successful");
+          navigate("/dashboard");  // Redirect to the dashboard if email is verified
+        } else {
+          toast.error("Please verify your email before logging in.");
+        }
       })
       .catch((error) => {
+        setLoading(false);
         if (error.code === "auth/invalid-credential") {
           toast.error("Invalid email or password. Please try again.");
         } else {
@@ -104,8 +114,9 @@ const Login = () => {
           <button
             type="submit"
             className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md transition duration-300"
+            disabled={loading}
           >
-            Sign In
+            {loading ? "Logging in..." : "Sign In"}
           </button>
         </form>
         <div className="mt-6">

@@ -31,6 +31,7 @@ const PendingOrders = () => {
     setIsModalOpen(false);
   };
 
+  console.log(orders)
   return (
     <div className="font-sans p-4">
       <h1 className="text-2xl text-indigo-600 font-semibold mb-6">

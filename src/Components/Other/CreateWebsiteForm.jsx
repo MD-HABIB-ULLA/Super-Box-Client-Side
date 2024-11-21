@@ -221,9 +221,9 @@ const CreateWebsiteForm = () => {
       </label>
       <div className="flex items-center gap-4">
         <input
-          {...register("navBackground", { required: true })}
+          {...register("navColorPicker", { required: true })}
           type="color"
-          id="navColorPicker "
+          id="navColorPicker"
           value={selectedNavColor}
           onChange={handleNavColorChange}
           className="absolute opacity-0 w-0 h-0"
