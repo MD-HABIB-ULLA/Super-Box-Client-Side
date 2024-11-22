@@ -169,7 +169,7 @@ const CreateWebsite = () => {
               {/* Three pickup addresses */}
               <label className="label">
                 <span className="label-text text-lg capitalize">
-                  Three pickup addresses
+                  Pickup addresses
                 </span>
               </label>
               <div className="flex flex-col md:flex-row gap-4">
@@ -181,22 +181,7 @@ const CreateWebsite = () => {
                     className="input input-bordered"
                   />
                 </div>
-                <div className="form-control flex-1">
-                  <input
-                    type="text"
-                    placeholder="Please enter your full address"
-                    {...register("PA2", { required: true })}
-                    className="input input-bordered"
-                  />
-                </div>
-                <div className="form-control flex-1">
-                  <input
-                    type="text"
-                    placeholder="Please enter your full address"
-                    {...register("PA3", { required: true })}
-                    className="input input-bordered"
-                  />
-                </div>
+                
               </div>
             </div>
 

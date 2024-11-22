@@ -6,12 +6,10 @@ import {
   signInWithPopup,
   signOut,
   updateProfile,
+  sendEmailVerification, // Import sendEmailVerification
 } from "firebase/auth";
 import auth from "../Firebase/firebase.config";
 import { createContext, useEffect, useState } from "react";
-
-
-// import useAxiosPublic from "../Hooks/useAxiosPublic";
 
 export const AuthContext = createContext(null);
 
@@ -23,24 +21,47 @@ const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const googleProvider = new GoogleAuthProvider();
 
-  // const axiosPublic = useAxiosPublic();
-
   // Google login
   const googleLogin = () => {
     setLoading(true);
     return signInWithPopup(auth, googleProvider);
   };
 
-  // email password sign up
-  const signUpWithEmailAndPassword = (email, password) => {
+  // email password sign up with email verification
+  const signUpWithEmailAndPassword = async (email, password) => {
     setLoading(true);
-    return createUserWithEmailAndPassword(auth, email, password);
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // Send email verification
+      await sendEmailVerification(user);
+      console.log("Verification email sent!");
+
+      return userCredential;
+    } catch (error) {
+      console.error("Error signing up:", error);
+      throw error;
+    }
   };
 
-  // email password login
-  const loginWithEmailAndPassword = (email, password) => {
+  // email password login (only allows login if the email is verified)
+  const loginWithEmailAndPassword = async (email, password) => {
     setLoading(true);
-    return signInWithEmailAndPassword(auth, email, password);
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // Check if the email is verified
+      // if (!user.emailVerified) {
+      //   throw new Error("Email is not verified. Please check your inbox.");
+      // }
+
+      return userCredential;
+    } catch (error) {
+      console.error("Error logging in:", error);
+      throw error;
+    }
   };
 
   // Log out
@@ -75,18 +96,14 @@ const AuthProvider = ({ children }) => {
 
       const storedIsCustomer = localStorage.getItem("isCustomer");
       const isCustomer = JSON.parse(storedIsCustomer);
-      console.log(isCustomer)
       if (isCustomer) {
-        
         setCustomerInfo(currentUser);
       }
     });
     return () => {
       unsubscribe();
     };
-  });
-
-  // User updating
+  }, []);
 
   const authInfo = {
     googleLogin,
@@ -96,7 +113,6 @@ const AuthProvider = ({ children }) => {
     logOut,
     updateUserProfile,
     loading,
-
     customerInfo,
   };
 

@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import GoogleLoginBtn from "../../Components/Common/GoogleLoginBtn";
 import axios from "axios";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import toast from "react-hot-toast";
@@ -12,6 +12,9 @@ const SignUp = () => {
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
   const axiosPublic = useAxiosPublic();
+
+  // State to track success state
+  const [signUpSuccess, setSignUpSuccess] = useState(false);
 
   const onSubmit = (data) => {
     const password = data.password;
@@ -37,12 +40,12 @@ const SignUp = () => {
                 updateUserProfile(data.name, image).then(() => {
                   const userInfo = { name: data.name, email: data.email };
                   axiosPublic.post("/users", userInfo).then((res) => {
-                    navigate("/dashboard");
+                    setSignUpSuccess(true); // Show success message
                     toast.success("Sign Up successful");
+                    // Automatically navigate to login or dashboard after successful sign-up
+                    // navigate("/dashboard");
                   });
                 });
-                toast.success("Successfully signed in");
-                navigate("/");
               }
             })
             .catch((error) => {
@@ -67,57 +70,83 @@ const SignUp = () => {
             />
           </Link>
         </div>
-        <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">Create Your Account</h2>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
-            <input
-              type="text"
-              placeholder="Enter your name"
-              {...register("name", { required: true })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-              required
-            />
+
+        {!signUpSuccess ? (
+          <>
+            <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">
+              Create Your Account
+            </h2>
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                <input
+                  type="text"
+                  placeholder="Enter your name"
+                  {...register("name", { required: true })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                <input
+                  type="email"
+                  placeholder="you@example.com"
+                  {...register("email", { required: true })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                <input
+                  type="password"
+                  placeholder="••••••••"
+                  {...register("password", { required: true })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Profile Picture</label>
+                <input
+                  type="file"
+                  {...register("image", { required: true })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                />
+              </div>
+              <div className="flex items-center">
+                <input type="checkbox" className="h-4 w-4 text-indigo-600 border-gray-300 rounded" required />
+                <label className="ml-2 text-sm text-gray-700">
+                  I accept the <a href="#" className="text-indigo-600">Terms & Conditions</a>
+                </label>
+              </div>
+              <button
+                type="submit"
+                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-md transition duration-300"
+              >
+                Sign Up
+              </button>
+            </form>
+          </>
+        ) : (
+          <div className="text-center">
+            <div className="text-green-500 text-6xl mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">Success!</h2>
+            <p className="text-gray-600 mb-6">You have successfully signed up. Please check your email for verification.</p>
+            <button
+              onClick={() => navigate("/login")}
+              className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-md transition duration-300"
+            >
+              Verify and Login
+            </button>
           </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-            <input
-              type="email"
-              placeholder="you@example.com"
-              {...register("email", { required: true })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-              required
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
-            <input
-              type="password"
-              placeholder="••••••••"
-              {...register("password", { required: true })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-              required
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Profile Picture</label>
-            <input
-              type="file"
-              {...register("image", { required: true })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-            />
-          </div>
-          <div className="flex items-center">
-            <input type="checkbox" className="h-4 w-4 text-indigo-600 border-gray-300 rounded" required />
-            <label className="ml-2 text-sm text-gray-700">I accept the <a href="#" className="text-indigo-600">Terms & Conditions</a></label>
-          </div>
-          <button
-            type="submit"
-            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-md transition duration-300"
-          >
-            Sign Up
-          </button>
-        </form>
+        )}
+
         <div className="mt-6">
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
@@ -131,6 +160,7 @@ const SignUp = () => {
             <GoogleLoginBtn />
           </div>
         </div>
+
         <p className="mt-8 text-center text-sm text-gray-600">
           Already have an account?{" "}
           <Link to="/login" className="text-indigo-600 hover:text-indigo-500">Login Now!</Link>

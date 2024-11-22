@@ -13,6 +13,7 @@ const PendingOrder = () => {
       try {
         if (user?.email) {
           const res = await axiosPublic.get(`/payments/${user.email}`);
+          console.log(res.data);
           setProducts(res.data); // Assuming your API response is an array of products
         }
       } catch (error) {
@@ -39,6 +40,7 @@ const PendingOrder = () => {
       // Update the product status on the backend
       const res = await axiosPublic.patch(`/payment/${productId}`, {
         isReceived: true,
+       
       });
       console.log("Delivery status updated:", res.data);
     } catch (error) {

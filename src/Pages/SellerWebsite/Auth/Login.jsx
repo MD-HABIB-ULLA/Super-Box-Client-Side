@@ -42,9 +42,10 @@ const LoginCus = () => {
         };
   
         axiosPublic.post("/customer", customerData)
-          .then(() => {
+          .then((res) => {
             toast.success("Login successful");
             navigate(`/w/${name}`);
+            console.log(res);
             // Avoid window reload unless absolutely necessary
           })
           .catch((error) => {

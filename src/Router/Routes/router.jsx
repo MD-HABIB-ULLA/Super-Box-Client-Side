@@ -54,6 +54,8 @@ import MassageForm from "../../Pages/Dashboard/Seller/MassageForm";
 import ErrorPage from "../../Pages/Errorpage/ErrorPage";
 import PendingServices from "../../Pages/Dashboard/Seller/PendingServices";
 import BookedServices from "../../Pages/SellerWebsite/bookedServices/BookedServices";
+import Feedbacks from "../../Pages/Feedback/Feedbacks";
+import PendingOrders from "../../Pages/Dashboard/Admin/PendingOrders/PendingOrders";
 
 const RoleBasedComponent = () => {
   const { isAdmin, isSeller } = useRole();
@@ -215,6 +217,14 @@ const router = createBrowserRouter([
           {
             path: "/dashboard/bm-resources",
             element: <BmResources />,
+          },
+          {
+            path: "/dashboard/feedbacks",
+            element: <Feedbacks />,
+          },
+          {
+            path: "/dashboard/pending-orders",
+            element: <PendingOrders />,
           },
           {
             path: "/dashboard/serviceManagement",
