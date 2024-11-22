@@ -6,7 +6,11 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 
 const Login = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const { logOut, loginWithEmailAndPassword } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
@@ -21,9 +25,10 @@ const Login = () => {
         const user = result.user;
 
         // Check if the user's email is verified
-        if (user.emailVerified) {
+        // if (user.emailVerified) {
+        if (user) {
           toast.success("Login successful");
-          navigate("/dashboard");  // Redirect to the dashboard if email is verified
+          navigate("/dashboard"); // Redirect to the dashboard if email is verified
         } else {
           toast.error("Please verify your email before logging in.");
         }
@@ -69,7 +74,9 @@ const Login = () => {
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
             />
             {errors.email && (
-              <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>
+              <p className="text-red-500 text-xs mt-1">
+                {errors.email.message}
+              </p>
             )}
           </div>
           <div>
@@ -87,7 +94,9 @@ const Login = () => {
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
             />
             {errors.password && (
-              <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>
+              <p className="text-red-500 text-xs mt-1">
+                {errors.password.message}
+              </p>
             )}
           </div>
           <div className="flex items-center justify-between">
@@ -140,7 +149,7 @@ const Login = () => {
             to="/sign-up"
             className="font-medium text-blue-600 hover:text-blue-500 transition duration-200"
           >
-           Create an account
+            Create an account
           </Link>
         </p>
       </div>

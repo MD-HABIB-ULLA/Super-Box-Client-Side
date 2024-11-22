@@ -1,23 +1,24 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import useAxiosPublic from "../../../../hooks/useAxiosPublic";
+import toast from "react-hot-toast";
 
 const PendingOrders = () => {
-    const axiosPublic = useAxiosPublic()
+  const axiosPublic = useAxiosPublic();
   const [orders, setOrders] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Fetch orders dynamically from API
+  const fetchOrders = async () => {
+    try {
+      const response = await axiosPublic.get("/productDelivery");
+      setOrders(response.data);
+    } catch (error) {
+      console.error("Failed to fetch orders:", error);
+    }
+  };
   useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const response = await axiosPublic.get("/productDelivery");
-        setOrders(response.data);
-      } catch (error) {
-        console.error("Failed to fetch orders:", error);
-      }
-    };
     fetchOrders();
   }, []);
 
@@ -31,7 +32,15 @@ const PendingOrders = () => {
     setIsModalOpen(false);
   };
 
-  console.log(orders)
+  const handleSend = (id) => {
+    console.log(id);
+    axiosPublic.post(`/sendToDelivery/${id}`, selectedOrder).then(() => {
+      setIsModalOpen(false);
+      toast.success("Order sent to delivery successfully!");
+      fetchOrders();
+    });
+  };
+  console.log(orders);
   return (
     <div className="font-sans p-4">
       <h1 className="text-2xl text-indigo-600 font-semibold mb-6">
@@ -54,45 +63,57 @@ const PendingOrders = () => {
             </tr>
           </thead>
           <tbody>
-            {orders?.map((order) => (
-              <tr
-                key={order._id}
-                className="border-b border-gray-200 hover:bg-gray-100"
-              >
-                <td className="py-3 px-4">{order._id}</td>
-                <td className="py-3 px-4">
-                  <img
-                    src={order.image}
-                    alt={order.name}
-                    className="w-12 h-12 object-cover rounded"
-                  />
-                </td>
-                <td className="py-3 px-4">${order.price}</td>
-                <td className="py-3 px-4">{order.shopName}</td>
-                <td className="py-3 px-4">{order.sellerEmail}</td>
-                <td className="py-3 px-4">{order.buyerEmail}</td>
-                <td className="py-3 px-4">{order.transactionId}</td>
-                <td className="py-3 px-4">
-                  <span
-                    className={`py-1 px-2 rounded text-xs font-semibold ${
-                      order.paymentStatus === "success"
-                        ? "bg-green-500 text-white"
-                        : "bg-red-500 text-white"
-                    }`}
+            {orders?.map((order) => {
+              // Check if the order satisfies the condition
+              if (
+                order.sendToDelivery === true &&
+                order.isDelivered === false
+              ) {
+                return (
+                  <tr
+                    key={order._id}
+                    className="border-b border-gray-200 hover:bg-gray-100"
                   >
-                    {order.paymentStatus}
-                  </span>
-                </td>
-                <td className="py-3 px-4">
-                  <button
-                    onClick={() => openModal(order)}
-                    className="bg-indigo-600 text-white px-3 py-1 rounded hover:bg-indigo-700"
-                  >
-                    View Details
-                  </button>
-                </td>
-              </tr>
-            ))}
+                    <td className="py-3 px-4">{order._id}</td>
+                    <td className="py-3 px-4">
+                      <img
+                        src={order.image}
+                        alt={order.productName || "Product"}
+                        className="w-12 h-12 object-cover rounded"
+                      />
+                    </td>
+                    <td className="py-3 px-4">${order.price}</td>
+                    <td className="py-3 px-4">{order.shopName}</td>
+                    <td className="py-3 px-4">{order.sellerEmail}</td>
+                    <td className="py-3 px-4">{order.buyerEmail}</td>
+                    <td className="py-3 px-4">
+                      {order.transactionId || "N/A"}
+                    </td>
+                    <td className="py-3 px-4">
+                      <span
+                        className={`py-1 px-2 rounded text-xs font-semibold ${
+                          order.paymentStatus === "success"
+                            ? "bg-green-500 text-white"
+                            : "bg-red-500 text-white"
+                        }`}
+                      >
+                        {order.paymentStatus}
+                      </span>
+                    </td>
+                    <td className="py-3 px-4">
+                      <button
+                        onClick={() => openModal(order)}
+                        className="bg-indigo-600 text-white px-3 py-1 rounded hover:bg-indigo-700"
+                      >
+                        View Details
+                      </button>
+                    </td>
+                  </tr>
+                );
+              }
+              // Return null if the condition is not met
+              return null;
+            })}
           </tbody>
         </table>
       </div>
@@ -136,6 +157,13 @@ const PendingOrders = () => {
               <strong>Transaction ID:</strong> {selectedOrder.transactionId}
             </p>
             <h3 className="text-lg text-indigo-600 font-semibold mt-4">
+              Seller pick up Address
+            </h3>
+            <p>
+              <strong>location:</strong>{" "}
+              {selectedOrder.websiteDetails.pickedUpAddress[0]}
+            </p>
+            <h3 className="text-lg text-indigo-600 font-semibold mt-4">
               Customer Address
             </h3>
             <p>
@@ -154,12 +182,20 @@ const PendingOrders = () => {
             <p>
               <strong>Country:</strong> {selectedOrder.customerAddress.country}
             </p>
-            <button
-              onClick={closeModal}
-              className="mt-4 bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
-            >
-              Close
-            </button>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={closeModal}
+                className="mt-4 bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
+              >
+                Close
+              </button>
+              <button
+                onClick={() => handleSend(selectedOrder._id)}
+                className="mt-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+              >
+                Send
+              </button>
+            </div>
           </div>
         </div>
       )}
