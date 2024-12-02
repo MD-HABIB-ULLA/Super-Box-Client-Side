@@ -9,11 +9,18 @@ import { Currency } from "lucide-react";
 import { TbCurrencyTaka } from "react-icons/tb";
 
 const Checkout = () => {
-  const { confirmProduct, webData, name, sellerInfo,setWebCartItem ,getCartItems} =
-    useContext(WebDataDisContext);
+  const {
+    confirmProduct,
+    webData,
+    name,
+    customerData,
+    sellerInfo,
+    setWebCartItem,
+    getCartItems,
+  } = useContext(WebDataDisContext);
 
   console.log(sellerInfo);
-  const {shopName} = useParams
+  const { shopName } = useParams;
   const { user } = useContext(AuthContext);
   const email = user?.email;
   const sellerEmail = webData?.email;
@@ -81,6 +88,7 @@ const Checkout = () => {
       isReceived: false,
       paymentMethod: paymentMethod,
       sellerEmail: sellerEmail,
+      customerData: customerData,
       transactionId: transactionId ? transactionId : "",
     }));
 
@@ -196,8 +204,8 @@ const Checkout = () => {
           {paymentMethod === "cashOnDelivery" && (
             <div className="bg-gray-50 p-4 rounded-md">
               <p className=" flex items-center gap-1">
-                Cash on Delivery is selected. A
-                BDT: 10 Tk charge will be added to your total.
+                Cash on Delivery is selected. A BDT: 10 Tk charge will be added
+                to your total.
               </p>
             </div>
           )}
@@ -342,16 +350,13 @@ const Checkout = () => {
             <span>Items Total</span>
             <span className="flex items-center gap-2">
               {" "}
-            BDT: {totalPrice.toFixed(2)}Tk
+              BDT: {totalPrice.toFixed(2)}Tk
             </span>
           </div>
           {paymentMethod === "cashOnDelivery" && (
             <div className="flex justify-between mb-2">
               <span>Cash on Delivery Fee</span>
-              <span className="flex items-center gap-2">
-                {" "}
-               BDT: 10.00 Tk
-              </span>
+              <span className="flex items-center gap-2"> BDT: 10.00 Tk</span>
             </div>
           )}
 

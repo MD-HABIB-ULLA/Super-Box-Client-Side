@@ -161,7 +161,9 @@ const PendingOrders = () => {
             </h3>
             <p>
               <strong>location:</strong>{" "}
-              {selectedOrder.websiteDetails.pickedUpAddress[0]}
+              {selectedOrder.websiteDetails.sellerAddress
+                ? selectedOrder.websiteDetails.sellerAddress
+                : selectedOrder.websiteDetails.pickedUpAddress[0]}
             </p>
             <h3 className="text-lg text-indigo-600 font-semibold mt-4">
               Customer Address

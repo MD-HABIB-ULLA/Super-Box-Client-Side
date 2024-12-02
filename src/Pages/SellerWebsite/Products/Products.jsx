@@ -17,7 +17,7 @@ const Products = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-
+  console.log(customerData);
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const handleAddToCart = (id) => {
@@ -81,103 +81,103 @@ const Products = () => {
 
         {/* Checkout Modal */}
         <dialog id="customerInfo" className="modal">
-            <div className="modal-box">
-              <h3 className="font-bold text-lg">
-                Please fill this form to checkout
-              </h3>
+          <div className="modal-box">
+            <h3 className="font-bold text-lg">
+              Please fill this form to checkout
+            </h3>
 
-              {/* Form starts here */}
-              <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-                <div>
-                  <label className="label">Phone</label>
-                  <input
-                    type="text"
-                    {...register("phone", { required: true })}
-                    className="input input-bordered w-full"
-                    placeholder="Enter your phone number"
-                  />
-                  {errors.phone && (
-                    <p className="text-red-500">Phone is required</p>
-                  )}
-                </div>
+            {/* Form starts here */}
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+              <div>
+                <label className="label">Phone</label>
+                <input
+                  type="text"
+                  {...register("phone", { required: true })}
+                  className="input input-bordered w-full"
+                  placeholder="Enter your phone number"
+                />
+                {errors.phone && (
+                  <p className="text-red-500">Phone is required</p>
+                )}
+              </div>
 
-                <div>
-                  <label className="label">Street</label>
-                  <input
-                    type="text"
-                    {...register("address.street", { required: true })}
-                    className="input input-bordered w-full"
-                    placeholder="Enter your street"
-                  />
-                  {errors.address?.street && (
-                    <p className="text-red-500">Street is required</p>
-                  )}
-                </div>
+              <div>
+                <label className="label">Street</label>
+                <input
+                  type="text"
+                  {...register("address.street", { required: true })}
+                  className="input input-bordered w-full"
+                  placeholder="Enter your street"
+                />
+                {errors.address?.street && (
+                  <p className="text-red-500">Street is required</p>
+                )}
+              </div>
 
-                <div>
-                  <label className="label">City</label>
-                  <input
-                    type="text"
-                    {...register("address.city", { required: true })}
-                    className="input input-bordered w-full"
-                    placeholder="Enter your city"
-                  />
-                  {errors.address?.city && (
-                    <p className="text-red-500">City is required</p>
-                  )}
-                </div>
+              <div>
+                <label className="label">City</label>
+                <input
+                  type="text"
+                  {...register("address.city", { required: true })}
+                  className="input input-bordered w-full"
+                  placeholder="Enter your city"
+                />
+                {errors.address?.city && (
+                  <p className="text-red-500">City is required</p>
+                )}
+              </div>
 
-                <div>
-                  <label className="label">State</label>
-                  <input
-                    type="text"
-                    {...register("address.state", { required: true })}
-                    className="input input-bordered w-full"
-                    placeholder="Enter your state"
-                  />
-                  {errors.address?.state && (
-                    <p className="text-red-500">State is required</p>
-                  )}
-                </div>
+              <div>
+                <label className="label">State</label>
+                <input
+                  type="text"
+                  {...register("address.state", { required: true })}
+                  className="input input-bordered w-full"
+                  placeholder="Enter your state"
+                />
+                {errors.address?.state && (
+                  <p className="text-red-500">State is required</p>
+                )}
+              </div>
 
-                <div>
-                  <label className="label">Postal Code</label>
-                  <input
-                    type="text"
-                    {...register("address.postalCode", { required: true })}
-                    className="input input-bordered w-full"
-                    placeholder="Enter your postal code"
-                  />
-                  {errors.address?.postalCode && (
-                    <p className="text-red-500">Postal Code is required</p>
-                  )}
-                </div>
+              <div>
+                <label className="label">Postal Code</label>
+                <input
+                  type="text"
+                  {...register("address.postalCode", { required: true })}
+                  className="input input-bordered w-full"
+                  placeholder="Enter your postal code"
+                />
+                {errors.address?.postalCode && (
+                  <p className="text-red-500">Postal Code is required</p>
+                )}
+              </div>
 
-                <div>
-                  <label className="label">Country</label>
-                  <input
-                    type="text"
-                    {...register("address.country", { required: true })}
-                    className="input input-bordered w-full"
-                    placeholder="Enter your country"
-                  />
-                  {errors.address?.country && (
-                    <p className="text-red-500">Country is required</p>
-                  )}
-                </div>
+              <div>
+                <label className="label">Country</label>
+                <input
+                  type="text"
+                  {...register("address.country", { required: true })}
+                  className="input input-bordered w-full"
+                  placeholder="Enter your country"
+                />
+                {errors.address?.country && (
+                  <p className="text-red-500">Country is required</p>
+                )}
+              </div>
 
-                {/* Submit button */}
-                <button type="submit" className="btn btn-primary">
-                  Submit
-                </button>
-              </form>
-            </div>
-
-            {/* Backdrop and close button */}
-            <form method="dialog" className="modal-backdrop">
-              <button className="">Close</button>
+              {/* Submit button */}
+              <button type="submit" className="btn btn-primary">
+                Submit
+              </button>
             </form>
-          </dialog>
+          </div>
+
+          {/* Backdrop and close button */}
+          <form method="dialog" className="modal-backdrop">
+            <button className="">Close</button>
+          </form>
+        </dialog>
       </div>
     </div>
   );
