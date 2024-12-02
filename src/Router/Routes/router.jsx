@@ -61,7 +61,7 @@ const RoleBasedComponent = () => {
   const { isAdmin, isSeller } = useRole();
 
   if (isAdmin) {
-    return <div>Hello, Admin</div>;
+    return <div><CreateWebsite /></div>;
   }
 
   if (isSeller) {
