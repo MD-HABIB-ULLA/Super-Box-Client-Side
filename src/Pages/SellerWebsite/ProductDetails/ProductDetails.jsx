@@ -1,12 +1,30 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useContext } from "react";
 import { WebDataDisContext } from "../../../Context/WebDataDisContext";
+import { AuthContext } from "../../../Provider/AuthProvider";
 
 const ProductDetails = () => {
   const { id } = useParams();
-  const { singleProductData } = useContext(WebDataDisContext);
+  const { singleProductData, name, customerData, addWebCartItem } =
+    useContext(WebDataDisContext);
+  const { user } = useContext(AuthContext);
   const { data } = singleProductData(id);
   console.log(data);
+
+  const navigate = useNavigate();
+
+  const handlePayment = (id) => {
+    if (!user) {
+      navigate(`/w/${name}/login`);
+    }
+
+    if (customerData.phone !== "") {
+      addWebCartItem(id);
+      navigate(`/w/${name}/shipping?type=single&productId=${id}`);
+    } else {
+      document.getElementById("customerInfo").showModal();
+    }
+  };
 
   return (
     <>
@@ -24,9 +42,15 @@ const ProductDetails = () => {
               <p>{data?.description}</p>
               <div className="card-actions justify-between items-center">
                 <span className="text-lg font-bold">BDT: {data?.price}Tk</span>
-                <Link>
-                  <button className="btn btn-primary">Buy Now</button>
-                </Link>
+
+                <button
+                  onClick={() => {
+                    handlePayment(data?._id);
+                  }}
+                  className="btn btn-primary"
+                >
+                  Buy Now
+                </button>
               </div>
               <div></div>
             </div>
