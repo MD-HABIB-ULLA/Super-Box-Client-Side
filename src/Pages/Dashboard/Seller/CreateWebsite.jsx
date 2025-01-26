@@ -17,13 +17,18 @@ import {
   Truck,
   Video,
 } from "lucide-react";
+import { MdError } from "react-icons/md";
 
 const CreateWebsite = () => {
   const [isNext, setIsNext] = useState(false);
   const [isCreate, setIsCreate] = useState(false);
   const { setSellerInfo, sellerInfo, sellerExist } = useContext(FormContext);
   const axiosPublic = useAxiosPublic();
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const [loading, setLoading] = useState(false);
   const [isAvailableStore, setIsAvailableStore] = useState(false);
 
@@ -35,37 +40,39 @@ const CreateWebsite = () => {
       <span className="text-gray-800 font-medium">{text}</span>
     </li>
   );
-
+  console.log(errors);
   const InputWrapper = ({
     label,
     name,
     type = "text",
     icon: Icon,
     register,
-    errors,
+    massage,
     placeholder,
     optional = false,
-  }) => (
-    <div className="mb-4">
-      <label className="block text-gray-700 font-medium mb-2">
-        {label}
-        {optional && (
-          <span className="text-gray-500 text-sm ml-2">(Optional)</span>
-        )}
-      </label>
-      <div className="relative">
-        {Icon && (
-          <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-indigo-500">
-            <Icon className="w-5 h-5" />
-          </div>
-        )}
-        <input
-          type={type}
-          placeholder={placeholder}
-          {...register(name, {
-            required: !optional ? "This field is required" : false,
-          })}
-          className={`
+  }) => {
+    console.log(name);
+    return (
+      <div className="mb-4">
+        <label className="block text-gray-700 font-medium mb-2">
+          {label}
+          {optional && (
+            <span className="text-gray-500 text-sm ml-2">(Optional)</span>
+          )}
+        </label>
+        <div className="relative">
+          {Icon && (
+            <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-indigo-500">
+              <Icon className="w-5 h-5" />
+            </div>
+          )}
+          <input
+            type={type}
+            placeholder={placeholder}
+            {...register(name, {
+              required: !optional ? "This field is required" : false,
+            })}
+            className={`
             w-full pl-10 pr-3 py-2 border 
           
             rounded-lg 
@@ -75,10 +82,17 @@ const CreateWebsite = () => {
             transition 
             duration-300
           `}
-        />
+          />
+        </div>
+        {massage && (
+          <div className="px-3 flex items-center gap-2 py-2 border border-error bg-error/10 rounded-lg mt-2">
+            <MdError className="text-error " />{" "}
+            <p className="text-error text-sm ">{massage}</p>
+          </div>
+        )}
       </div>
-    </div>
-  );
+    );
+  };
 
   const FileInputWrapper = ({
     label,
@@ -86,6 +100,7 @@ const CreateWebsite = () => {
     icon: Icon,
     register,
     errors,
+    massage,
     optional = false,
   }) => (
     <div className="mb-4">
@@ -117,6 +132,12 @@ const CreateWebsite = () => {
           `}
         />
       </div>
+      {massage && (
+        <div className="px-3 flex items-center gap-2 py-2 border border-error bg-error/10 rounded-lg mt-2">
+          <MdError className="text-error " />{" "}
+          <p className="text-error text-sm ">{massage}</p>
+        </div>
+      )}
     </div>
   );
 
@@ -124,30 +145,30 @@ const CreateWebsite = () => {
     {
       icon: <Box className="w-6 h-6 text-indigo-600" />,
       title: "Complete Product Listing",
-      description: "Add your products to start selling on Super Box marketplace."
+      description:
+        "Add your products to start selling on Super Box marketplace.",
     },
     {
       icon: <Truck className="w-6 h-6 text-indigo-600" />,
       title: "Set Up Shipping",
-      description: "Configure your shipping methods and delivery zones."
+      description: "Configure your shipping methods and delivery zones.",
     },
     {
       icon: <ShoppingBag className="w-6 h-6 text-indigo-600" />,
       title: "Store Setup",
-      description: "Customize your store profile and branding."
+      description: "Customize your store profile and branding.",
     },
     {
       icon: <CreditCard className="w-6 h-6 text-indigo-600" />,
       title: "Payment Configuration",
-      description: "Link your payment methods to receive earnings."
-    }
+      description: "Link your payment methods to receive earnings.",
+    },
   ];
 
   const onSubmit = async (data) => {
     setLoading(true);
     let tradeLicense = null;
     let nidPicture = null;
-    
 
     // FormData for handling file uploads
     const formData = new FormData();
@@ -228,58 +249,59 @@ const CreateWebsite = () => {
 
   return (
     <div className="">
-     {!isNext? (<div className=" flex items-center justify-center  p-4">
-        <div className="rounded-2xl w-full max-w-md p-8 bg-white shadow-2xl border border-indigo-100">
-          <div className="text-center">
-            <div className="mb-6 flex justify-center">
-              <div className="bg-indigo-100 p-4 rounded-full inline-block">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  className="h-12 w-12 text-indigo-600"
-                >
-                  <path d="M12 2L2 7l10 5 10-5-10-5z" />
-                  <path d="M2 17l10 5 10-5" />
-                  <path d="M2 12l10 5 10-5" />
-                </svg>
+      {!isNext ? (
+        <div className=" flex items-center justify-center  p-4">
+          <div className="rounded-2xl w-full max-w-md p-8 bg-white shadow-2xl border border-indigo-100">
+            <div className="text-center">
+              <div className="mb-6 flex justify-center">
+                <div className="bg-indigo-100 p-4 rounded-full inline-block">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    className="h-12 w-12 text-indigo-600"
+                  >
+                    <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                    <path d="M2 17l10 5 10-5" />
+                    <path d="M2 12l10 5 10-5" />
+                  </svg>
+                </div>
               </div>
+              <h1 className="text-4xl font-extrabold text-indigo-800 mb-4">
+                Super Box
+              </h1>
+              <p className="text-xl text-indigo-600 mb-8">
+                Create Your Website Journey Begins Here
+              </p>
             </div>
-            <h1 className="text-4xl font-extrabold text-indigo-800 mb-4">
-              Super Box
-            </h1>
-            <p className="text-xl text-indigo-600 mb-8">
-              Create Your Website Journey Begins Here
+
+            <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
+              Account Creation Prep
+            </h2>
+
+            <p className="text-gray-600 text-center mb-6 px-4">
+              Gather these essential documents to streamline your account setup
             </p>
-          </div>
 
-          <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
-            Account Creation Prep
-          </h2>
+            <ul className=" mb-8 grid grid-cols-2 grid-rows-2 gap-3">
+              <ListItem icon={<Camera />} text="  NID Picture" />
+              <ListItem icon={<CreditCard />} text="bKash Number" />
+              <ListItem icon={<FileText />} text="Trade License (Optional)" />
+              <ListItem icon={<MapPin />} text="Country Name and Address" />
+            </ul>
 
-          <p className="text-gray-600 text-center mb-6 px-4">
-            Gather these essential documents to streamline your account setup
-          </p>
-
-          <ul className=" mb-8 grid grid-cols-2 grid-rows-2 gap-3">
-            <ListItem icon={<Camera />} text="  NID Picture" />
-            <ListItem icon={<CreditCard />} text="bKash Number" />
-            <ListItem icon={<FileText />} text="Trade License (Optional)" />
-            <ListItem icon={<MapPin />} text="Country Name and Address" />
-          </ul>
-
-          <button
-            onClick={() => setIsNext(true)}
-            className="w-full py-3 px-4 bg-indigo-600 text-white font-bold rounded-xl 
+            <button
+              onClick={() => setIsNext(true)}
+              className="w-full py-3 px-4 bg-indigo-600 text-white font-bold rounded-xl 
           hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 
           transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg"
-          >
-            Continue to Next Step
-          </button>
+            >
+              Continue to Next Step
+            </button>
+          </div>
         </div>
-      </div>)
-       : !sellerInfo?(
+      ) : !sellerInfo ? (
         <div>
           <div className="text-center">
             <div className="mb-6 flex justify-center">
@@ -315,6 +337,9 @@ const CreateWebsite = () => {
                     label="Country"
                     name="sellerCountry"
                     icon={MapPin}
+                    massage={
+                      errors.sellerCountry && errors.sellerCountry.message
+                    }
                     register={register}
                     placeholder="Enter your country"
                   />
@@ -322,6 +347,9 @@ const CreateWebsite = () => {
                     label="Address"
                     name="sellerAddress"
                     icon={MapPin}
+                    massage={
+                      errors.sellerAddress && errors.sellerAddress.message
+                    }
                     register={register}
                     placeholder="Full address"
                   />
@@ -331,6 +359,7 @@ const CreateWebsite = () => {
                   <FileInputWrapper
                     label="NID Picture"
                     name="nidPicture"
+                    massage={errors.nidPicture && errors.nidPicture.message}
                     icon={Camera}
                     register={register}
                   />
@@ -338,6 +367,7 @@ const CreateWebsite = () => {
                     label="Bkash Number"
                     name="bkashNumber"
                     type="tel"
+                    massage={errors.bkashNumber && errors.bkashNumber.message}
                     icon={Phone}
                     register={register}
                     placeholder="Enter Bkash number"
@@ -351,6 +381,7 @@ const CreateWebsite = () => {
                   <InputWrapper
                     name="PA1"
                     register={register}
+                    massage={errors.PA1 && errors.PA1.message}
                     placeholder="Enter pickup address"
                   />
                 </div>
@@ -389,6 +420,9 @@ const CreateWebsite = () => {
                     label="Shop Location"
                     name="storeLocation"
                     icon={Store}
+                    massage={
+                      errors.storeLocation && errors.storeLocation.message
+                    }
                     register={register}
                     placeholder="Enter your shop location"
                   />
@@ -457,12 +491,13 @@ const CreateWebsite = () => {
               </div>
 
               <div className="flex justify-center space-x-4">
-                <button onClick={()=>setIsCreate(true)} className="flex items-center bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition duration-300 space-x-2">
+                <button
+                  onClick={() => setIsCreate(true)}
+                  className="flex items-center bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition duration-300 space-x-2"
+                >
                   <span>Create website Now</span>
                   <ArrowRight className="w-5 h-5" />
                 </button>
-
-
               </div>
 
               <div className="mt-8 bg-yellow-50 border-l-4 border-yellow-500 p-4 text-left">

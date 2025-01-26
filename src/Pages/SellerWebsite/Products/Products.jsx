@@ -40,6 +40,8 @@ const Products = () => {
     }
   };
 
+  console.log(products)
+
   const onSubmit = async (data) => {
     try {
       const response = await axiosPublic.put(

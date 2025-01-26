@@ -213,7 +213,7 @@ const ProductManagement = () => {
               <label className="block text-gray-700">Product Name</label>
               <input
                 type="text"
-                {...register("productName", {
+                {...register("name", {
                   required: "Product name is required",
                 })}
                 className="input input-bordered w-full"

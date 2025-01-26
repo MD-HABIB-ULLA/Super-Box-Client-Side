@@ -1,18 +1,55 @@
 import { Link, Outlet, useParams } from "react-router-dom";
 import Navbar from "../../../Components/SellerWebPage/Navbar";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { WebDataDisContext } from "../../../Context/WebDataDisContext";
 import { Clock, LogOut, Package, ShoppingCart, User } from "lucide-react";
 import { HiChatBubbleLeftRight } from "react-icons/hi2";
 import { AuthContext } from "../../../Provider/AuthProvider";
 import { MdFeedback } from "react-icons/md";
 import { PiClockCountdownDuotone } from "react-icons/pi";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
 
 const Layout = () => {
+  const [services, setServices] = useState([]);
+  const [pendingProducts, setPendingProducts] = useState(null);
+  console.log(services, pendingProducts);
+  const axiosPublic = useAxiosPublic();
   const { name } = useParams();
+
   const { setName, webInfo } = useContext(WebDataDisContext);
-  const { logOut } = useContext(AuthContext);
+  const { logOut, user } = useContext(AuthContext);
+
+  const fetchServices = async () => {
+    if (user) {
+      try {
+        const res = await axiosPublic.get(
+          `/bookService?key=userEmail&value=${user.email}`
+        );
+        setServices(res.data);
+      } catch (err) {
+        setServices(null);
+      }
+    }
+  };
+
+  const fetchPendingProducts = async () => {
+    if (!email || !user?.email) return;
+
+    setLoading(true);
+
+    try {
+      const res = await axiosPublic.get(
+        `/w/pendingProduct/${email}/${user.email}`
+      );
+      setPendingProducts(res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   useEffect(() => {
+    fetchServices();
+    fetchPendingProducts();
     setName(name);
   }, [name]);
   return (
@@ -66,24 +103,29 @@ const Layout = () => {
                     Cart Items
                   </Link>
                 </li>
-                <li>
-                  <Link
-                    to={`/w/${name}/bookedServices`}
-                    className="flex items-center py-2 px-4 hover:bg-gray-700 hover:text-white rounded transition duration-150 ease-in-out"
-                  >
-                    <PiClockCountdownDuotone  className="mr-3" />
-                    Pending services
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to={`/w/${name}/pending`}
-                    className="flex items-center py-2 px-4 hover:bg-gray-700 hover:text-white rounded transition duration-150 ease-in-out"
-                  >
-                    <Clock className="mr-3" size={20} />
-                    Pending Products
-                  </Link>
-                </li>
+                {services && (
+                  <li>
+                    <Link
+                      to={`/w/${name}/bookedServices`}
+                      className="flex items-center py-2 px-4 hover:bg-gray-700 hover:text-white rounded transition duration-150 ease-in-out"
+                    >
+                      <PiClockCountdownDuotone className="mr-3" />
+                      Pending services
+                    </Link>
+                  </li>
+                )}
+                {pendingProducts&& (
+                  <li>
+                    <Link
+                      to={`/w/${name}/pending`}
+                      className="flex items-center py-2 px-4 hover:bg-gray-700 hover:text-white rounded transition duration-150 ease-in-out"
+                    >
+                      <Clock className="mr-3" size={20} />
+                      Pending Products
+                    </Link>
+                  </li>
+                )}
+
                 <li>
                   <Link
                     to={`/w/${name}/purchased`}

@@ -6,7 +6,7 @@ import { AuthContext } from "../../../Provider/AuthProvider";
 const BookedServices = () => {
   //   const { data: contextData } = useContext(WebDataDisContext);
   const { user } = useContext(AuthContext);
-  const axiosPublic = useAxiosPublic();
+    const axiosPublic = useAxiosPublic();
   const [services, setServices] = useState([]);
 
   const [isLoading, setIsLoading] = useState(true);
